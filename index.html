@@ -1689,6 +1689,68 @@
 
   <!-- SCRIPT LOGIC -->
   <script>
+    // Bilingual Language Switcher (English / Hausa) - Defined immediately
+    let currentLang = 'en';
+    const translations = {
+      en: {
+        badge: 'NG Starting in Gombe State, Nigeria',
+        heroTitle: 'The night watch, <br><span class="hero-italic">finally automated.</span>',
+        heroLead: 'AgriSense Sentinel connects Northern Nigerian poultry and livestock farms to continuous, offline environmental protection. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.',
+        orderBtn: 'ORDER KIT',
+        chatBtn: 'CHAT ON WHATSAPP',
+        navTelemetry: 'TELEMETRY',
+        navEvidence: 'FIELD EVIDENCE',
+        navHardware: 'HARDWARE',
+        navCalc: 'CALCULATOR',
+        navPricing: 'PRICING'
+      },
+      ha: {
+        badge: 'NG An Fara a Jihar Gombe, Najeriya',
+        heroTitle: 'Tsaron dare na gidan kaji, <br><span class="hero-italic">yanzu an sarrafa shi.</span>',
+        heroLead: 'AgriSense Sentinel tana kare gidajen kaji da dabbobi a Arewacin Najeriya dare da rana ba tare da intanet ba. Tana buga karrarawa mai karfin 110dB da aika sakon SMS nan take idan zafi ko ammonia ya zama barazana.',
+        orderBtn: 'YI ODA YANZU',
+        chatBtn: 'MAGANA A WHATSAPP',
+        navTelemetry: 'YANAYI',
+        navEvidence: 'SHAHADA DAGA GONA',
+        navHardware: 'KAYAN AIKI',
+        navCalc: 'LISSAFIN RIBA',
+        navPricing: 'FARASHI'
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const btnEN = document.getElementById('langBtnEN');
+      const btnHA = document.getElementById('langBtnHA');
+      if (btnEN) btnEN.classList.toggle('active', lang === 'en');
+      if (btnHA) btnHA.classList.toggle('active', lang === 'ha');
+
+      const t = translations[lang];
+      if (t) {
+        const badge = document.getElementById('heroBadge');
+        const h1 = document.getElementById('heroH1');
+        const lead = document.getElementById('heroLead');
+        const btnOrder = document.getElementById('btnOrderText');
+        const btnChat = document.getElementById('btnChatText');
+        const navTel = document.getElementById('navTel');
+        const navEv = document.getElementById('navEv');
+        const navHw = document.getElementById('navHw');
+        const navCalc = document.getElementById('navCalc');
+        const navPrice = document.getElementById('navPrice');
+
+        if (badge) badge.innerText = t.badge;
+        if (h1) h1.innerHTML = t.heroTitle;
+        if (lead) lead.innerText = t.heroLead;
+        if (btnOrder) btnOrder.innerText = t.orderBtn;
+        if (btnChat) btnChat.innerText = t.chatBtn;
+        if (navTel) navTel.innerText = t.navTelemetry;
+        if (navEv) navEv.innerText = t.navEvidence;
+        if (navHw) navHw.innerText = t.navHardware;
+        if (navCalc) navCalc.innerText = t.navCalc;
+        if (navPrice) navPrice.innerText = t.navPricing;
+      }
+    }
+
     // Audio Context for realistic simulated 110dB Piezo Siren
     let audioCtx = null;
     let sirenOsc = null;
@@ -1911,53 +1973,6 @@
       const url = `https://wa.me/2349015487928?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
       closeModal();
-    }
-
-    // Bilingual Language Switcher (English / Hausa)
-    let currentLang = 'en';
-    const translations = {
-      en: {
-        badge: 'FIELD-PROVEN OFFLINE PEN DEFENSE',
-        heroTitle: 'The night watch, <br><span class="gradient-text">automated &amp; offline.</span>',
-        heroLead: 'Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.',
-        orderBtn: 'ORDER KIT',
-        chatBtn: 'CHAT ON WHATSAPP',
-        navTelemetry: 'TELEMETRY',
-        navEvidence: 'FIELD EVIDENCE',
-        navHardware: 'HARDWARE',
-        navCalc: 'CALCULATOR',
-        navPricing: 'PRICING'
-      },
-      ha: {
-        badge: 'TSARON DARE NA GIDAN KAJI DA DABBOBI',
-        heroTitle: 'Tsaron dare na gidan kaji, <br><span class="gradient-text">mai aiki ba tare da intanet ba.</span>',
-        heroLead: 'Na\'urar kula da zafi, danshi, da iskar ammonia mai guba da aka kera ta musamman domin gidajen kaji da dabbobi a Arewacin Najeriya. Tana aiki da hasken rana ba tare da wutar NEPA ko intanet ba. Tana buga karrarawa mai karfin 110dB da aika sakon SMS nan take idan matsala ta taso da tsakar dare.',
-        orderBtn: 'YI ODA YANZU',
-        chatBtn: 'MAGANA A WHATSAPP',
-        navTelemetry: 'YANAYI',
-        navEvidence: 'SHAHADA DAGA GONA',
-        navHardware: 'KAYAN AIKI',
-        navCalc: 'LISSAFIN RIBA',
-        navPricing: 'FARASHI'
-      }
-    };
-
-    function setLanguage(lang) {
-      currentLang = lang;
-      document.getElementById('langBtnEN').classList.toggle('active', lang === 'en');
-      document.getElementById('langBtnHA').classList.toggle('active', lang === 'ha');
-
-      const t = translations[lang];
-      document.getElementById('heroBadge').innerText = t.badge;
-      document.getElementById('heroH1').innerHTML = t.heroTitle;
-      document.getElementById('heroLead').innerText = t.heroLead;
-      document.getElementById('btnOrderText').innerText = t.orderBtn;
-      document.getElementById('btnChatText').innerText = t.chatBtn;
-      document.getElementById('navTel').innerText = t.navTelemetry;
-      document.getElementById('navEv').innerText = t.navEvidence;
-      document.getElementById('navHw').innerText = t.navHardware;
-      document.getElementById('navCalc').innerText = t.navCalc;
-      document.getElementById('navPrice').innerText = t.navPricing;
     }
 
     // Run initial calc & sim update
