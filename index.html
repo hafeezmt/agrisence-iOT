@@ -330,60 +330,62 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 9px;
       padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.92rem;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 0.88rem;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.22s ease;
       text-decoration: none;
       font-family: var(--font-main);
       border: 1px solid transparent;
     }
 
-    .btn-gold {
+    .btn-gold, .btn-primary {
       background: var(--gold);
       color: #0C1E12;
       font-weight: 800;
-      font-size: 0.94rem;
-      padding: 13px 26px;
+      font-size: 0.9rem;
+      padding: 12px 26px;
       border-radius: 9999px;
       display: inline-flex;
       align-items: center;
-      gap: 9px;
+      justify-content: center;
+      gap: 8px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(229, 169, 60, 0.4);
-      transition: all 0.25s ease;
+      box-shadow: 0 4px 18px rgba(229, 169, 60, 0.38);
+      transition: all 0.22s ease;
       text-decoration: none;
       font-family: var(--font-main);
     }
 
-    .btn-gold:hover {
+    .btn-gold:hover, .btn-primary:hover {
       background: var(--gold-hover);
       transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(229, 169, 60, 0.55);
+      box-shadow: 0 8px 26px rgba(229, 169, 60, 0.52);
     }
 
-    .btn-dark-pill {
+    .btn-dark-pill, .btn-outline, .btn-pill-dark {
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
       font-weight: 700;
-      font-size: 0.92rem;
-      padding: 13px 24px;
+      font-size: 0.88rem;
+      padding: 12px 22px;
       border-radius: 9999px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.22s ease;
       text-decoration: none;
       font-family: var(--font-main);
     }
 
-    .btn-dark-pill:hover {
+    .btn-dark-pill:hover, .btn-outline:hover, .btn-pill-dark:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.35);
       transform: translateY(-2px);
@@ -995,24 +997,24 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
-    }
-
-    .field-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+    }    .field-card {
+      background: #081F13;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
       overflow: hidden;
-      transition: all 0.3s ease;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s ease;
     }
 
     .field-card:hover {
-      border-color: rgba(16, 185, 129, 0.35);
+      border-color: rgba(229, 169, 60, 0.4);
       transform: translateY(-3px);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.65);
     }
 
     .field-img-wrap {
       position: relative;
-      height: 155px;
+      height: 165px;
       overflow: hidden;
     }
 
@@ -1024,51 +1026,53 @@
     }
 
     .field-card:hover .field-img-wrap img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .field-card-pill {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: rgba(7, 10, 16, 0.85);
-      backdrop-filter: blur(6px);
-      padding: 3px 8px;
+      background: rgba(4, 15, 9, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 3px 10px;
       border-radius: 999px;
       font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      font-weight: 800;
+      color: var(--gold);
+      border: 1px solid rgba(229, 169, 60, 0.35);
     }
 
     .field-body {
-      padding: 16px 18px;
+      padding: 18px 20px;
     }
 
     .field-body h3 {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 700;
       margin-bottom: 4px;
+      color: #FFFFFF;
     }
 
     .field-location {
       font-size: 0.72rem;
-      color: var(--emerald);
+      color: var(--gold);
       font-family: var(--font-mono);
+      font-weight: 700;
       display: block;
       margin-bottom: 6px;
     }
 
     .field-body p {
-      font-size: 0.84rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .field-stat {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-between;
       font-size: 0.78rem;
@@ -1089,10 +1093,10 @@
     }
 
     .hardware-photo-box {
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
       position: relative;
     }
 
@@ -1108,10 +1112,10 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(8, 12, 20, 0.9);
+      background: rgba(4, 15, 9, 0.94);
       backdrop-filter: blur(10px);
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
+      padding: 12px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .photo-caption-bar h4 {
@@ -1128,26 +1132,31 @@
     .spec-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .spec-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
+      background: #081F13;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 18px;
       display: flex;
       gap: 14px;
       align-items: flex-start;
+      transition: all 0.2s ease;
+    }
+
+    .spec-item:hover {
+      border-color: rgba(229, 169, 60, 0.35);
     }
 
     .spec-item-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      color: var(--emerald);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(229, 169, 60, 0.12);
+      border: 1px solid rgba(229, 169, 60, 0.35);
+      color: var(--gold);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1155,8 +1164,8 @@
     }
 
     .spec-item-icon svg {
-      width: 17px;
-      height: 17px;
+      width: 18px;
+      height: 18px;
     }
 
     .spec-item h4 {
@@ -1173,18 +1182,19 @@
 
     /* ROI CALCULATOR */
     .calc-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 26px 30px;
+      background: #081F13;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 28px 32px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      gap: 30px;
+      gap: 32px;
       align-items: center;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
     }
 
     .calc-input-group {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .calc-input-group:last-child { margin-bottom: 0; }
 
@@ -1198,26 +1208,29 @@
 
     .calc-input-group .value-pill {
       font-family: var(--font-mono);
-      color: var(--emerald);
-      background: rgba(16, 185, 129, 0.12);
+      color: var(--gold);
+      background: rgba(229, 169, 60, 0.14);
+      border: 1px solid rgba(229, 169, 60, 0.35);
       padding: 2px 8px;
       border-radius: 6px;
       font-size: 0.85rem;
+      font-weight: 700;
     }
 
     .calc-result-box {
-      background: #090D16;
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      border-radius: 14px;
-      padding: 22px;
+      background: #05150D;
+      border: 1px solid rgba(229, 169, 60, 0.35);
+      border-radius: 16px;
+      padding: 24px;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .calc-result-box .num {
       font-family: var(--font-mono);
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--emerald);
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--gold);
       margin: 8px 0;
     }
 
@@ -1229,41 +1242,50 @@
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 20px;
     }
 
     .price-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px 20px;
+      background: #081F13;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 26px 22px;
       display: flex;
       flex-direction: column;
       position: relative;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s ease;
+    }
+
+    .price-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.65);
     }
 
     .price-card.featured {
-      border-color: var(--emerald);
-      background: rgba(16, 185, 129, 0.08);
-      box-shadow: 0 12px 34px rgba(16, 185, 129, 0.2);
+      border: 2px solid var(--gold);
+      background: rgba(229, 169, 60, 0.06);
+      box-shadow: 0 20px 48px rgba(229, 169, 60, 0.18);
     }
 
     .price-card .tag {
       position: absolute;
-      top: -10px;
-      right: 16px;
-      background: var(--emerald);
-      color: #032216;
-      font-size: 0.68rem;
+      top: -11px;
+      right: 18px;
+      background: var(--gold);
+      color: #0C1E12;
+      font-size: 0.7rem;
       font-weight: 800;
-      padding: 2px 9px;
+      padding: 3px 10px;
       border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(229, 169, 60, 0.4);
     }
 
     .price-card h3 {
       font-size: 1.15rem;
       font-weight: 700;
       margin-bottom: 4px;
+      color: #FFFFFF;
     }
 
     .price-card .cost {
@@ -1299,7 +1321,7 @@
     }
 
     .price-list li svg {
-      color: var(--emerald);
+      color: var(--gold);
       flex-shrink: 0;
       width: 15px;
       height: 15px;
@@ -1309,40 +1331,48 @@
     .team-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      gap: 20px;
     }
 
     .founder-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px 20px;
+      background: #081F13;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px 22px;
       display: flex;
-      gap: 18px;
+      gap: 20px;
       align-items: center;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s ease;
+    }
+
+    .founder-card:hover {
+      border-color: rgba(229, 169, 60, 0.4);
+      transform: translateY(-2px);
     }
 
     .founder-photo {
-      width: 92px;
-      height: 92px;
-      border-radius: 12px;
+      width: 96px;
+      height: 96px;
+      border-radius: 14px;
       object-fit: cover;
       object-position: center 15%;
       flex-shrink: 0;
-      border: 2px solid rgba(16, 185, 129, 0.4);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      border: 2px solid var(--gold);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
     }
 
     .founder-info h3 {
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       font-weight: 700;
+      color: #FFFFFF;
     }
 
     .founder-info .role {
-      color: var(--emerald);
+      color: var(--gold);
       font-family: var(--font-mono);
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 800;
       display: block;
       margin-top: 2px;
     }
@@ -1351,13 +1381,13 @@
       font-size: 0.84rem;
       color: var(--text-muted);
       margin-top: 6px;
-      line-height: 1.48;
+      line-height: 1.5;
     }
 
     /* FOOTER */
     footer.site-footer {
-      background: #04060A;
-      border-top: 1px solid var(--border);
+      background: #030C07;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding: 70px 0 30px;
     }
 
@@ -1379,10 +1409,10 @@
     }
 
     .contact-item:hover { color: #fff; }
-    .contact-item svg { color: var(--emerald); flex-shrink: 0; }
+    .contact-item svg { color: var(--gold); flex-shrink: 0; }
 
     .footer-bottom {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding-top: 24px;
       display: flex;
       justify-content: space-between;
@@ -1395,7 +1425,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(8px);
       z-index: 2000;
       align-items: center;
@@ -1406,13 +1436,14 @@
     .modal-overlay.open { display: flex; }
 
     .modal-box {
-      background: #0E1422;
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      background: #081F13;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
       max-width: 500px;
       width: 100%;
-      padding: 30px;
+      padding: 32px;
       position: relative;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
     }
 
     .modal-close {
@@ -1440,18 +1471,20 @@
 
     .form-group input, .form-group select {
       width: 100%;
-      padding: 11px 13px;
-      background: #070A12;
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      padding: 12px 14px;
+      background: #041209;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
       color: #fff;
       font-family: var(--font-main);
       font-size: 0.92rem;
       outline: none;
+      transition: all 0.2s ease;
     }
 
     .form-group input:focus, .form-group select:focus {
-      border-color: var(--emerald);
+      border-color: var(--gold);
+      box-shadow: 0 0 12px rgba(229, 169, 60, 0.25);
     }
 
     /* Responsive */
@@ -1731,11 +1764,11 @@
   </section>
 
   <!-- REAL FIELD DEPLOYMENTS & EVIDENCE -->
-  <section id="deployments" style="background:rgba(11, 35, 23, 0.5); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <section id="deployments" style="background:#071C10; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
     <div class="container">
       <div class="section-head">
-        <div class="badge">REAL EVIDENCE FROM THE FIELD</div>
-        <h2>Tested in working pens across the Gombe corridor</h2>
+        <div class="badge"><span class="badge-pulse"></span> FIELD EVIDENCE</div>
+        <h2>Tested across the corridor, <br><span class="hero-serif-italic">proven in the pens.</span></h2>
         <p>Real farm environments where heat and ammonia destroy profits before morning dawn.</p>
       </div>
 
@@ -1798,8 +1831,8 @@
   <section id="hardware">
     <div class="container">
       <div class="section-head">
-        <div class="badge">HARDWARE RIGOR</div>
-        <h2>Built with industrial components, not toy hobby kits</h2>
+        <div class="badge"><span class="badge-pulse"></span> HARDWARE RIGOR</div>
+        <h2>Built for the Sahel, <br><span class="hero-serif-italic">solar sustained.</span></h2>
         <p>Assembled and calibrated locally to survive 45°C ambient heat and corrosive pen ammonia vapor.</p>
       </div>
 
@@ -1860,11 +1893,11 @@
   </section>
 
   <!-- ROI CALCULATOR -->
-  <section id="calculator" style="background:rgba(13, 18, 29, 0.4); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <section id="calculator" style="background:#071C10; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
     <div class="container">
       <div class="section-head">
-        <div class="badge">FLOCK ECONOMICS</div>
-        <h2>Calculate your flock value at risk</h2>
+        <div class="badge"><span class="badge-pulse"></span> FLOCK ECONOMICS</div>
+        <h2>Calculate your flock risk, <br><span class="hero-serif-italic">in exact Naira.</span></h2>
         <p>A single midnight ventilation stall can wipe out your entire season's profit.</p>
       </div>
 
@@ -1902,7 +1935,7 @@
             Preventing just one single overnight asphyxiation episode saves more than the total cost of 6 AgriSense Sentinel units.
           </p>
           <div style="margin-top:18px;">
-            <span class="badge" style="background:rgba(16,185,129,0.15);">
+            <span class="badge" style="background:rgba(229,169,60,0.14); border-color:rgba(229,169,60,0.35); color:var(--gold);">
               PAYBACK PERIOD: &lt; 21 DAYS
             </span>
           </div>
@@ -1915,8 +1948,8 @@
   <section id="pricing">
     <div class="container">
       <div class="section-head">
-        <div class="badge">TRANSPARENT DISTRIBUTION</div>
-        <h2>Priced for real farm economics</h2>
+        <div class="badge"><span class="badge-pulse"></span> TRANSPARENT TIERS</div>
+        <h2>Priced for farmers, <br><span class="hero-serif-italic">built for cooperatives.</span></h2>
         <p>Direct farmer packages and bulk cooperative discounts coordinated through local agro-dealers.</p>
       </div>
 
@@ -1946,7 +1979,10 @@
               1-Year Replacement Hardware Guarantee
             </li>
           </ul>
-          <button class="btn btn-pill-dark" onclick="openModal('Individual Farm Kit')">Order Kit</button>
+          <button class="btn btn-dark-pill" onclick="openModal('Individual Farm Kit')">
+            <span>Order Kit</span>
+            <span style="font-size:1rem; font-weight:800;">&rsaquo;</span>
+          </button>
         </div>
 
         <!-- Tier 2 -->
@@ -1975,7 +2011,10 @@
               Priority Local Field Technician Support
             </li>
           </ul>
-          <button class="btn btn-primary" onclick="openModal('Cooperative Bulk')">Get Co-op Pricing</button>
+          <button class="btn btn-gold" onclick="openModal('Cooperative Bulk')">
+            <span>Get Co-op Pricing</span>
+            <span style="font-size:1.1rem; font-weight:900;">&rsaquo;</span>
+          </button>
         </div>
 
         <!-- Tier 3 -->
@@ -2003,18 +2042,21 @@
               100% Full Ownership upon completion
             </li>
           </ul>
-          <button class="btn btn-pill-dark" onclick="openModal('Lease-to-Own')">Apply for Lease</button>
+          <button class="btn btn-dark-pill" onclick="openModal('Lease-to-Own')">
+            <span>Apply for Lease</span>
+            <span style="font-size:1rem; font-weight:800;">&rsaquo;</span>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FOUNDERS WITH REAL PHOTOGRAPHS -->
-  <section id="team" style="background:rgba(11, 35, 23, 0.5); border-top:1px solid var(--border);">
+  <section id="team" style="background:#071C10; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
     <div class="container">
       <div class="section-head">
-        <div class="badge">LEADERSHIP</div>
-        <h2>Founded &amp; built in Gombe State</h2>
+        <div class="badge"><span class="badge-pulse"></span> LEADERSHIP</div>
+        <h2>Roots in Gombe State, <br><span class="hero-serif-italic">securing the Sahel.</span></h2>
         <p>Combining cybersecurity, applied physics, statistics, and rural agricultural operations.</p>
       </div>
 
@@ -2045,15 +2087,16 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Bring the night watch to your pen.</h2>
-          <p style="color:var(--text-muted); font-size:1.02rem; max-width:480px; margin-bottom:24px;">
+          <h2 style="font-size:2.1rem; font-weight:800; margin-bottom:14px; letter-spacing:-0.03em;">Bring the night watch <br><span class="hero-serif-italic">to your farm.</span></h2>
+          <p style="color:var(--text-muted); font-size:1.02rem; max-width:480px; margin-bottom:24px; line-height:1.65;">
             Protect your flock investment before the next heat wave or ammonia crash. Talk to our technical team in Gombe.
           </p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <a class="btn btn-primary" href="https://wa.me/2349015487928?text=Hello%20AgriSense%20Team%2C%20I%20want%20to%20order%20the%20Sentinel%20system" target="_blank" rel="noopener">
-              WhatsApp (+234 901 548 7928)
+          <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <a class="btn btn-gold" href="https://wa.me/2349015487928?text=Hello%20AgriSense%20Team%2C%20I%20want%20to%20order%20the%20Sentinel%20system" target="_blank" rel="noopener">
+              <span>WhatsApp (+234 901 548 7928)</span>
+              <span style="font-size:1.1rem; font-weight:900;">&rsaquo;</span>
             </a>
-            <button class="btn btn-outline" onclick="openModal()">
+            <button class="btn btn-dark-pill" onclick="openModal()">
               Request Official Quote
             </button>
           </div>
@@ -2116,8 +2159,9 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">
-          Submit &amp; Open WhatsApp
+        <button type="submit" class="btn-gold" style="width:100%; margin-top:12px; font-size:0.95rem;">
+          <span>Submit &amp; Open WhatsApp</span>
+          <span style="font-size:1.1rem; font-weight:900;">&rsaquo;</span>
         </button>
       </form>
     </div>
