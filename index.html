@@ -1492,12 +1492,239 @@
     }
 
     /* Responsive */
+    .mobile-text { display: none !important; }
+    .desktop-text { display: inline !important; }
+
     @media (max-width: 960px) {
       .pill-nav { display: none; }
       .hero-grid, .hardware-showcase, .calc-card, .footer-grid { grid-template-columns: 1fr; }
       .field-grid, .pricing-grid, .team-grid { grid-template-columns: 1fr; }
-      .hero { padding-top: 110px; }
+      .hero { padding-top: 100px; }
       .founder-card { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-text { display: inline !important; }
+      .desktop-text { display: none !important; }
+
+      /* Top Pilot Bar Mobile: Single crisp line without wrapping */
+      .top-pilot-bar {
+        padding: 6px 14px;
+      }
+      .top-pilot-right {
+        display: none !important;
+      }
+      .top-pilot-left {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .top-pilot-left .title-text {
+        font-size: 0.74rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Floating Pill Header Mobile: Compact, aligned, no overlap */
+      .pill-header-outer {
+        top: 36px;
+        padding: 0 10px;
+      }
+      .pill-header {
+        padding: 5px 6px 5px 14px;
+        max-width: 100%;
+      }
+      .pill-brand-icon {
+        width: 28px;
+        height: 28px;
+      }
+      .pill-brand-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+      .pill-brand-name {
+        font-size: 0.95rem;
+      }
+      .pill-brand-badge {
+        display: none !important;
+      }
+      .pill-action-text {
+        display: none !important;
+      }
+      .btn-trashgo-cta {
+        padding: 7px 13px;
+        font-size: 0.74rem;
+        gap: 5px;
+      }
+
+      /* Containers and Paddings */
+      .container {
+        padding: 0 16px;
+      }
+      section {
+        padding: 50px 0;
+      }
+      .hero {
+        padding: 95px 0 35px;
+      }
+      .hero-grid {
+        gap: 26px;
+      }
+      .hero h1 {
+        font-size: clamp(2.1rem, 7.5vw, 2.6rem);
+        letter-spacing: -0.025em;
+        margin: 14px 0;
+      }
+      .hero p.lead {
+        font-size: 0.92rem;
+        line-height: 1.55;
+        margin-bottom: 20px;
+      }
+
+      /* Hero Metrics stacked cards to prevent ₦350,00 cut-off */
+      .hero-metrics {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 24px;
+        padding-top: 18px;
+      }
+      .metric-box {
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+      .metric-box h4 {
+        font-size: 1.35rem;
+        margin-bottom: 0;
+      }
+      .metric-box p {
+        font-size: 0.76rem;
+        text-align: right;
+        margin: 0;
+      }
+
+      /* Practical Video HUD & Tag */
+      .practical-video-wrap {
+        height: 220px;
+      }
+      .hud-cam-badge {
+        display: none !important;
+      }
+      .video-hud-top {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+      }
+      .practical-video-tag {
+        bottom: 8px;
+        left: 8px;
+        padding: 4px 10px;
+        font-size: 0.7rem;
+        max-width: 60%;
+      }
+      .video-control-overlay {
+        bottom: 8px;
+        right: 8px;
+      }
+      .btn-video-toggle {
+        padding: 4px 9px;
+        font-size: 0.7rem;
+      }
+
+      /* Live Events Panel */
+      .live-events-panel {
+        padding: 14px 14px 16px;
+      }
+      .event-item {
+        padding: 9px 10px;
+      }
+      .event-name {
+        font-size: 0.8rem;
+      }
+      .event-meta {
+        font-size: 0.68rem;
+      }
+
+      /* Simulator Card */
+      .sim-card {
+        padding: 18px 14px;
+      }
+      .sim-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      .sim-actions .btn {
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 0.84rem;
+      }
+      .sim-alert-box {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+      }
+      .siren-controls-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .btn-siren-test {
+        flex: 1;
+        justify-content: center;
+      }
+
+      /* Calculator Card */
+      .calc-card {
+        padding: 20px 14px;
+        gap: 22px;
+      }
+      .calc-result-box {
+        padding: 18px 14px;
+      }
+      .calc-result-box .num {
+        font-size: 2rem;
+      }
+
+      /* Pricing & Modal */
+      .price-card {
+        padding: 22px 18px;
+      }
+      .modal-box {
+        padding: 24px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .reading-card {
+        padding: 8px 4px;
+      }
+      .reading-card .label {
+        font-size: 0.62rem;
+      }
+      .reading-card .value {
+        font-size: 1.18rem;
+      }
+      .reading-card .thresh {
+        font-size: 0.58rem;
+      }
+      .hero-cta-group {
+        flex-direction: column;
+        width: 100%;
+      }
+      .hero-cta-group .btn-gold,
+      .hero-cta-group .btn-dark-pill {
+        width: 100%;
+      }
+      .siren-vol-slider-wrap {
+        padding: 5px 8px;
+      }
+      .siren-vol-slider-wrap input[type="range"] {
+        width: 55px;
+      }
     }
   </style>
 </head>
@@ -1510,7 +1737,10 @@
     <div class="top-pilot-inner">
       <div class="top-pilot-left">
         <span class="lightning">⚡</span>
-        <span class="title-text">AgriSense Sentinel Platform (Gombe Pilot Prototype)</span>
+        <span class="title-text">
+          <span class="desktop-text">AgriSense Sentinel Platform (Gombe Pilot Prototype)</span>
+          <span class="mobile-text">AgriSense Sentinel · Gombe Pilot</span>
+        </span>
         <div class="lang-switch-wrap" title="Harshe / Language" style="margin-left: 8px;">
           <button id="langBtnEN" class="lang-toggle-btn active" onclick="setLanguage('en')">EN</button>
           <span style="color:#64748B; font-size:0.68rem;">|</span>
@@ -1580,7 +1810,7 @@
           Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
         </p>
 
-        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <div class="hero-cta-group" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
           <a class="btn-gold" href="#simulator">
             <span>Schedule Pen Monitor</span>
             <span style="font-size:1.1rem; font-weight:900;">&rsaquo;</span>
@@ -1627,13 +1857,14 @@
             </div>
 
             <div class="practical-video-tag">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <span>Dadinkowa Cluster &amp; Tudun Wada Farm Route</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span class="desktop-text">Dadinkowa Cluster &amp; Tudun Wada Farm Route</span>
+              <span class="mobile-text">Dadinkowa Cluster</span>
             </div>
 
             <div class="video-control-overlay">
               <button class="btn-video-toggle" onclick="toggleVideoPlayback()" id="videoToggleBtn">
-                <span>⏸</span> <span>Practical Feed</span>
+                <span>⏸</span> <span class="desktop-text">Practical Feed</span>
               </button>
             </div>
           </div>
