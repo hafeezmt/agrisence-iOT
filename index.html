@@ -53,151 +53,121 @@
     }
 
     /* ======================================================== */
-    /* DEDICATED PILOT NETWORK & CORRIDOR TRACKER SECTION       */
+    /* GOMBE PILOT NETWORK & CORRIDOR HUBS                      */
     /* ======================================================== */
-    .pilot-corridor-hub {
-      padding: 32px 0 40px;
-      background: #05140B;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    .corridor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
     }
 
-    .pilot-hub-card {
+    .corridor-card {
       background: #081F13;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 24px 28px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s ease;
+      position: relative;
     }
 
-    .pilot-hub-header {
+    .corridor-card:hover {
+      border-color: rgba(229, 169, 60, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.65);
+    }
+
+    .corridor-card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-      flex-wrap: wrap;
+      margin-bottom: 16px;
     }
 
-    .pilot-hub-title {
+    .corridor-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(229, 169, 60, 0.12);
+      border: 1px solid rgba(229, 169, 60, 0.35);
       display: flex;
       align-items: center;
-      gap: 14px;
+      justify-content: center;
+      font-size: 1.35rem;
     }
 
-    .hub-pulse-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 12px var(--gold);
-      animation: pulse-dot 1.8s infinite;
-      flex-shrink: 0;
-    }
-
-    .pilot-hub-title h3 {
-      font-size: 1.18rem;
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: -0.02em;
-    }
-
-    .pilot-hub-title p {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .pilot-hub-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: var(--emerald);
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 0.74rem;
+    .corridor-status-pill {
+      font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.04em;
-    }
-
-    .status-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 8px var(--emerald);
-    }
-
-    .pilot-hub-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .pilot-hub-item {
-      background: rgba(4, 18, 10, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      transition: all 0.22s ease;
+      gap: 5px;
     }
 
-    .pilot-hub-item:hover {
-      background: rgba(229, 169, 60, 0.08);
-      border-color: rgba(229, 169, 60, 0.4);
-      transform: translateY(-2px);
+    .corridor-status-pill.online {
+      color: var(--gold);
+      background: rgba(229, 169, 60, 0.12);
+      border: 1px solid rgba(229, 169, 60, 0.35);
     }
 
-    .hub-item-icon {
-      font-size: 1.35rem;
-      line-height: 1;
-      flex-shrink: 0;
+    .corridor-status-pill.active {
+      color: var(--emerald);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
     }
 
-    .hub-item-body {
-      flex: 1;
-      min-width: 0;
+    .corridor-status-pill.solar {
+      color: #60A5FA;
+      background: rgba(96, 165, 250, 0.12);
+      border: 1px solid rgba(96, 165, 250, 0.35);
     }
 
-    .hub-item-body strong {
-      display: block;
-      font-size: 0.88rem;
+    .corridor-status-pill.coop {
+      color: #FCD34D;
+      background: rgba(252, 211, 77, 0.12);
+      border: 1px solid rgba(252, 211, 77, 0.35);
+    }
+
+    .corridor-card h3 {
+      font-size: 1.12rem;
       font-weight: 700;
       color: #FFFFFF;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-bottom: 8px;
     }
 
-    .hub-item-body span {
-      display: block;
-      font-size: 0.74rem;
-      color: var(--text-dim);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .corridor-card p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex-grow: 1;
+      margin-bottom: 18px;
     }
 
-    .hub-item-arrow {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1.2rem;
-      font-weight: 800;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .pilot-hub-item:hover .hub-item-arrow {
+    .corridor-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--gold);
-      transform: translateX(3px);
+    }
+
+    .corridor-card-footer .corridor-arrow {
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .corridor-card:hover .corridor-arrow {
+      transform: translateX(4px);
     }
 
     /* ======================================================== */
@@ -1586,7 +1556,7 @@
       .pill-nav { display: none; }
       .hero-grid, .hardware-showcase, .calc-card, .footer-grid { grid-template-columns: 1fr; }
       .field-grid, .pricing-grid, .team-grid { grid-template-columns: 1fr; }
-      .pilot-hub-grid { grid-template-columns: repeat(2, 1fr); }
+      .corridor-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .hero { padding-top: 95px; }
       .founder-card { flex-direction: column; text-align: center; }
     }
@@ -1627,18 +1597,13 @@
         gap: 5px;
       }
 
-      /* Pilot Hub Mobile */
-      .pilot-hub-grid {
+      /* Corridor Grid Mobile */
+      .corridor-grid {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 14px;
       }
-      .pilot-hub-card {
-        padding: 18px 16px;
-      }
-      .pilot-hub-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+      .corridor-card {
+        padding: 20px 18px;
       }
 
       /* Containers and Paddings */
@@ -2063,62 +2028,72 @@
   </section>
 
   <!-- ======================================================== -->
-  <!-- DEDICATED PILOT NETWORK & CORRIDOR TRACKER SECTION       -->
+  <!-- GOMBE PILOT NETWORK & CORRIDOR HUBS                      -->
   <!-- ======================================================== -->
-  <section class="pilot-corridor-hub" id="pilotHub">
+  <section id="pilotHub" style="background:#071C10; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
     <div class="container">
-      <div class="pilot-hub-card">
-        <div class="pilot-hub-header">
-          <div class="pilot-hub-title">
-            <span class="hub-pulse-dot"></span>
-            <div>
-              <h3>⚡ AgriSense Sentinel Platform <span class="hero-serif-italic">(Gombe Pilot Network)</span></h3>
-              <p>Autonomous offline pen defense monitoring across working poultry clusters in the Sahel corridor.</p>
-            </div>
+      <div class="section-head">
+        <div class="badge"><span class="badge-pulse"></span> GOMBE PILOT NETWORK</div>
+        <h2>Autonomous pen defense, <br><span class="hero-serif-italic">monitored across the Sahel.</span></h2>
+        <p>Continuous edge intelligence, solar health, and emergency alert telemetry deployed across working Northern poultry clusters.</p>
+      </div>
+
+      <div class="corridor-grid">
+        <!-- Card 1 -->
+        <a href="#simulator" class="corridor-card">
+          <div class="corridor-card-top">
+            <div class="corridor-icon-box">🟡</div>
+            <span class="corridor-status-pill online">ONLINE</span>
           </div>
-          <div class="pilot-hub-badge">
-            <span class="status-indicator"></span>
-            <span>3 PEN CORRIDORS ACTIVE</span>
+          <h3>Live Telemetry HUD</h3>
+          <p>Sub-second micro-climate &amp; lethal ammonia monitoring with real-time browser test simulator.</p>
+          <div class="corridor-card-footer">
+            <span>Explore Telemetry</span>
+            <span class="corridor-arrow">&rsaquo;</span>
           </div>
-        </div>
+        </a>
 
-        <div class="pilot-hub-grid">
-          <a href="#simulator" class="pilot-hub-item">
-            <div class="hub-item-icon">🟡</div>
-            <div class="hub-item-body">
-              <strong>Live Telemetry HUD</strong>
-              <span>Sub-second micro-climate &amp; ammonia alerts</span>
-            </div>
-            <span class="hub-item-arrow">&rsaquo;</span>
-          </a>
+        <!-- Card 2 -->
+        <a href="#deployments" class="corridor-card">
+          <div class="corridor-card-top">
+            <div class="corridor-icon-box">🏡</div>
+            <span class="corridor-status-pill active">3 CLUSTERS</span>
+          </div>
+          <h3>Gombe Pen Corridors</h3>
+          <p>Active field deployments in Dadinkowa Irrigation Basin, Billiri, and Tudun Wada commercial pens.</p>
+          <div class="corridor-card-footer">
+            <span>View Deployments</span>
+            <span class="corridor-arrow">&rsaquo;</span>
+          </div>
+        </a>
 
-          <a href="#deployments" class="pilot-hub-item">
-            <div class="hub-item-icon">🏡</div>
-            <div class="hub-item-body">
-              <strong>Pen Corridors</strong>
-              <span>Dadinkowa, Billiri &amp; Tudun Wada clusters</span>
-            </div>
-            <span class="hub-item-arrow">&rsaquo;</span>
-          </a>
+        <!-- Card 3 -->
+        <a href="#hardware" class="corridor-card">
+          <div class="corridor-card-top">
+            <div class="corridor-icon-box">📱</div>
+            <span class="corridor-status-pill solar">SOLAR 2G</span>
+          </div>
+          <h3>Edge Hardware Rigor</h3>
+          <p>Dual-core ESP32 edge intelligence with SIM800L 2G GSM cellular telemetry and MPPT solar backup.</p>
+          <div class="corridor-card-footer">
+            <span>Inspect Hardware</span>
+            <span class="corridor-arrow">&rsaquo;</span>
+          </div>
+        </a>
 
-          <a href="#hardware" class="pilot-hub-item">
-            <div class="hub-item-icon">📱</div>
-            <div class="hub-item-body">
-              <strong>Edge Hardware Rigor</strong>
-              <span>Solar MPPT + 2G GSM cellular telemetry</span>
-            </div>
-            <span class="hub-item-arrow">&rsaquo;</span>
-          </a>
-
-          <a href="#pricing" class="pilot-hub-item">
-            <div class="hub-item-icon">⚡</div>
-            <div class="hub-item-body">
-              <strong>Field Kits &amp; Co-op Leases</strong>
-              <span>Accessible pricing for Northern smallholders</span>
-            </div>
-            <span class="hub-item-arrow">&rsaquo;</span>
-          </a>
-        </div>
+        <!-- Card 4 -->
+        <a href="#pricing" class="corridor-card">
+          <div class="corridor-card-top">
+            <div class="corridor-icon-box">⚡</div>
+            <span class="corridor-status-pill coop">CO-OP TIER</span>
+          </div>
+          <h3>Field Kits &amp; Leases</h3>
+          <p>Direct smallholder packages and bulk cooperative financing options designed for local farm economics.</p>
+          <div class="corridor-card-footer">
+            <span>See Pricing Tiers</span>
+            <span class="corridor-arrow">&rsaquo;</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
