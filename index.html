@@ -7,29 +7,30 @@
   <meta name="description" content="Field-tested, solar-powered, offline IoT monitor engineered for poultry & livestock pens in Northern Nigeria. Instant on-site siren and direct GSM SMS alerts.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700;1,9..144,800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#FAF8EE">
   
   <style>
     :root {
-      --bg: #070A10;
-      --bg-surface: #0D121D;
-      --bg-card: rgba(15, 21, 33, 0.78);
-      --bg-card-hover: rgba(22, 31, 49, 0.9);
-      --border: rgba(255, 255, 255, 0.09);
-      --border-glow: rgba(16, 185, 129, 0.3);
+      --bg: #06170E;             /* Deep lush forest green like TrashGo */
+      --bg-surface: #0B2216;     /* Elevated forest surface */
+      --bg-card: rgba(11, 35, 23, 0.85);
+      --bg-card-hover: rgba(16, 48, 32, 0.95);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(229, 169, 60, 0.35);
+      --gold: #E5A93C;           /* TrashGo warm golden amber */
+      --gold-hover: #D4962B;
+      --gold-text: #0C1E12;
       --emerald: #10B981;
-      --emerald-glow: rgba(16, 185, 129, 0.45);
       --emerald-dark: #064E3B;
-      --amber: #F59E0B;
       --crimson: #EF4444;
       --crimson-glow: rgba(239, 68, 68, 0.5);
-      --cyan: #06B6D4;
       --text: #F8FAFC;
       --text-muted: #94A3B8;
       --text-dim: #64748B;
       --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Fraunces', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -37,7 +38,7 @@
     html { scroll-behavior: smooth; }
 
     body {
-      background: #080B12;
+      background: var(--bg);
       color: var(--text);
       font-family: var(--font-main);
       line-height: 1.6;
@@ -70,12 +71,12 @@
     .pill-header {
       pointer-events: auto;
       width: 100%;
-      max-width: 1060px;
-      background: #FAF8EE; /* PropaBridge exact warm ivory cream surface */
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 14px 38px -6px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.2);
-      border-radius: 14px;
-      padding: 6px 8px 6px 18px;
+      max-width: 1080px;
+      background: #FFFFFF; /* TrashGo pure crisp white surface */
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.15);
+      border-radius: 9999px; /* Pure rounded pill */
+      padding: 6px 10px 6px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -83,7 +84,7 @@
     }
 
     .pill-header:hover {
-      box-shadow: 0 18px 46px -6px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.75);
     }
 
     .pill-brand {
@@ -91,19 +92,19 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: #0A1128;
+      color: #111827;
     }
 
     .pill-brand-icon {
-      width: 28px;
-      height: 28px;
-      background: #0A1128;
-      border-radius: 7px;
+      width: 30px;
+      height: 30px;
+      background: #06170E;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #10B981;
-      box-shadow: 0 2px 6px rgba(10, 17, 40, 0.3);
+      color: var(--gold);
+      box-shadow: 0 2px 6px rgba(6, 23, 14, 0.25);
     }
 
     .pill-brand-icon svg {
@@ -112,10 +113,10 @@
     }
 
     .pill-brand-name {
-      font-size: 0.96rem;
+      font-size: 1.02rem;
       font-weight: 800;
-      letter-spacing: -0.01em;
-      color: #0A1128;
+      letter-spacing: -0.02em;
+      color: #111827;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -124,8 +125,8 @@
     .pill-brand-badge {
       font-size: 0.62rem;
       color: #065F46;
-      background: rgba(16, 185, 129, 0.16);
-      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 999px;
       padding: 1px 7px;
       font-weight: 700;
@@ -135,36 +136,36 @@
     .pill-nav {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 18px;
     }
 
     .pill-link {
-      color: #1E293B;
+      color: #374151;
       text-decoration: none;
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
       padding: 4px 6px;
       transition: color 0.15s ease;
     }
 
     .pill-link:hover {
-      color: #059669;
+      color: #06170E;
     }
 
     .pill-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .pill-action-text {
       background: none;
       border: none;
-      color: #0A1128;
-      font-size: 0.76rem;
+      color: #111827;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
       cursor: pointer;
       padding: 6px 8px;
       transition: color 0.15s ease;
@@ -172,32 +173,32 @@
     }
 
     .pill-action-text:hover {
-      color: #059669;
+      color: var(--gold-hover);
     }
 
     .btn-propa-action {
-      background: #0B192C; /* PropaBridge exact deep navy button */
+      background: #111827; /* TrashGo dark pill button */
       color: #FFFFFF;
       font-weight: 700;
-      font-size: 0.76rem;
-      letter-spacing: 0.04em;
-      padding: 8px 16px;
-      border-radius: 8px;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      padding: 9px 18px;
+      border-radius: 9999px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      box-shadow: 0 4px 12px rgba(11, 25, 44, 0.25);
+      box-shadow: 0 4px 12px rgba(17, 24, 39, 0.25);
       transition: all 0.2s ease;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       font-family: var(--font-main);
     }
 
     .btn-propa-action:hover {
-      background: #152744;
+      background: #1F2937;
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(11, 25, 44, 0.4);
+      box-shadow: 0 6px 16px rgba(17, 24, 39, 0.4);
     }
 
     .lang-switch-wrap {
@@ -263,10 +264,10 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 13px 26px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.95rem;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.94rem;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
@@ -274,139 +275,167 @@
       border: 1px solid transparent;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #10B981, #059669);
-      color: #032216;
-      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+    .btn-gold {
+      background: var(--gold);
+      color: var(--gold-text);
+      box-shadow: 0 4px 20px rgba(229, 169, 60, 0.38);
     }
 
-    .btn-primary:hover {
+    .btn-gold:hover {
+      background: var(--gold-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5);
-      background: linear-gradient(135deg, #34D399, #10B981);
+      box-shadow: 0 8px 28px rgba(229, 169, 60, 0.55);
     }
 
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
+    .btn-pill-dark {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       color: #fff;
     }
 
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(255, 255, 255, 0.25);
+    .btn-pill-dark:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.28);
       transform: translateY(-2px);
     }
 
     /* HERO SECTION */
     .hero {
-      padding: 95px 0 45px;
+      padding: 95px 0 35px;
       position: relative;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 46px;
       align-items: center;
     }
 
     .hero h1 {
-      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
-      font-weight: 800;
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-      margin: 16px 0;
+      font-family: var(--font-serif);
+      font-size: clamp(2.7rem, 4.4vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin: 18px 0;
+      color: #FFFFFF;
     }
 
-    .hero h1 .gradient-text {
-      color: var(--emerald);
+    .hero h1 .hero-italic {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--gold);
+      display: inline-block;
     }
 
     .hero p.lead {
-      font-size: 1.02rem;
+      font-size: 1.06rem;
       color: var(--text-muted);
       max-width: 520px;
-      line-height: 1.6;
-      margin-bottom: 24px;
+      line-height: 1.65;
+      margin-bottom: 28px;
     }
 
-    .hero-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
+    /* TRASHGO-STYLE GOLDEN STATS RIBBON */
+    .gold-stats-ribbon {
+      background: var(--gold);
+      color: var(--gold-text);
+      padding: 30px 0;
+      margin-top: 45px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
 
-    .metric-box h4 {
-      font-family: var(--font-mono);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #fff;
+    .gold-stats-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
     }
 
-    .metric-box p {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      margin-top: 3px;
+    .gold-stat-item {
+      flex: 1;
+      min-width: 220px;
     }
 
-    /* HERO PHOTO-IN-PHOTO + SIMULATOR CARD */
-    .hero-device-wrapper {
-      position: relative;
+    .gold-stat-item h3 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      font-family: var(--font-serif);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #0C1E12;
     }
 
-    .real-photo-banner {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 12px;
+    .gold-stat-item p {
+      font-size: 0.84rem;
+      font-weight: 600;
+      opacity: 0.85;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .gold-stat-divider {
+      width: 1px;
+      height: 48px;
+      background: rgba(12, 30, 18, 0.2);
+    }
+
+    /* INTEGRATED TRASHGO-STYLE PREVIEW CARD */
+    .integrated-preview-card {
+      background: var(--bg-surface);
       border: 1px solid var(--border);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.75);
+      transition: all 0.3s ease;
     }
 
-    .real-photo-banner img {
+    .integrated-preview-card.hazard-active {
+      border-color: var(--crimson);
+      box-shadow: 0 0 50px var(--crimson-glow);
+    }
+
+    .card-media-head {
+      position: relative;
       width: 100%;
-      height: 155px;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .card-media-head img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
-      filter: brightness(0.88);
-      transition: filter 0.3s;
+      filter: brightness(0.9);
+      transition: transform 0.4s ease;
     }
 
-    .real-photo-tag {
+    .integrated-preview-card:hover .card-media-head img {
+      transform: scale(1.02);
+    }
+
+    .media-location-tag {
       position: absolute;
-      bottom: 10px;
-      left: 12px;
-      background: rgba(10, 14, 23, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 6px;
-      padding: 3px 9px;
-      font-size: 0.72rem;
+      bottom: 12px;
+      left: 14px;
+      background: rgba(6, 23, 14, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-size: 0.74rem;
       color: #fff;
+      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* TELEMETRY SIMULATOR WIDGET */
-    .sim-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
-      transition: border-color 0.3s;
-    }
-
-    .sim-card.hazard-active {
-      border-color: var(--crimson);
-      box-shadow: 0 0 45px var(--crimson-glow);
+    .card-telemetry-body {
+      padding: 20px 22px;
     }
 
     .sim-header {
@@ -422,13 +451,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .reading-card {
-      background: rgba(10, 14, 23, 0.85);
+      background: rgba(6, 23, 14, 0.7);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 12px;
       position: relative;
     }
@@ -506,12 +535,12 @@
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: var(--emerald);
+      background: var(--gold);
       cursor: pointer;
-      box-shadow: 0 0 10px var(--emerald);
+      box-shadow: 0 0 12px rgba(229, 169, 60, 0.55);
       border: 2px solid #fff;
     }
 
@@ -593,15 +622,18 @@
     }
 
     .section-head h2 {
-      font-size: clamp(1.75rem, 2.8vw, 2.3rem);
-      font-weight: 800;
+      font-family: var(--font-serif);
+      font-size: clamp(1.95rem, 3.2vw, 2.5rem);
+      font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      color: #FFFFFF;
     }
 
     .section-head p {
       color: var(--text-muted);
-      font-size: 0.96rem;
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     /* REAL FIELD GALLERY & CASE EVIDENCE */
@@ -812,16 +844,16 @@
 
     .calc-input-group .value-pill {
       font-family: var(--font-mono);
-      color: var(--emerald);
-      background: rgba(16, 185, 129, 0.1);
-      padding: 1px 8px;
-      border-radius: 4px;
+      color: var(--gold);
+      background: rgba(229, 169, 60, 0.14);
+      padding: 2px 8px;
+      border-radius: 6px;
       font-size: 0.85rem;
     }
 
     .calc-result-box {
-      background: #090D16;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: #081C12;
+      border: 1px solid rgba(229, 169, 60, 0.35);
       border-radius: 14px;
       padding: 22px;
       text-align: center;
@@ -831,7 +863,7 @@
       font-family: var(--font-mono);
       font-size: 2.2rem;
       font-weight: 800;
-      color: var(--emerald);
+      color: var(--gold);
       margin: 8px 0;
     }
 
@@ -857,20 +889,20 @@
     }
 
     .price-card.featured {
-      border-color: var(--emerald);
-      background: rgba(16, 185, 129, 0.06);
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+      border-color: var(--gold);
+      background: rgba(229, 169, 60, 0.08);
+      box-shadow: 0 12px 34px rgba(229, 169, 60, 0.16);
     }
 
     .price-card .tag {
       position: absolute;
       top: -10px;
       right: 16px;
-      background: var(--emerald);
-      color: #032216;
+      background: var(--gold);
+      color: #0C1E12;
       font-size: 0.68rem;
       font-weight: 800;
-      padding: 2px 8px;
+      padding: 2px 9px;
       border-radius: 999px;
     }
 
@@ -1124,71 +1156,53 @@
   </div>
 
   <!-- HERO SECTION -->
-  <section class="hero">
+  <section class="hero" id="simulator">
     <div class="container hero-grid">
       <div>
         <div class="badge">
           <span class="badge-pulse"></span>
-          <span id="heroBadge">FIELD-PROVEN OFFLINE PEN DEFENSE</span>
+          <span id="heroBadge">NG Starting in Gombe State, Nigeria</span>
         </div>
         <h1 id="heroH1">
           The night watch, <br>
-          <span class="gradient-text">automated &amp; offline.</span>
+          <span class="hero-italic">finally automated.</span>
         </h1>
         <p class="lead" id="heroLead">
-          Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
+          AgriSense Sentinel connects Northern Nigerian poultry and livestock farms to continuous, offline environmental protection. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
         </p>
 
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a class="btn btn-primary" href="#simulator">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            Test Live Telemetry Simulator
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a class="btn btn-gold" href="#simulator">
+            <span>Test Live Simulator</span>
+            <span style="font-weight:800; font-size:1.15rem; line-height:1;">&rsaquo;</span>
           </a>
-          <button class="btn btn-outline" onclick="openModal()">
-            Request Field Kit
+          <button class="btn btn-pill-dark" onclick="openModal()">
+            Order Sentinel Kit
           </button>
-        </div>
-
-        <div class="hero-metrics">
-          <div class="metric-box">
-            <h4>72 Hours</h4>
-            <p>Full battery reserve through dust storms &amp; heavy Sahel overcast</p>
-          </div>
-          <div class="metric-box">
-            <h4>&lt; 1.2s</h4>
-            <p>Edge alert response time with zero dependence on cloud servers</p>
-          </div>
-          <div class="metric-box">
-            <h4>₦350,000+</h4>
-            <p>Average flock loss prevented per avoided night ventilation stall</p>
-          </div>
         </div>
       </div>
 
-      <!-- PHOTO + LIVE SIMULATOR -->
-      <div class="hero-device-wrapper">
-        <!-- Real Poultry Pen Photography -->
-        <div class="real-photo-banner">
+      <!-- UNIFIED TRASHGO-STYLE SHOWCASE CARD -->
+      <div class="integrated-preview-card" id="simCard">
+        <!-- Photo Banner with embedded location tag -->
+        <div class="card-media-head">
           <img src="./assets/hero_poultry.jpg" alt="Commercial Poultry Farm in Operation">
-          <div class="real-photo-tag">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-            <span>Active Pen Monitoring · Gombe Corridor</span>
+          <div class="media-location-tag">
+            <span>📍 Active Pen Monitoring · Dadinkowa Corridor</span>
           </div>
         </div>
 
-        <!-- SIMULATOR WIDGET -->
-        <div class="sim-card" id="simCard">
+        <!-- Telemetry & Controls Body -->
+        <div class="card-telemetry-body">
           <div class="sim-header">
             <div style="display:flex; align-items:center; gap:10px;">
               <span class="badge-pulse" id="liveDot"></span>
               <div>
-                <strong style="font-size:0.85rem; display:block;">PEN #04 — DADINKOWA CLUSTER</strong>
+                <strong style="font-size:0.86rem; display:block; color:#fff;">PEN #04 — DADINKOWA CLUSTER</strong>
                 <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">LIVE TIME: 02:14:10 AM</span>
               </div>
             </div>
-            <span class="badge" id="simStatusBadge" style="font-size:0.72rem; padding:3px 9px;">
+            <span class="badge" id="simStatusBadge" style="font-size:0.72rem; padding:3px 10px;">
               STATUS: NOMINAL
             </span>
           </div>
@@ -1202,63 +1216,79 @@
 
             <div class="reading-card" id="cardHum">
               <span class="label">Humidity</span>
-              <div class="value"><span id="valHum">68</span><span class="unit">%</span></div>
-              <span class="thresh">Limit: &gt;75%</span>
+              <div class="value"><span id="valHum">64.0</span><span class="unit">%</span></div>
+              <span class="thresh">Limit: &gt;75.0%</span>
             </div>
 
-            <div class="reading-card" id="cardAmm">
+            <div class="reading-card" id="cardAmmonia">
               <span class="label">Ammonia (NH₃)</span>
-              <div class="value"><span id="valAmm">14</span><span class="unit">ppm</span></div>
-              <span class="thresh">Limit: &gt;25 ppm</span>
+              <div class="value"><span id="valAmmonia">14.2</span><span class="unit">ppm</span></div>
+              <span class="thresh">Limit: &gt;25.0 ppm</span>
             </div>
           </div>
 
-          <div class="slider-group">
-            <div class="slider-row">
+          <div class="sim-controls">
+            <div class="control-row">
               <label>
                 <span>Simulate Pen Temperature</span>
-                <span class="val-display" id="sliderTempVal">29.2 °C</span>
+                <strong id="lblTemp">29.2°C</strong>
               </label>
-              <input type="range" id="sliderTemp" min="20" max="42" step="0.5" value="29.2">
+              <input type="range" id="sliderTemp" min="20" max="44" step="0.2" value="29.2" oninput="updateSimulation()">
             </div>
 
-            <div class="slider-row">
+            <div class="control-row">
               <label>
                 <span>Simulate Ammonia Gas (NH₃)</span>
-                <span class="val-display" id="sliderAmmVal">14 ppm</span>
+                <strong id="lblAmmonia">14.2 ppm</strong>
               </label>
-              <input type="range" id="sliderAmm" min="5" max="45" step="1" value="14">
+              <input type="range" id="sliderAmmonia" min="0" max="55" step="0.5" value="14.2" oninput="updateSimulation()">
             </div>
           </div>
 
-          <div class="alert-banner" id="alertBanner">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
-            <div style="flex-grow:1;">
-              <strong id="alertTitle" style="display:block; font-size:0.82rem;">Continuous Monitoring Active</strong>
-              <span id="alertDesc" style="font-size:0.75rem; opacity:0.85;">All micro-climate thresholds within safe limits.</span>
+          <div class="sim-alert-box" id="alertBox">
+            <div class="alert-status">
+              <span class="alert-icon" id="alertIcon">🛡️</span>
+              <div>
+                <strong id="alertTitle">Continuous Edge Monitoring Active</strong>
+                <p id="alertDesc">All micro-climate thresholds within safe limits. On-site 110dB siren disarmed.</p>
+              </div>
             </div>
-            <button id="sirenBtn" onclick="toggleAudioMute()" style="background:rgba(255,255,255,0.1); border:none; padding:5px 9px; border-radius:6px; color:#fff; cursor:pointer; font-size:0.72rem; font-family:var(--font-mono);">
+            <button class="btn-siren-test" id="btnSirenTest" onclick="toggleAudioTest()">
               🔊 Unmute Siren
             </button>
           </div>
 
-          <div class="phone-preview-modal" id="phoneAlert">
-            <div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:6px; display:flex; justify-content:space-between;">
-              <span>MTN NIGERIA · GSM CELLULAR SMS</span>
-              <span>JUST NOW</span>
+          <div class="sim-sms-preview" id="smsPreview" style="display: none;">
+            <div class="sms-sender">
+              <span>AGRISENSE 2G GSM SMS DISPATCH</span>
+              <span>NETWORK: MTN-NG</span>
             </div>
             <div class="sms-bubble" id="smsText">
               🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Ammonia reading reached 32 ppm! 110dB Strobe Siren triggered on-site. Check ventilation immediately!
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <div class="sim-actions">
-            <button onclick="setSimState(28, 12, 'normal')">🌱 Normal Night</button>
-            <button onclick="setSimState(36, 18, 'heat')">🔥 Heat Stress</button>
-            <button onclick="setSimState(31, 33, 'ammonia')" class="active-spike">⚠️ 2:00 AM Ammonia Build-up</button>
-          </div>
+  <!-- TRASHGO-STYLE GOLDEN STATS RIBBON -->
+  <section class="gold-stats-ribbon">
+    <div class="container">
+      <div class="gold-stats-grid">
+        <div class="gold-stat-item">
+          <h3>72 Hours</h3>
+          <p>Full Battery Reserve Through Dust Storms &amp; Heavy Sahel Overcast</p>
+        </div>
+        <div class="gold-stat-divider"></div>
+        <div class="gold-stat-item">
+          <h3>&lt; 1.2s</h3>
+          <p>Edge Alert Response Time with Zero Dependence on Cloud Servers</p>
+        </div>
+        <div class="gold-stat-divider"></div>
+        <div class="gold-stat-item">
+          <h3>₦350,000+</h3>
+          <p>Average Flock Loss Prevented per Avoided Night Ventilation Stall</p>
         </div>
       </div>
     </div>
