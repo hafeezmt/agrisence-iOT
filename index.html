@@ -13,16 +13,14 @@
   
   <style>
     :root {
-      --bg: #06170E;             /* Deep lush forest green like TrashGo */
-      --bg-surface: #0B2216;     /* Elevated forest surface */
-      --bg-card: rgba(11, 35, 23, 0.85);
-      --bg-card-hover: rgba(16, 48, 32, 0.95);
+      --bg: #070B14;
+      --bg-surface: #0E1626;
+      --bg-card: rgba(14, 22, 38, 0.75);
+      --bg-card-hover: rgba(20, 32, 54, 0.9);
       --border: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(229, 169, 60, 0.35);
-      --gold: #E5A93C;           /* TrashGo warm golden amber */
-      --gold-hover: #D4962B;
-      --gold-text: #0C1E12;
+      --border-glow: rgba(16, 185, 129, 0.35);
       --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.4);
       --emerald-dark: #064E3B;
       --crimson: #EF4444;
       --crimson-glow: rgba(239, 68, 68, 0.5);
@@ -30,7 +28,6 @@
       --text-muted: #94A3B8;
       --text-dim: #64748B;
       --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-serif: 'Fraunces', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -264,44 +261,44 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 13px 28px;
-      border-radius: 9999px;
+      padding: 12px 24px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
       text-decoration: none;
       font-family: var(--font-main);
       border: 1px solid transparent;
     }
 
-    .btn-gold {
-      background: var(--gold);
-      color: var(--gold-text);
-      box-shadow: 0 4px 20px rgba(229, 169, 60, 0.38);
+    .btn-primary {
+      background: var(--emerald);
+      color: #032216;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
     }
 
-    .btn-gold:hover {
-      background: var(--gold-hover);
+    .btn-primary:hover {
+      background: #059669;
       transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(229, 169, 60, 0.55);
+      box-shadow: 0 8px 28px rgba(16, 185, 129, 0.55);
     }
 
-    .btn-pill-dark {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       color: #fff;
     }
 
-    .btn-pill-dark:hover {
-      background: rgba(255, 255, 255, 0.12);
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.28);
       transform: translateY(-2px);
     }
 
     /* HERO SECTION */
     .hero {
-      padding: 95px 0 35px;
+      padding: 95px 0 45px;
       position: relative;
     }
 
@@ -309,133 +306,121 @@
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
       gap: 46px;
-      align-items: center;
+      align-items: flex-start;
     }
 
     .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.7rem, 4.4vw, 3.8rem);
-      font-weight: 700;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
+      font-family: var(--font-main);
+      font-size: clamp(2.6rem, 4.4vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
       margin: 18px 0;
       color: #FFFFFF;
     }
 
-    .hero h1 .hero-italic {
-      font-family: var(--font-serif);
-      font-style: italic;
-      color: var(--gold);
+    .gradient-text {
+      color: var(--emerald);
+      background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       display: inline-block;
     }
 
     .hero p.lead {
-      font-size: 1.06rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
       max-width: 520px;
       line-height: 1.65;
       margin-bottom: 28px;
     }
 
-    /* TRASHGO-STYLE GOLDEN STATS RIBBON */
-    .gold-stats-ribbon {
-      background: var(--gold);
-      color: var(--gold-text);
-      padding: 30px 0;
-      margin-top: 45px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+      padding-top: 26px;
+      border-top: 1px solid var(--border);
     }
 
-    .gold-stats-grid {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .gold-stat-item {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .gold-stat-item h3 {
-      font-size: 2.1rem;
+    .metric-box h4 {
+      font-size: 1.55rem;
       font-weight: 800;
-      font-family: var(--font-serif);
-      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 4px;
       letter-spacing: -0.02em;
-      color: #0C1E12;
     }
 
-    .gold-stat-item p {
-      font-size: 0.84rem;
-      font-weight: 600;
-      opacity: 0.85;
-      margin-top: 4px;
+    .metric-box p {
+      font-size: 0.76rem;
+      color: var(--text-dim);
       line-height: 1.4;
     }
 
-    .gold-stat-divider {
-      width: 1px;
-      height: 48px;
-      background: rgba(12, 30, 18, 0.2);
-    }
-
-    /* INTEGRATED TRASHGO-STYLE PREVIEW CARD */
-    .integrated-preview-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.75);
-      transition: all 0.3s ease;
-    }
-
-    .integrated-preview-card.hazard-active {
-      border-color: var(--crimson);
-      box-shadow: 0 0 50px var(--crimson-glow);
-    }
-
-    .card-media-head {
+    /* BIG CONTEXT REAL FIELD PHOTO BANNER */
+    .hero-device-wrapper {
       position: relative;
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
     }
 
-    .card-media-head img {
+    .real-photo-banner {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      height: 310px; /* Big context so the entire flock and deep litter pen is prominently visible! */
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      margin-bottom: 16px;
+    }
+
+    .real-photo-banner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 35%;
       display: block;
-      filter: brightness(0.9);
       transition: transform 0.4s ease;
     }
 
-    .integrated-preview-card:hover .card-media-head img {
-      transform: scale(1.02);
+    .real-photo-banner:hover img {
+      transform: scale(1.03);
     }
 
-    .media-location-tag {
+    .real-photo-tag {
       position: absolute;
-      bottom: 12px;
+      bottom: 14px;
       left: 14px;
-      background: rgba(6, 23, 14, 0.88);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(7, 11, 20, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 9999px;
-      padding: 4px 12px;
-      font-size: 0.74rem;
+      padding: 6px 14px;
+      font-size: 0.82rem;
       color: #fff;
-      font-weight: 600;
+      font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
     }
 
-    .card-telemetry-body {
-      padding: 20px 22px;
+    .real-photo-tag svg {
+      color: var(--emerald);
+    }
+
+    /* SIMULATOR WIDGET */
+    .sim-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .sim-card.hazard-active {
+      border-color: var(--crimson);
+      box-shadow: 0 0 50px var(--crimson-glow);
     }
 
     .sim-header {
@@ -538,9 +523,9 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: var(--gold);
+      background: var(--emerald);
       cursor: pointer;
-      box-shadow: 0 0 12px rgba(229, 169, 60, 0.55);
+      box-shadow: 0 0 12px var(--emerald-glow);
       border: 2px solid #fff;
     }
 
@@ -622,9 +607,9 @@
     }
 
     .section-head h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.95rem, 3.2vw, 2.5rem);
-      font-weight: 700;
+      font-family: var(--font-main);
+      font-size: clamp(1.85rem, 3vw, 2.4rem);
+      font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 12px;
       color: #FFFFFF;
@@ -844,16 +829,16 @@
 
     .calc-input-group .value-pill {
       font-family: var(--font-mono);
-      color: var(--gold);
-      background: rgba(229, 169, 60, 0.14);
+      color: var(--emerald);
+      background: rgba(16, 185, 129, 0.12);
       padding: 2px 8px;
       border-radius: 6px;
       font-size: 0.85rem;
     }
 
     .calc-result-box {
-      background: #081C12;
-      border: 1px solid rgba(229, 169, 60, 0.35);
+      background: #090D16;
+      border: 1px solid rgba(16, 185, 129, 0.35);
       border-radius: 14px;
       padding: 22px;
       text-align: center;
@@ -863,7 +848,7 @@
       font-family: var(--font-mono);
       font-size: 2.2rem;
       font-weight: 800;
-      color: var(--gold);
+      color: var(--emerald);
       margin: 8px 0;
     }
 
@@ -889,17 +874,17 @@
     }
 
     .price-card.featured {
-      border-color: var(--gold);
-      background: rgba(229, 169, 60, 0.08);
-      box-shadow: 0 12px 34px rgba(229, 169, 60, 0.16);
+      border-color: var(--emerald);
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 12px 34px rgba(16, 185, 129, 0.2);
     }
 
     .price-card .tag {
       position: absolute;
       top: -10px;
       right: 16px;
-      background: var(--gold);
-      color: #0C1E12;
+      background: var(--emerald);
+      color: #032216;
       font-size: 0.68rem;
       font-weight: 800;
       padding: 2px 9px;
@@ -1161,45 +1146,63 @@
       <div>
         <div class="badge">
           <span class="badge-pulse"></span>
-          <span id="heroBadge">NG Starting in Gombe State, Nigeria</span>
+          <span id="heroBadge">FIELD-PROVEN OFFLINE PEN DEFENSE</span>
         </div>
         <h1 id="heroH1">
           The night watch, <br>
-          <span class="hero-italic">finally automated.</span>
+          <span class="gradient-text">automated &amp; offline.</span>
         </h1>
         <p class="lead" id="heroLead">
-          AgriSense Sentinel connects Northern Nigerian poultry and livestock farms to continuous, offline environmental protection. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
+          Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
         </p>
 
-        <div style="display:flex; gap:14px; flex-wrap:wrap;">
-          <a class="btn btn-gold" href="#simulator">
-            <span>Test Live Simulator</span>
-            <span style="font-weight:800; font-size:1.15rem; line-height:1;">&rsaquo;</span>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="#simulator">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Test Live Telemetry Simulator
           </a>
-          <button class="btn btn-pill-dark" onclick="openModal()">
-            Order Sentinel Kit
+          <button class="btn btn-outline" onclick="openModal()">
+            Request Field Kit
           </button>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric-box">
+            <h4>72 Hours</h4>
+            <p>Full battery reserve through dust storms &amp; heavy Sahel overcast</p>
+          </div>
+          <div class="metric-box">
+            <h4>&lt; 1.2s</h4>
+            <p>Edge alert response time with zero dependence on cloud servers</p>
+          </div>
+          <div class="metric-box">
+            <h4>₦350,000+</h4>
+            <p>Average flock loss prevented per avoided night ventilation stall</p>
+          </div>
         </div>
       </div>
 
-      <!-- UNIFIED TRASHGO-STYLE SHOWCASE CARD -->
-      <div class="integrated-preview-card" id="simCard">
-        <!-- Photo Banner with embedded location tag -->
-        <div class="card-media-head">
-          <img src="./assets/hero_poultry.jpg" alt="Commercial Poultry Farm in Operation">
-          <div class="media-location-tag">
-            <span>📍 Active Pen Monitoring · Dadinkowa Corridor</span>
+      <!-- PHOTO BANNER + LIVE SIMULATOR IN BIG CONTEXT -->
+      <div class="hero-device-wrapper">
+        <!-- Big Context Poultry Pen Photography -->
+        <div class="real-photo-banner">
+          <img src="./assets/hero_poultry.jpg" alt="Active Commercial Poultry Pen in Gombe Corridor">
+          <div class="real-photo-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <span>Active Pen Monitoring · Gombe Corridor</span>
           </div>
         </div>
 
-        <!-- Telemetry & Controls Body -->
-        <div class="card-telemetry-body">
+        <!-- SIMULATOR WIDGET -->
+        <div class="sim-card" id="simCard">
           <div class="sim-header">
             <div style="display:flex; align-items:center; gap:10px;">
               <span class="badge-pulse" id="liveDot"></span>
               <div>
                 <strong style="font-size:0.86rem; display:block; color:#fff;">PEN #04 — DADINKOWA CLUSTER</strong>
-                <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">LIVE TIME: 02:14:10 AM</span>
+                <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">LIVE TIME: 09:02:23 (WAT)</span>
               </div>
             </div>
             <span class="badge" id="simStatusBadge" style="font-size:0.72rem; padding:3px 10px;">
@@ -1210,20 +1213,20 @@
           <div class="sim-readings">
             <div class="reading-card" id="cardTemp">
               <span class="label">Temperature</span>
-              <div class="value"><span id="valTemp">29.2</span><span class="unit">°C</span></div>
+              <div class="value"><span id="valTemp">29.0</span><span class="unit">°C</span></div>
               <span class="thresh">Limit: &gt;32.0°C</span>
             </div>
 
             <div class="reading-card" id="cardHum">
               <span class="label">Humidity</span>
-              <div class="value"><span id="valHum">64.0</span><span class="unit">%</span></div>
-              <span class="thresh">Limit: &gt;75.0%</span>
+              <div class="value"><span id="valHum">64</span><span class="unit">%</span></div>
+              <span class="thresh">Limit: &gt;75%</span>
             </div>
 
             <div class="reading-card" id="cardAmmonia">
               <span class="label">Ammonia (NH₃)</span>
-              <div class="value"><span id="valAmmonia">14.2</span><span class="unit">ppm</span></div>
-              <span class="thresh">Limit: &gt;25.0 ppm</span>
+              <div class="value"><span id="valAmmonia">14</span><span class="unit">ppm</span></div>
+              <span class="thresh">Limit: &gt;25 ppm</span>
             </div>
           </div>
 
@@ -1231,17 +1234,17 @@
             <div class="control-row">
               <label>
                 <span>Simulate Pen Temperature</span>
-                <strong id="lblTemp">29.2°C</strong>
+                <strong id="lblTemp">29.0°C</strong>
               </label>
-              <input type="range" id="sliderTemp" min="20" max="44" step="0.2" value="29.2" oninput="updateSimulation()">
+              <input type="range" id="sliderTemp" min="20" max="44" step="0.2" value="29.0" oninput="updateSimulation()">
             </div>
 
             <div class="control-row">
               <label>
                 <span>Simulate Ammonia Gas (NH₃)</span>
-                <strong id="lblAmmonia">14.2 ppm</strong>
+                <strong id="lblAmmonia">14 ppm</strong>
               </label>
-              <input type="range" id="sliderAmmonia" min="0" max="55" step="0.5" value="14.2" oninput="updateSimulation()">
+              <input type="range" id="sliderAmmonia" min="0" max="55" step="0.5" value="14.0" oninput="updateSimulation()">
             </div>
           </div>
 
@@ -1250,7 +1253,7 @@
               <span class="alert-icon" id="alertIcon">🛡️</span>
               <div>
                 <strong id="alertTitle">Continuous Edge Monitoring Active</strong>
-                <p id="alertDesc">All micro-climate thresholds within safe limits. On-site 110dB siren disarmed.</p>
+                <p id="alertDesc">All micro-climate thresholds within safe limits.</p>
               </div>
             </div>
             <button class="btn-siren-test" id="btnSirenTest" onclick="toggleAudioTest()">
@@ -1267,28 +1270,12 @@
               🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Ammonia reading reached 32 ppm! 110dB Strobe Siren triggered on-site. Check ventilation immediately!
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- TRASHGO-STYLE GOLDEN STATS RIBBON -->
-  <section class="gold-stats-ribbon">
-    <div class="container">
-      <div class="gold-stats-grid">
-        <div class="gold-stat-item">
-          <h3>72 Hours</h3>
-          <p>Full Battery Reserve Through Dust Storms &amp; Heavy Sahel Overcast</p>
-        </div>
-        <div class="gold-stat-divider"></div>
-        <div class="gold-stat-item">
-          <h3>&lt; 1.2s</h3>
-          <p>Edge Alert Response Time with Zero Dependence on Cloud Servers</p>
-        </div>
-        <div class="gold-stat-divider"></div>
-        <div class="gold-stat-item">
-          <h3>₦350,000+</h3>
-          <p>Average Flock Loss Prevented per Avoided Night Ventilation Stall</p>
+          <div class="sim-actions">
+            <button onclick="setSimState(28, 12, 'normal')">🌱 Normal Night</button>
+            <button onclick="setSimState(36, 18, 'heat')">🔥 Heat Stress</button>
+            <button onclick="setSimState(31, 33, 'ammonia')" class="active-spike">⚠️ 2:00 AM Ammonia Build-up</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1539,7 +1526,7 @@
               Priority Local Field Technician Support
             </li>
           </ul>
-          <button class="btn btn-gold" onclick="openModal('Cooperative Bulk')">Get Co-op Pricing</button>
+          <button class="btn btn-primary" onclick="openModal('Cooperative Bulk')">Get Co-op Pricing</button>
         </div>
 
         <!-- Tier 3 -->
@@ -1693,9 +1680,9 @@
     let currentLang = 'en';
     const translations = {
       en: {
-        badge: 'NG Starting in Gombe State, Nigeria',
-        heroTitle: 'The night watch, <br><span class="hero-italic">finally automated.</span>',
-        heroLead: 'AgriSense Sentinel connects Northern Nigerian poultry and livestock farms to continuous, offline environmental protection. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.',
+        badge: 'FIELD-PROVEN OFFLINE PEN DEFENSE',
+        heroTitle: 'The night watch, <br><span class="gradient-text">automated &amp; offline.</span>',
+        heroLead: 'Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.',
         orderBtn: 'ORDER KIT',
         chatBtn: 'CHAT ON WHATSAPP',
         navTelemetry: 'TELEMETRY',
@@ -1705,9 +1692,9 @@
         navPricing: 'PRICING'
       },
       ha: {
-        badge: 'NG An Fara a Jihar Gombe, Najeriya',
-        heroTitle: 'Tsaron dare na gidan kaji, <br><span class="hero-italic">yanzu an sarrafa shi.</span>',
-        heroLead: 'AgriSense Sentinel tana kare gidajen kaji da dabbobi a Arewacin Najeriya dare da rana ba tare da intanet ba. Tana buga karrarawa mai karfin 110dB da aika sakon SMS nan take idan zafi ko ammonia ya zama barazana.',
+        badge: 'TSARON DARE NA GIDAN KAJI DA DABBOBI',
+        heroTitle: 'Tsaron dare na gidan kaji, <br><span class="gradient-text">mai aiki ba tare da intanet ba.</span>',
+        heroLead: 'Na\'urar kula da zafi, danshi, da iskar ammonia mai guba da aka kera ta musamman domin gidajen kaji da dabbobi a Arewacin Najeriya. Tana aiki da hasken rana ba tare da wutar NEPA ko intanet ba. Tana buga karrarawa mai karfin 110dB da aika sakon SMS nan take idan matsala ta taso da tsakar dare.',
         orderBtn: 'YI ODA YANZU',
         chatBtn: 'MAGANA A WHATSAPP',
         navTelemetry: 'YANAYI',
