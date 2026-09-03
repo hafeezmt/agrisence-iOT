@@ -1,493 +1,2089 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgriSense Sentinel — The night watch, automated</title>
-<meta name="description" content="AgriSense Sentinel is a solar-powered, offline sensor that watches your pen through the night and calls your phone the moment conditions turn dangerous.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:        #12162A;
-    --ink-soft:   #1D2340;
-    --paper:      #EDE3C6;
-    --paper-hi:   #F6F0DC;
-    --amber:      #F2A340;
-    --amber-deep: #C97A1E;
-    --clay:       #B5602C;
-    --sorghum:    #4E6B48;
-    --line:       rgba(18,22,42,0.14);
-    --line-dark:  rgba(246,240,220,0.18);
-    --display:    'Space Grotesk', sans-serif;
-    --body:       'IBM Plex Sans', sans-serif;
-    --max: 1120px;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSense Sentinel — Autonomous Offline Pen Monitoring & Alert System</title>
+  <meta name="description" content="Industrial-grade, solar-powered, offline IoT sentinel for poultry and livestock pens in Northern Nigeria. Instant 110dB siren and GSM SMS alerts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #07090E;
+      --bg-surface: #0E131F;
+      --bg-card: rgba(18, 24, 38, 0.7);
+      --bg-card-hover: rgba(26, 35, 56, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(16, 185, 129, 0.25);
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.4);
+      --emerald-dark: #065F46;
+      --amber: #F59E0B;
+      --amber-glow: rgba(245, 158, 11, 0.35);
+      --crimson: #EF4444;
+      --crimson-glow: rgba(239, 68, 68, 0.45);
+      --cyan: #06B6D4;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
-  }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--body);
-    font-size:17px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 60%, rgba(6, 182, 212, 0.08), transparent),
+        linear-gradient(to bottom, #07090E, #0A0E17 100%);
+      background-attachment: fixed;
+    }
 
-  h1,h2,h3{
-    font-family:var(--display);
-    margin:0;
-    line-height:1.05;
-    letter-spacing:-0.01em;
-    color:inherit;
-  }
+    /* Subtle grid background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      pointer-events: none;
+      z-index: -1;
+    }
 
-  a{color:inherit;}
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--amber);
-    outline-offset:3px;
-  }
+    /* Container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+    /* Buttons & Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
 
-  /* ---------- NAV ---------- */
-  header.site{
-    position:sticky; top:0; z-index:50;
-    background:rgba(18,22,42,0.92);
-    backdrop-filter:blur(6px);
-    color:var(--paper-hi);
-    border-bottom:1px solid var(--line-dark);
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 28px; max-width:var(--max); margin:0 auto;
-  }
-  .brand{display:flex; flex-direction:column; gap:0;}
-  .brand .name{font-family:var(--display); font-weight:700; font-size:1.25rem; letter-spacing:-0.01em;}
-  .brand .sub{font-size:0.72rem; color:var(--amber); font-weight:500;}
-  nav.links{display:flex; gap:28px; font-size:0.95rem;}
-  nav.links a{text-decoration:none; color:var(--paper-hi); opacity:0.82; transition:opacity .15s;}
-  nav.links a:hover{opacity:1;}
-  .nav-cta{
-    background:var(--amber); color:var(--ink); font-weight:600; font-size:0.9rem;
-    padding:9px 18px; border-radius:3px; text-decoration:none; white-space:nowrap;
-  }
-  .nav-mobile-hide{display:flex;}
-  @media (max-width:760px){ .nav-mobile-hide{display:none;} }
+    .badge-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald);
+      animation: blink 1.8s infinite;
+    }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    background:
-      radial-gradient(ellipse 900px 500px at 78% -10%, rgba(242,163,64,0.14), transparent 60%),
-      linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
-    color:var(--paper-hi);
-    padding:96px 28px 120px;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero-grid{
-    max-width:var(--max); margin:0 auto;
-    display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;
-  }
-  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} .hero{padding:64px 22px 80px;} }
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.85); }
+    }
 
-  .eyebrow{
-    font-size:0.95rem; color:var(--amber); font-weight:500; margin-bottom:18px;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 5.2vw, 3.7rem);
-    font-weight:600;
-    max-width:12ch;
-  }
-  .hero p.lede{
-    margin-top:22px; font-size:1.15rem; max-width:46ch; color:rgba(246,240,220,0.82);
-  }
-  .hero-ctas{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;}
-  .btn{
-    display:inline-block; padding:13px 24px; border-radius:3px; font-weight:600;
-    text-decoration:none; font-size:0.98rem; border:1px solid transparent; cursor:pointer;
-    font-family:var(--body);
-  }
-  .btn-primary{background:var(--amber); color:var(--ink);}
-  .btn-primary:hover{background:#ffb75a;}
-  .btn-ghost{border-color:var(--line-dark); color:var(--paper-hi);}
-  .btn-ghost:hover{border-color:var(--amber); color:var(--amber);}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      border: 1px solid transparent;
+      font-family: var(--font-main);
+    }
 
-  /* sentinel graphic */
-  .sentinel-visual{position:relative; display:flex; align-items:center; justify-content:center;}
-  .sentinel-visual svg{width:100%; max-width:340px; height:auto;}
-  .pulse-ring{transform-origin:170px 170px; animation:pulse 2.8s ease-out infinite;}
-  .pulse-ring.r2{animation-delay:0.9s;}
-  .pulse-ring.r3{animation-delay:1.8s;}
-  @keyframes pulse{
-    0%{opacity:0.55; transform:scale(0.55);}
-    100%{opacity:0; transform:scale(1.15);}
-  }
+    .btn-primary {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #042217;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-  /* ---------- SECTION SHELL ---------- */
-  section{padding:96px 28px;}
-  @media (max-width:760px){ section{padding:64px 22px;} }
-  .section-head{max-width:640px; margin:0 auto 52px;}
-  .section-head h2{font-size:clamp(1.7rem, 3.4vw, 2.3rem); font-weight:600;}
-  .section-head p{margin-top:14px; font-size:1.05rem; color:rgba(18,22,42,0.72); max-width:52ch;}
-  .kicker{font-size:0.92rem; color:var(--clay); font-weight:600; margin-bottom:12px;}
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(16, 185, 129, 0.5);
+      background: linear-gradient(135deg, #34D399, #10B981);
+    }
 
-  /* ---------- PROBLEM (ledger) ---------- */
-  .problem{background:var(--paper);}
-  .ledger{
-    max-width:var(--max); margin:0 auto;
-    display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
-    border-top:1px solid var(--line); border-left:1px solid var(--line);
-  }
-  @media (max-width:760px){ .ledger{grid-template-columns:1fr;} }
-  .ledger-cell{
-    border-right:1px solid var(--line); border-bottom:1px solid var(--line);
-    padding:34px 28px;
-  }
-  .ledger-cell .figure{
-    font-family:var(--display); font-size:2.6rem; font-weight:700; color:var(--clay);
-    line-height:1;
-  }
-  .ledger-cell p{margin:14px 0 0; font-size:0.98rem; color:rgba(18,22,42,0.75);}
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      backdrop-filter: blur(8px);
+    }
 
-  .field-note{
-    max-width:60ch; margin:54px auto 0;
-    border-left:3px solid var(--amber-deep);
-    padding:6px 0 6px 24px;
-    font-size:1.08rem; color:rgba(18,22,42,0.82);
-  }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
 
-  /* ---------- SOLUTION / DIAGRAM ---------- */
-  .solution{background:var(--paper-hi); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .solution-grid{
-    max-width:var(--max); margin:0 auto; display:grid;
-    grid-template-columns:0.95fr 1.05fr; gap:64px; align-items:center;
-  }
-  @media (max-width:860px){ .solution-grid{grid-template-columns:1fr;} }
-  .device-diagram{position:relative;}
-  .device-diagram svg{width:100%; height:auto; max-width:320px; margin:0 auto; display:block;}
-  .callout-list{list-style:none; margin:28px 0 0; padding:0; display:grid; gap:16px;}
-  .callout-list li{display:flex; gap:14px; align-items:flex-start; font-size:0.98rem;}
-  .callout-list .dot{
-    width:9px; height:9px; border-radius:50%; background:var(--amber-deep);
-    margin-top:7px; flex-shrink:0;
-  }
-  .solution-copy h2{font-size:clamp(1.7rem,3.2vw,2.2rem); font-weight:600;}
-  .solution-copy p.lede{font-size:1.05rem; margin-top:16px; color:rgba(18,22,42,0.75); max-width:48ch;}
+    .btn-hazard {
+      background: linear-gradient(135deg, #EF4444, #B91C1C);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    }
 
-  /* ---------- HOW IT WORKS (real sequence) ---------- */
-  .how{background:var(--paper);}
-  .steps{
-    max-width:var(--max); margin:0 auto; display:grid;
-    grid-template-columns:repeat(3,1fr); gap:0; counter-reset:step;
-    border-top:2px solid var(--ink);
-  }
-  @media (max-width:760px){ .steps{grid-template-columns:1fr;} }
-  .step{
-    padding:32px 26px 32px 0; border-right:1px solid var(--line);
-    counter-increment:step; position:relative;
-  }
-  .step:last-child{border-right:none;}
-  @media (max-width:760px){ .step{border-right:none; border-bottom:1px solid var(--line); padding:28px 0;} }
-  .step::before{
-    content:counter(step, decimal-leading-zero);
-    font-family:var(--display); font-size:0.85rem; color:var(--amber-deep); font-weight:600;
-    display:block; margin-bottom:14px;
-  }
-  .step h3{font-size:1.2rem; font-weight:600;}
-  .step p{margin-top:10px; font-size:0.98rem; color:rgba(18,22,42,0.72);}
+    /* Header Nav */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
 
-  /* ---------- SPEC SHEET ---------- */
-  .specs{background:var(--ink); color:var(--paper-hi);}
-  .specs .section-head p{color:rgba(246,240,220,0.72);}
-  .specs .section-head h2{color:var(--paper-hi);}
-  .spec-table{max-width:var(--max); margin:0 auto; border-top:1px solid var(--line-dark);}
-  .spec-row{
-    display:grid; grid-template-columns:220px 1fr; gap:24px;
-    padding:18px 0; border-bottom:1px solid var(--line-dark);
-    font-size:0.98rem;
-  }
-  @media (max-width:600px){ .spec-row{grid-template-columns:1fr; gap:6px;} }
-  .spec-row .k{font-family:var(--display); color:var(--amber); font-weight:500; font-size:0.92rem;}
-  .spec-row .v{color:rgba(246,240,220,0.88);}
-  .spec-row .v code{
-    font-family:'Space Grotesk', monospace; background:rgba(246,240,220,0.08);
-    padding:2px 7px; border-radius:2px; font-size:0.88em;
-  }
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  /* ---------- MODEL / PRICING ---------- */
-  .model{background:var(--paper-hi);}
-  .model-cols{
-    max-width:var(--max); margin:0 auto; display:grid;
-    grid-template-columns:repeat(3,1fr); gap:28px;
-  }
-  @media (max-width:860px){ .model-cols{grid-template-columns:1fr;} }
-  .model-card{
-    border:1px solid var(--line); background:var(--paper); padding:28px 24px;
-    border-radius:2px;
-  }
-  .model-card h3{font-size:1.05rem; font-weight:600;}
-  .model-card .tag{font-size:0.82rem; color:var(--sorghum); font-weight:600; margin-bottom:10px; display:block;}
-  .model-card p{margin-top:12px; font-size:0.95rem; color:rgba(18,22,42,0.75);}
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
 
-  /* ---------- TEAM ---------- */
-  .team{background:var(--paper);}
-  .team-list{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:40px;}
-  @media (max-width:760px){ .team-list{grid-template-columns:1fr;} }
-  .person{border-top:2px solid var(--ink); padding-top:20px;}
-  .person h3{font-size:1.25rem; font-weight:600;}
-  .person .role{color:var(--clay); font-weight:600; font-size:0.92rem; margin-top:4px; display:block;}
-  .person p{margin-top:14px; font-size:0.97rem; color:rgba(18,22,42,0.75); max-width:44ch;}
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #10B981, #064E3B);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    }
 
-  /* ---------- CONTACT / FOOTER ---------- */
-  footer.site{
-    background:var(--ink); color:var(--paper-hi);
-    padding:80px 28px 40px;
-  }
-  .contact-grid{
-    max-width:var(--max); margin:0 auto; display:grid;
-    grid-template-columns:1.2fr 1fr; gap:56px;
-  }
-  @media (max-width:760px){ .contact-grid{grid-template-columns:1fr; gap:40px;} }
-  footer.site h2{font-size:clamp(1.6rem,3vw,2.1rem); font-weight:600; max-width:14ch;}
-  footer.site p.lede{margin-top:16px; color:rgba(246,240,220,0.72); max-width:42ch;}
-  .contact-lines{display:grid; gap:18px; font-size:1rem;}
-  .contact-lines a{text-decoration:none; border-bottom:1px solid var(--line-dark); padding-bottom:2px;}
-  .contact-lines a:hover{border-color:var(--amber); color:var(--amber);}
-  .contact-lines .label{display:block; font-size:0.78rem; color:var(--amber); margin-bottom:4px; font-weight:500;}
-  .foot-bottom{
-    max-width:var(--max); margin:64px auto 0; padding-top:24px;
-    border-top:1px solid var(--line-dark); display:flex; justify-content:space-between;
-    flex-wrap:wrap; gap:12px; font-size:0.85rem; color:rgba(246,240,220,0.5);
-  }
-</style>
+    .logo-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo-title span {
+      color: var(--emerald);
+      font-weight: 500;
+      font-size: 0.8rem;
+      padding: 2px 6px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      display: block;
+      font-family: var(--font-mono);
+    }
+
+    nav.nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    nav.nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav.nav-links a:hover {
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin: 20px 0 22px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p.lead {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.65;
+      margin-bottom: 34px;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    .metric-box h4 {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .metric-box p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    /* Live Interactive Telemetry Simulator Widget */
+    .sim-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .sim-card.hazard-active {
+      border-color: var(--crimson);
+      box-shadow: 0 0 50px var(--crimson-glow);
+      animation: alert-flash 1s infinite alternate;
+    }
+
+    @keyframes alert-flash {
+      from { border-color: rgba(239, 68, 68, 0.6); }
+      to { border-color: rgba(239, 68, 68, 1); }
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .device-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+
+    .sim-readings {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .reading-card {
+      background: rgba(10, 14, 23, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .reading-card .label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .reading-card .value {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .reading-card .unit {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .reading-card .thresh {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 6px;
+      display: block;
+    }
+
+    .reading-card.danger {
+      border-color: var(--crimson);
+      background: rgba(239, 68, 68, 0.08);
+    }
+    .reading-card.danger .value { color: var(--crimson); }
+    .reading-card.danger .label { color: var(--crimson); }
+
+    /* Interactive Sliders */
+    .slider-group {
+      background: rgba(10, 14, 23, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .slider-row {
+      margin-bottom: 14px;
+    }
+    .slider-row:last-child { margin-bottom: 0; }
+
+    .slider-row label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .slider-row label span.val-display {
+      font-family: var(--font-mono);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--emerald);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--emerald);
+      border: 2px solid #fff;
+    }
+
+    /* Alert Strobe & Simulated SMS Box */
+    .alert-banner {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s;
+    }
+
+    .alert-banner.danger-mode {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--crimson);
+      color: #FCA5A5;
+    }
+
+    /* Simulation Control Buttons */
+    .sim-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .sim-actions button {
+      flex: 1;
+      padding: 10px;
+      font-size: 0.82rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .sim-actions button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .sim-actions button.active-spike {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--crimson);
+      color: #fff;
+    }
+
+    /* Realistic GSM SMS Phone Preview */
+    .phone-preview-modal {
+      display: none;
+      margin-top: 16px;
+      background: #020408;
+      border: 2px solid var(--crimson);
+      border-radius: 10px;
+      padding: 14px;
+      font-family: var(--font-mono);
+      box-shadow: 0 0 25px var(--crimson-glow);
+      animation: slide-up 0.3s ease-out forwards;
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .phone-preview-header {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .sms-bubble {
+      background: rgba(239, 68, 68, 0.12);
+      border-left: 3px solid var(--crimson);
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    /* Section Headers */
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 60px;
+    }
+
+    .section-head .badge {
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 3.2vw, 2.7rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Core Pillars / Architecture */
+    section.features {
+      padding: 100px 0;
+      background: rgba(14, 19, 31, 0.4);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 26px;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(16, 185, 129, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--emerald);
+      margin-bottom: 22px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+
+    /* Hardware Breakdown Section */
+    section.hardware {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .hardware-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .component-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .component-item {
+      display: flex;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .component-item:hover, .component-item.active {
+      border-color: var(--emerald);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .component-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      color: var(--emerald);
+      height: fit-content;
+      font-weight: 600;
+    }
+
+    .component-item h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .component-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Hardware Schematic Graphic */
+    .schematic-box {
+      background: #090D15;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .schematic-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 2:00 AM Crisis Scenario Comparison */
+    section.comparison {
+      padding: 90px 0;
+      background: #090D17;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .compare-card {
+      border-radius: 16px;
+      padding: 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .compare-card.bad {
+      border-top: 4px solid var(--crimson);
+    }
+
+    .compare-card.good {
+      border-top: 4px solid var(--emerald);
+      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1);
+    }
+
+    .compare-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .bad .compare-tag { color: var(--crimson); }
+    .good .compare-tag { color: var(--emerald); }
+
+    .compare-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      padding-left: 24px;
+      border-left: 2px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .t-item {
+      position: relative;
+    }
+    .t-item::before {
+      content: "";
+      position: absolute;
+      left: -29px;
+      top: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+    .good .t-item::before { background: var(--emerald); box-shadow: 0 0 8px var(--emerald); }
+    .bad .t-item::before { background: var(--crimson); }
+
+    .t-time {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .t-text {
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    .compare-result {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .result-number {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+    .bad .result-number { color: var(--crimson); }
+    .good .result-number { color: var(--emerald); }
+
+    /* ROI Calculator Section */
+    section.calculator {
+      padding: 100px 0;
+    }
+
+    .calc-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .calc-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .calc-input-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .calc-input-group .value-pill {
+      font-family: var(--font-mono);
+      color: var(--emerald);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    .calc-result-card {
+      background: #0B0F19;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 34px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.12);
+    }
+
+    .calc-result-card .label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .calc-result-card .big-num {
+      font-family: var(--font-mono);
+      font-size: 2.7rem;
+      font-weight: 800;
+      color: var(--emerald);
+      margin: 12px 0;
+      line-height: 1;
+    }
+
+    .calc-result-card p.expl {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Co-op & Pricing Section */
+    section.pricing {
+      padding: 90px 0;
+      background: #090D17;
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 36px 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s;
+    }
+
+    .price-card.featured {
+      border-color: var(--emerald);
+      box-shadow: 0 10px 35px rgba(16, 185, 129, 0.18);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.06), rgba(18, 24, 38, 0.7));
+    }
+
+    .price-card .badge-popular {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--emerald);
+      color: #042217;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .price-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .price-card .desc {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      min-height: 42px;
+    }
+
+    .price-card .price-tag {
+      font-family: var(--font-mono);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .price-card .price-tag span.term {
+      font-size: 0.85rem;
+      font-family: var(--font-main);
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .price-perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-grow: 1;
+    }
+
+    .price-perks li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-perks li svg {
+      color: var(--emerald);
+      flex-shrink: 0;
+    }
+
+    /* Founders / Team */
+    section.team {
+      padding: 90px 0;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .founder-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    .founder-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #10B981, #065F46);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: #fff;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .founder-info h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .founder-info .role {
+      font-size: 0.82rem;
+      color: var(--emerald);
+      font-weight: 600;
+      display: block;
+      margin-top: 2px;
+      font-family: var(--font-mono);
+    }
+
+    .founder-info p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.55;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background: #04060A;
+      border-top: 1px solid var(--border);
+      padding: 80px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-cta h2 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .footer-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin-bottom: 26px;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .contact-line:hover {
+      color: #fff;
+    }
+
+    .contact-line svg {
+      color: var(--emerald);
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* Modal for Field Kit Request */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #0F1422;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 520px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      background: #080B12;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--emerald);
+    }
+
+    /* Responsive */
+    @media (max-width: 990px) {
+      .hero-grid, .hardware-layout, .calc-box, .footer-grid { grid-template-columns: 1fr; }
+      .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .compare-grid, .team-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0 40px; }
+      nav.nav-links { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-metrics { grid-template-columns: 1fr; gap: 20px; }
+      .sim-readings { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="site">
-  <div class="nav">
-    <div class="brand">
-      <span class="name">AgriSense</span>
-      <span class="sub">Noma Vault · Gombe State</span>
-    </div>
-    <nav class="links nav-mobile-hide">
-      <a href="#problem">The problem</a>
-      <a href="#solution">Sentinel</a>
-      <a href="#how">How it works</a>
-      <a href="#model">Pricing</a>
-      <a href="#team">Team</a>
-    </nav>
-    <a class="nav-cta" href="#contact">Talk to us</a>
-  </div>
-</header>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="#" class="logo-block">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v8"></path>
+            <path d="m4.93 10.93 1.41 1.41"></path>
+            <path d="M2 18h2"></path>
+            <path d="M20 18h2"></path>
+            <path d="m19.07 10.93-1.41 1.41"></path>
+            <path d="M22 22H2"></path>
+            <path d="m8 22 4-10 4 10"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-title">AgriSense <span>SENTINEL</span></div>
+          <span class="logo-sub">Gombe State · Sahel Edge Tech</span>
+        </div>
+      </a>
 
-<section class="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="eyebrow">Offline-first pen monitoring</div>
-      <h1>The night watch, automated.</h1>
-      <p class="lede">AgriSense Sentinel watches your pen through the night so you don't have to. No Wi-Fi, no smartphone, no grid power — just a siren on-site and an SMS the moment heat, humidity, or ammonia cross a dangerous line.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="#contact">Get a Sentinel</a>
-        <a class="btn btn-ghost" href="#how">See how it works</a>
+      <nav class="nav-links">
+        <a href="#simulator">Live Demo</a>
+        <a href="#hardware">Hardware Spec</a>
+        <a href="#crisis">Why Offline?</a>
+        <a href="#calculator">ROI Calculator</a>
+        <a href="#coop">Pricing</a>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openModal()">
+          Request Unit
+        </button>
+        <a class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;" href="https://wa.me/2349015487928?text=Hello%20AgriSense%20Team%2C%20I%20want%20to%20inquire%20about%20the%20Sentinel%20monitoring%20system" target="_blank" rel="noopener">
+          WhatsApp Direct
+        </a>
       </div>
     </div>
-    <div class="sentinel-visual" aria-hidden="true">
-      <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
-        <circle class="pulse-ring" cx="170" cy="170" r="70" fill="none" stroke="#F2A340" stroke-width="1.5" opacity="0.5"/>
-        <circle class="pulse-ring r2" cx="170" cy="170" r="70" fill="none" stroke="#F2A340" stroke-width="1.5" opacity="0.5"/>
-        <circle class="pulse-ring r3" cx="170" cy="170" r="70" fill="none" stroke="#F2A340" stroke-width="1.5" opacity="0.5"/>
-        <rect x="128" y="140" width="84" height="100" rx="6" fill="#1D2340" stroke="#F6F0DC" stroke-opacity="0.25"/>
-        <rect x="140" y="120" width="60" height="26" rx="3" fill="#2A3158" stroke="#F2A340" stroke-opacity="0.6"/>
-        <circle cx="170" cy="133" r="5" fill="#F2A340"/>
-        <line x1="170" y1="140" x2="170" y2="120" stroke="#F6F0DC" stroke-opacity="0.3"/>
-        <rect x="145" y="165" width="50" height="14" rx="2" fill="#12162A"/>
-        <rect x="145" y="185" width="50" height="6" rx="2" fill="#12162A"/>
-        <rect x="145" y="197" width="34" height="6" rx="2" fill="#12162A"/>
-        <text x="170" y="176" text-anchor="middle" font-family="Space Grotesk" font-size="9" fill="#F2A340">31.4°C</text>
-      </svg>
-    </div>
-  </div>
-</section>
+  </header>
 
-<section class="problem" id="problem">
-  <div class="section-head">
-    <div class="kicker">Every season, without fail</div>
-    <h2>Heat and ammonia don't wait for morning.</h2>
-    <p>Pen conditions turn dangerous fastest between midnight and dawn — exactly when no one is watching. By the time a farmer wakes for the first check, the damage is often already done.</p>
-  </div>
-  <div class="ledger">
-    <div class="ledger-cell">
-      <div class="figure">30%</div>
-      <p>of a flock can be lost in a single bad season, to heat stress, humidity, and ammonia build-up inside the pen.</p>
-    </div>
-    <div class="ledger-cell">
-      <div class="figure">₦50k–₦300k</div>
-      <p>lost per incident — money that came from savings, loans, or a cooperative's shared capital.</p>
-    </div>
-    <div class="ledger-cell">
-      <div class="figure">2–3×</div>
-      <p>nightly wake-ups, walking out to the pen with a torch, just to check whether conditions are still safe.</p>
-    </div>
-  </div>
-  <p class="field-note">Monitoring systems built for commercial farms cost $500–$2,000 and assume Wi-Fi and steady grid power — two things most pens in Northern Nigeria don't have. Farmers are left to do the monitoring themselves, at 2am, by torchlight.</p>
-</section>
-
-<section class="solution" id="solution">
-  <div class="solution-grid">
-    <div class="device-diagram">
-      <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
-        <rect x="90" y="20" width="150" height="60" rx="4" fill="#2A3158" stroke="#12162A" stroke-width="2"/>
-        <line x1="100" y1="35" x2="230" y2="35" stroke="#B5602C" stroke-width="2" opacity="0.6"/>
-        <line x1="100" y1="50" x2="230" y2="50" stroke="#B5602C" stroke-width="2" opacity="0.6"/>
-        <line x1="100" y1="65" x2="230" y2="65" stroke="#B5602C" stroke-width="2" opacity="0.6"/>
-        <line x1="165" y1="80" x2="165" y2="130" stroke="#12162A" stroke-width="2"/>
-        <rect x="95" y="130" width="140" height="180" rx="8" fill="#F6F0DC" stroke="#12162A" stroke-width="2"/>
-        <rect x="112" y="150" width="106" height="34" rx="3" fill="#12162A"/>
-        <text x="165" y="172" text-anchor="middle" font-family="Space Grotesk" font-size="12" fill="#F2A340">32°C · 78%RH</text>
-        <circle cx="130" cy="205" r="10" fill="none" stroke="#4E6B48" stroke-width="2"/>
-        <circle cx="130" cy="205" r="4" fill="#4E6B48"/>
-        <circle cx="165" cy="205" r="10" fill="none" stroke="#B5602C" stroke-width="2"/>
-        <path d="M160 205 h10 M165 200 v10" stroke="#B5602C" stroke-width="2"/>
-        <rect x="192" y="196" width="26" height="18" rx="2" fill="none" stroke="#12162A" stroke-width="2"/>
-        <line x1="205" y1="196" x2="205" y2="188" stroke="#12162A" stroke-width="2"/>
-        <rect x="112" y="230" width="106" height="60" rx="3" fill="none" stroke="#12162A" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text x="165" y="264" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" fill="#12162A" opacity="0.55">SD log · SIM800L</text>
-        <rect x="60" y="330" width="220" height="10" rx="2" fill="#12162A" opacity="0.15"/>
-      </svg>
-    </div>
-    <div class="solution-copy">
-      <div class="kicker">The Sentinel</div>
-      <h2>One box. Solar power. Zero connectivity required.</h2>
-      <p class="lede">The AgriSense Sentinel mounts inside the pen and runs on sun and a small battery. It never needs your Wi-Fi, your phone, or a data plan — it just watches, and speaks up the moment something is wrong.</p>
-      <ul class="callout-list">
-        <li><span class="dot"></span><span>Reads temperature, humidity, and ammonia continuously, day and night.</span></li>
-        <li><span class="dot"></span><span>Sounds a siren on the spot the instant a threshold is crossed — no phone needed to hear it.</span></li>
-        <li><span class="dot"></span><span>Sends an SMS straight to a basic phone over MTN, Airtel, or Glo — no smartphone or app required.</span></li>
-        <li><span class="dot"></span><span>Keeps a full log on its SD card, so a bad night can be reviewed and understood afterward.</span></li>
-        <li><span class="dot"></span><span>Sealed in a weatherproof IP65 shell built for a pen, not an office.</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="how" id="how">
-  <div class="section-head">
-    <div class="kicker">From mounting to morning</div>
-    <h2>How a Sentinel earns its keep</h2>
-  </div>
-  <div class="steps">
-    <div class="step">
-      <h3>Install</h3>
-      <p>Mount the unit inside the pen. The solar panel and battery mean there's no wiring to run and no outlet to find.</p>
-    </div>
-    <div class="step">
-      <h3>Monitor</h3>
-      <p>The Sentinel reads temperature, humidity, and ammonia around the clock, comparing every reading against safe thresholds.</p>
-    </div>
-    <div class="step">
-      <h3>Alert</h3>
-      <p>The moment a reading turns dangerous, the on-site siren sounds and an SMS goes out — in time to act, not to grieve.</p>
-    </div>
-  </div>
-</section>
-
-<section class="specs" id="specs">
-  <div class="section-head">
-    <div class="kicker">Built for the pen, not the lab</div>
-    <h2>What's inside</h2>
-  </div>
-  <div class="spec-table">
-    <div class="spec-row"><div class="k">Controller</div><div class="v">ESP32 development board running <code>MicroPython</code> firmware</div></div>
-    <div class="spec-row"><div class="k">Sensing</div><div class="v">SHT31 temperature &amp; humidity sensor, plus ammonia gas sensing</div></div>
-    <div class="spec-row"><div class="k">Alerting</div><div class="v">On-site siren + SMS via <code>SIM800L</code> GSM module (MTN, Airtel, Glo)</div></div>
-    <div class="spec-row"><div class="k">Power</div><div class="v">Solar panel with charge controller, backed by a LiPo battery — no grid connection needed</div></div>
-    <div class="spec-row"><div class="k">Logging</div><div class="v">Every reading and event recorded locally to an SD card</div></div>
-    <div class="spec-row"><div class="k">Enclosure</div><div class="v">Weather-resistant <code>IP65</code>-rated housing, built for pen conditions</div></div>
-    <div class="spec-row"><div class="k">Connectivity</div><div class="v">None required — works fully offline, with no Wi-Fi or smartphone dependency</div></div>
-  </div>
-</section>
-
-<section class="model" id="model">
-  <div class="section-head">
-    <div class="kicker">Priced for how farmers actually pay</div>
-    <h2>Ways to bring a Sentinel home</h2>
-    <p>Sold through agricultural cooperatives and agro-dealers you already trust — not as a one-off gadget sale.</p>
-  </div>
-  <div class="model-cols">
-    <div class="model-card">
-      <span class="tag">Own it outright</span>
-      <h3>Hardware + subscription</h3>
-      <p>Buy the Sentinel unit once, then keep it monitoring with a small monthly subscription that covers SMS delivery and support.</p>
-    </div>
-    <div class="model-card">
-      <span class="tag">Buy together</span>
-      <h3>Cooperative bulk pricing</h3>
-      <p>Cooperatives ordering for their members unlock a discounted per-unit price, with delivery and setup coordinated through the co-op.</p>
-    </div>
-    <div class="model-card">
-      <span class="tag">Pay as you go</span>
-      <h3>Lease-to-own via mobile money</h3>
-      <p>Spread the cost over time through mobile money, and own the unit outright once the lease is paid off.</p>
-    </div>
-  </div>
-</section>
-
-<section class="team" id="team">
-  <div class="section-head">
-    <div class="kicker">Who's building it</div>
-    <h2>Founded in Gombe, for farmers everywhere in the region</h2>
-  </div>
-  <div class="team-list">
-    <div class="person">
-      <h3>Abduljabbar Bello Shariff</h3>
-      <span class="role">CEO &amp; Co-Founder</span>
-      <p>Known as Jb. Comes from a background in cybersecurity and physics, with over five years managing IT operations, and now leads AgriSense's product and technology strategy.</p>
-    </div>
-    <div class="person">
-      <h3>Jungudo Muhammad Tukur</h3>
-      <span class="role">Operations Lead &amp; Co-Founder</span>
-      <p>A software solutions developer and UI/UX designer studying Statistics at Gombe State University and Computer Science at UoPeople. Runs field operations and local market relationships.</p>
-    </div>
-  </div>
-</section>
-
-<footer class="site" id="contact">
-  <div class="contact-grid">
-    <div>
-      <h2>Bring the night watch to your pen.</h2>
-      <p class="lede">Reach out directly, or ask your cooperative about ordering AgriSense Sentinel units in bulk.</p>
-    </div>
-    <div class="contact-lines">
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container hero-grid">
       <div>
-        <span class="label">Location</span>
-        Gombe State, Nigeria
+        <div class="badge">
+          <span class="badge-pulse"></span>
+          OFFLINE-FIRST PEN DEFENSE SYSTEM
+        </div>
+        <h1>
+          The night watch, <br>
+          <span class="gradient-text">fully automated.</span>
+        </h1>
+        <p class="lead">
+          Continuous temperature, humidity, and ammonia sensing built specifically for Nigerian poultry & livestock pens. Zero Wi-Fi. Zero grid power. An on-site 110dB siren and direct GSM SMS alert when lethal levels arise at 2:00 AM.
+        </p>
+
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="#simulator">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Test Live Simulator
+          </a>
+          <button class="btn btn-outline" onclick="openModal()">
+            Order Field Kit
+          </button>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric-box">
+            <h4>100%</h4>
+            <p>Solar & battery autonomy with 72h bad-weather reserve</p>
+          </div>
+          <div class="metric-box">
+            <h4>0.0s</h4>
+            <p>Cloud delay: instantaneous edge siren & direct cellular SMS</p>
+          </div>
+          <div class="metric-box">
+            <h4>₦250k+</h4>
+            <p>Average flock loss prevented per single avoided night spike</p>
+          </div>
+        </div>
       </div>
-      <div>
-        <span class="label">Email</span>
-        <a href="mailto:abduljabbarbello5@gmail.com">abduljabbarbello5@gmail.com</a><br>
-        <a href="mailto:jungudomuhammadtukur@gmail.com">jungudomuhammadtukur@gmail.com</a>
-      </div>
-      <div>
-        <span class="label">Phone / WhatsApp</span>
-        <a href="tel:+2349015487928">+234 901 548 7928</a><br>
-        <a href="tel:+2348028742753">+234 802 874 2753</a>
+
+      <!-- LIVE TELEMETRY SIMULATOR WIDGET -->
+      <div id="simulator">
+        <div class="sim-card" id="simCard">
+          <div class="sim-header">
+            <div class="device-status">
+              <div class="live-dot" id="liveDot"></div>
+              <div>
+                <strong style="font-size:0.9rem; display:block;">PEN #04 — GOMBE SOUTH</strong>
+                <span style="font-size:0.75rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">TIME: 02:14:38 AM</span>
+              </div>
+            </div>
+            <span class="badge" id="simStatusBadge" style="font-size:0.75rem; padding:3px 10px;">
+              STATUS: NOMINAL
+            </span>
+          </div>
+
+          <!-- Gauges -->
+          <div class="sim-readings">
+            <div class="reading-card" id="cardTemp">
+              <span class="label">Temperature</span>
+              <div class="value"><span id="valTemp">29.4</span><span class="unit">°C</span></div>
+              <span class="thresh">Limit: &gt;32.0°C</span>
+            </div>
+
+            <div class="reading-card" id="cardHum">
+              <span class="label">Humidity</span>
+              <div class="value"><span id="valHum">68</span><span class="unit">%</span></div>
+              <span class="thresh">Limit: &gt;75%</span>
+            </div>
+
+            <div class="reading-card" id="cardAmm">
+              <span class="label">Ammonia (NH₃)</span>
+              <div class="value"><span id="valAmm">14</span><span class="unit">ppm</span></div>
+              <span class="thresh">Limit: &gt;25 ppm</span>
+            </div>
+          </div>
+
+          <!-- Interactive Sliders -->
+          <div class="slider-group">
+            <div class="slider-row">
+              <label>
+                <span>Simulate Temperature</span>
+                <span class="val-display" id="sliderTempVal">29.4 °C</span>
+              </label>
+              <input type="range" id="sliderTemp" min="20" max="42" step="0.5" value="29.4">
+            </div>
+
+            <div class="slider-row">
+              <label>
+                <span>Simulate Ammonia MQ Level</span>
+                <span class="val-display" id="sliderAmmVal">14 ppm</span>
+              </label>
+              <input type="range" id="sliderAmm" min="5" max="45" step="1" value="14">
+            </div>
+          </div>
+
+          <!-- Alert Banner & Sound -->
+          <div class="alert-banner" id="alertBanner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="alertIcon">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <div style="flex-grow:1;">
+              <strong id="alertTitle" style="display:block; font-size:0.85rem;">Continuous Edge Monitoring Active</strong>
+              <span id="alertDesc" style="font-size:0.78rem; opacity:0.85;">All micro-climate thresholds within safe limits.</span>
+            </div>
+            <button id="sirenBtn" onclick="toggleAudioMute()" style="background:rgba(255,255,255,0.1); border:none; padding:6px 10px; border-radius:6px; color:#fff; cursor:pointer; font-size:0.75rem; font-family:var(--font-mono);">
+              🔊 Unmute Siren
+            </button>
+          </div>
+
+          <!-- Simulated SMS notification preview -->
+          <div class="phone-preview-modal" id="phoneAlert">
+            <div class="phone-preview-header">
+              <span>MTN NIGERIA · 2G CELLULAR SMS</span>
+              <span>JUST NOW</span>
+            </div>
+            <div class="sms-bubble" id="smsText">
+              🚨 <strong>AGRISENSE ALERT [PEN #4]</strong>: Ammonia reading reached 31 ppm! Strobe siren triggered on-site. Check ventilation immediately!
+            </div>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="sim-actions">
+            <button onclick="setSimState(28, 12, 'normal')">🌱 Normal Pen Night</button>
+            <button onclick="setSimState(36, 18, 'heat')">🔥 Extreme Heat Stress</button>
+            <button onclick="setSimState(31, 34, 'ammonia')" class="active-spike">⚠️ 2:00 AM Ammonia Build-up</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="foot-bottom">
-    <span>AgriSense IoT — Noma Vault</span>
-    <span>Gombe State, Northern Nigeria</span>
-  </div>
-</footer>
+  </section>
 
+  <!-- FEATURES SECTION -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">BUILT FOR RUGGED CONDITIONS</div>
+        <h2>Engineering that doesn't pretend Nigeria has 100% grid power.</h2>
+        <p>Most commercial agritech solutions assume steady 220V power, stable Wi-Fi, and managers who check smartphone apps at 3:00 AM. AgriSense Sentinel is engineered around reality.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+          </div>
+          <h3>100% Solar & Battery</h3>
+          <p>Mount the solar panel on the pen's roof. Integrated intelligent charge controller keeps the internal Li-ion pack charged with 3 full days of overcast backup.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <h3>Direct GSM SMS Alerts</h3>
+          <p>Delivers urgent text notifications via MTN, Airtel, or Glo directly to any basic feature phone (Nokia "torchlight") without requiring data bundles or apps.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </div>
+          <h3>110dB On-Site Siren</h3>
+          <p>If your phone is on silent or you're sleeping in the farmhouse compound, the on-site siren sounds immediately, giving night handlers instant notice to act.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3>Offline Black-Box SD Log</h3>
+          <p>Every minute of environmental history is timestamped and stored locally on high-endurance SD media. Review seasonal curves even in zero-cell-coverage valleys.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3>IP65 Enclosure & Gas Filter</h3>
+          <p>Pen air is filled with corrosive ammonia vapor and dust. Our conformal-coated board and IP65 enclosure shield internal micro-electronics from humidity and dirt.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3>Automated Fan/Mister Relay</h3>
+          <p>Optional onboard relay switches on exhaust fans or misters automatically the split-second thresholds cross, protecting livestock even before staff arrive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE BREAKDOWN -->
+  <section class="hardware" id="hardware">
+    <div class="container hardware-layout">
+      <div>
+        <div class="badge">INDUSTRIAL GRADE ARCHITECTURE</div>
+        <h2 style="font-size:2.4rem; font-weight:800; margin:16px 0 20px;">
+          Inside the Sentinel: <br>
+          No gimmicks, pure reliability.
+        </h2>
+        <p style="color:var(--text-muted); margin-bottom:30px;">
+          Built on field-proven hardware selected specifically to endure Sahel ambient temperatures up to 45°C and intense dust storm conditions.
+        </p>
+
+        <div class="component-list">
+          <div class="component-item active">
+            <span class="component-badge">CORE MCU</span>
+            <div>
+              <h4>ESP32-WROOM Dual Core (240MHz)</h4>
+              <p>Executes local edge micro-decision firmware in MicroPython. Zero dependence on cloud latency.</p>
+            </div>
+          </div>
+
+          <div class="component-item">
+            <span class="component-badge">GAS SENSING</span>
+            <div>
+              <h4>Sensirion SHT31 + Calibrated MQ Sensor</h4>
+              <p>Medical-grade ±0.2°C temperature precision paired with sensitive ammonia parts-per-million detection.</p>
+            </div>
+          </div>
+
+          <div class="component-item">
+            <span class="component-badge">GSM CELLULAR</span>
+            <div>
+              <h4>SIMCom SIM800L Industrial GSM Engine</h4>
+              <p>High-gain omni antenna for deep rural network reach on MTN, Airtel, and Glo 2G/3G bands.</p>
+            </div>
+          </div>
+
+          <div class="component-item">
+            <span class="component-badge">POWER HARVEST</span>
+            <div>
+              <h4>MPPT Solar Charge Controller + 6000mAh LiPo</h4>
+              <p>Regulated 5V rail with low-quiescent standby current to operate through days of cloud cover.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schematic Box Graphic -->
+      <div class="schematic-box">
+        <svg class="schematic-svg" viewBox="0 0 540 440" xmlns="http://www.w3.org/2000/svg">
+          <!-- Main Box Enclosure -->
+          <rect x="50" y="40" width="440" height="360" rx="16" fill="#0E1424" stroke="#10B981" stroke-width="2" stroke-dasharray="4 2" opacity="0.85"/>
+          
+          <!-- Solar Input -->
+          <rect x="80" y="70" width="110" height="54" rx="8" fill="#131B30" stroke="#06B6D4" stroke-width="1.5"/>
+          <text x="135" y="96" fill="#06B6D4" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SOLAR PV</text>
+          <text x="135" y="112" fill="#64748B" font-size="9" font-family="JetBrains Mono" text-anchor="middle">12V / 10W Panel</text>
+
+          <!-- LiPo Battery -->
+          <rect x="80" y="146" width="110" height="54" rx="8" fill="#131B30" stroke="#10B981" stroke-width="1.5"/>
+          <text x="135" y="172" fill="#10B981" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">BATTERY</text>
+          <text x="135" y="188" fill="#64748B" font-size="9" font-family="JetBrains Mono" text-anchor="middle">6000mAh Li-ion</text>
+
+          <!-- ESP32 Brain -->
+          <rect x="230" y="100" width="150" height="150" rx="12" fill="#18233C" stroke="#10B981" stroke-width="2.5"/>
+          <text x="305" y="150" fill="#FFFFFF" font-size="16" font-family="Plus Jakarta Sans" font-weight="800" text-anchor="middle">ESP32 MCU</text>
+          <text x="305" y="170" fill="#10B981" font-size="10" font-family="JetBrains Mono" text-anchor="middle">MicroPython Edge</text>
+          <circle cx="305" cy="205" r="8" fill="#10B981" opacity="0.8"/>
+
+          <!-- Connectors -->
+          <path d="M 190 97 L 230 130" stroke="#06B6D4" stroke-width="2" fill="none"/>
+          <path d="M 190 173 L 230 173" stroke="#10B981" stroke-width="2" fill="none"/>
+
+          <!-- SHT31 & MQ Sensors -->
+          <rect x="80" y="235" width="110" height="60" rx="8" fill="#131B30" stroke="#F59E0B" stroke-width="1.5"/>
+          <text x="135" y="262" fill="#F59E0B" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SENSORS</text>
+          <text x="135" y="280" fill="#64748B" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Temp/RH + NH₃</text>
+          <path d="M 190 265 L 230 215" stroke="#F59E0B" stroke-width="2" fill="none"/>
+
+          <!-- GSM Modem -->
+          <rect x="410" y="90" width="60" height="80" rx="6" fill="#131B30" stroke="#EF4444" stroke-width="1.5"/>
+          <text x="440" y="125" fill="#EF4444" font-size="10" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">GSM</text>
+          <text x="440" y="145" fill="#64748B" font-size="8" font-family="JetBrains Mono" text-anchor="middle">SIM800L</text>
+          <path d="M 380 140 L 410 140" stroke="#EF4444" stroke-width="2" fill="none"/>
+
+          <!-- 110dB Siren -->
+          <rect x="410" y="200" width="60" height="80" rx="6" fill="#131B30" stroke="#F59E0B" stroke-width="1.5"/>
+          <text x="440" y="235" fill="#F59E0B" font-size="10" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SIREN</text>
+          <text x="440" y="255" fill="#64748B" font-size="8" font-family="JetBrains Mono" text-anchor="middle">110dB Piezo</text>
+          <path d="M 380 215 L 410 235" stroke="#F59E0B" stroke-width="2" fill="none"/>
+
+          <!-- MicroSD Card Logger -->
+          <rect x="230" y="285" width="150" height="50" rx="8" fill="#131B30" stroke="#64748B" stroke-width="1.5"/>
+          <text x="305" y="315" fill="#94A3B8" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SD BLACK-BOX LOG</text>
+          <path d="M 305 250 L 305 285" stroke="#64748B" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 2:00 AM SCENARIO -->
+  <section class="comparison" id="crisis">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">THE REAL PEN TEST</div>
+        <h2>What happens at 2:14 AM when ventilation stalls?</h2>
+        <p>Ammonia and suffocating heat build silently in closed pens. Here is what separates a standard flock tragedy from a controlled intervention.</p>
+      </div>
+
+      <div class="compare-grid">
+        <!-- Without Sentinel -->
+        <div class="compare-card bad">
+          <span class="compare-tag">TRADITIONAL UNMONITORED PEN</span>
+          <h3>The Cost of Human Guesswork</h3>
+          <div class="timeline">
+            <div class="t-item">
+              <span class="t-time">01:45 AM</span>
+              <p class="t-text">Power cuts. Exhaust fan stops. Litter moisture turns into pungent ammonia gas.</p>
+            </div>
+            <div class="t-item">
+              <span class="t-time">02:30 AM</span>
+              <p class="t-text">Ammonia crosses 35 ppm. Birds experience severe respiratory distress and panic.</p>
+            </div>
+            <div class="t-item">
+              <span class="t-time">06:15 AM</span>
+              <p class="t-text">Farm worker walks in with morning feed. Discovers 180 broilers dead in the corner.</p>
+            </div>
+          </div>
+          <div class="compare-result">
+            <div>
+              <span style="font-size:0.8rem; color:var(--text-dim); display:block;">ESTIMATED LOSS</span>
+              <span class="result-number">₦450,000</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--crimson); font-weight:600;">Full Cycle Profit Wiped</span>
+          </div>
+        </div>
+
+        <!-- With Sentinel -->
+        <div class="compare-card good">
+          <span class="compare-tag">WITH AGRISENSE SENTINEL</span>
+          <h3>Immediate Edge Intervention</h3>
+          <div class="timeline">
+            <div class="t-item">
+              <span class="t-time">01:45 AM</span>
+              <p class="t-text">Power cuts. Ammonia begins rapid accumulation from wet pen litter.</p>
+            </div>
+            <div class="t-item">
+              <span class="t-time">01:48 AM</span>
+              <p class="t-text">Ammonia crosses 25 ppm threshold. Sentinel immediately triggers 110dB siren & fires GSM SMS.</p>
+            </div>
+            <div class="t-item">
+              <span class="t-time">01:51 AM</span>
+              <p class="t-text">Farm security arrives, turns backup generator on, opens side tarps. Flocks stabilize.</p>
+            </div>
+          </div>
+          <div class="compare-result">
+            <div>
+              <span style="font-size:0.8rem; color:var(--text-dim); display:block;">ESTIMATED LOSS</span>
+              <span class="result-number">₦0 (0 Birds)</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--emerald); font-weight:600;">100% Flock Saved</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI CALCULATOR -->
+  <section class="calculator" id="calculator">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">FINANCIAL RETURN ESTIMATOR</div>
+        <h2>Calculate your pen savings</h2>
+        <p>See how fast an AgriSense Sentinel pays for itself based on your flock size and market value.</p>
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-inputs">
+          <div class="calc-input-group">
+            <label>
+              <span>Flock Size (Birds)</span>
+              <span class="value-pill" id="calcFlockVal">1,000 birds</span>
+            </label>
+            <input type="range" id="calcFlock" min="200" max="10000" step="100" value="1000">
+          </div>
+
+          <div class="calc-input-group">
+            <label>
+              <span>Average Bird Market Value (₦)</span>
+              <span class="value-pill" id="calcPriceVal">₦3,500</span>
+            </label>
+            <input type="range" id="calcPrice" min="1500" max="8000" step="250" value="3500">
+          </div>
+
+          <div class="calc-input-group">
+            <label>
+              <span>Typical Night Mortality Risk (%)</span>
+              <span class="value-pill" id="calcRiskVal">15%</span>
+            </label>
+            <input type="range" id="calcRisk" min="5" max="40" step="1" value="15">
+          </div>
+        </div>
+
+        <div class="calc-result-card">
+          <span class="label">Total Money At Risk per Incident</span>
+          <div class="big-num" id="calcTotalRisk">₦525,000</div>
+          <p class="expl">
+            One single prevented overnight ventilation crash saves you enough to purchase multiple Sentinel units outright.
+          </p>
+          <div style="margin-top:20px;">
+            <span class="badge" style="background:rgba(16,185,129,0.15);">
+              PAYBACK PERIOD: &lt; 3 WEEKS
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING & COOPERATIVE TIERS -->
+  <section class="pricing" id="coop">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">TRANSPARENT DISTRIBUTION</div>
+        <h2>Tailored for Northern Nigerian farmers</h2>
+        <p>Available directly or through registered agricultural cooperatives with flexible terms.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Tier 1 -->
+        <div class="price-card">
+          <h3>Individual Farm Kit</h3>
+          <p class="desc">For independent poultry and livestock owners needing single-pen 24/7 security.</p>
+          <div class="price-tag">
+            ₦85,000 <span class="term">/ unit</span>
+          </div>
+          <ul class="price-perks">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              1x Sentinel Core Node (IP65)
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              10W Solar Panel + Mount Bracket
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Pre-calibrated SHT31 & Ammonia probe
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              1-Year Replacement Warranty
+            </li>
+          </ul>
+          <button class="btn btn-outline" onclick="openModal('Individual Farm Kit')">Select Kit</button>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="price-card featured">
+          <span class="badge-popular">MOST POPULAR</span>
+          <h3>Cooperative Bulk</h3>
+          <p class="desc">Designed for agricultural co-ops ordering 5+ units with group discounts.</p>
+          <div class="price-tag">
+            ₦68,000 <span class="term">/ unit (5+ units)</span>
+          </div>
+          <ul class="price-perks">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              All Individual Kit Inclusions
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Free On-site Pen Installation in Gombe
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Co-op Manager SMS Group Dispatch
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Priority Local Field Technician Support
+            </li>
+          </ul>
+          <button class="btn btn-primary" onclick="openModal('Cooperative Bulk')">Get Co-op Discount</button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="price-card">
+          <h3>Lease-to-Own</h3>
+          <p class="desc">Pay in manageable weekly or monthly tranches via mobile money.</p>
+          <div class="price-tag">
+            ₦12,500 <span class="term">/ month (8 mos)</span>
+          </div>
+          <ul class="price-perks">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Zero Large Upfront Capital Barrier
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Full Hardware Warranty During Lease
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Mobile Money (OPay, PalmPay, USSD)
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              100% Ownership Transferred upon final payoff
+            </li>
+          </ul>
+          <button class="btn btn-outline" onclick="openModal('Lease-to-Own')">Apply for Lease</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDERS -->
+  <section class="team">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">DEVELOPED IN GOMBE</div>
+        <h2>Engineers who know the local terrain</h2>
+        <p>Combining deep cybersecurity, physics, statistics, and field agricultural realities.</p>
+      </div>
+
+      <div class="team-grid">
+        <div class="founder-card">
+          <div class="founder-avatar">AS</div>
+          <div class="founder-info">
+            <h3>Abduljabbar Bello Shariff</h3>
+            <span class="role">CEO & CO-FOUNDER</span>
+            <p>Known as Jb. Background in cybersecurity and physics with over 5 years leading enterprise IT and IoT infrastructure. Architect of AgriSense's offline edge telemetry firmware.</p>
+          </div>
+        </div>
+
+        <div class="founder-card">
+          <div class="founder-avatar">JT</div>
+          <div class="founder-info">
+            <h3>Jungudo Muhammad Tukur</h3>
+            <span class="role">OPERATIONS LEAD & CO-FOUNDER</span>
+            <p>Software developer and UI/UX researcher studying Statistics at Gombe State University and Computer Science at UoPeople. Manages rural co-op partnerships and hardware field testing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / CONTACT -->
+  <footer class="site-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-cta">
+          <h2>Bring the Sentinel night watch to your pens.</h2>
+          <p>Protect your flock this season. Talk to our technical team in Gombe or arrange an on-site pen evaluation.</p>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="https://wa.me/2349015487928?text=Hello%2C%20I%20would%20like%20to%20order%20the%20AgriSense%20Sentinel%20system" target="_blank" rel="noopener">
+              Chat on WhatsApp (+234 901 548 7928)
+            </a>
+            <button class="btn btn-outline" onclick="openModal()">
+              Request Official Quote
+            </button>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-line">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Gombe State, Northern Nigeria</span>
+          </div>
+          <div class="contact-line">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>abduljabbarbello5@gmail.com</span>
+          </div>
+          <div class="contact-line">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>+234 901 548 7928 / +234 802 874 2753</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© AgriSense IoT · Noma Vault Systems. All rights reserved.</span>
+        <span>Sahel Agritech Innovation Hub · Gombe State</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FIELD KIT REQUEST MODAL -->
+  <div class="modal-overlay" id="requestModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3 style="font-size:1.4rem; font-weight:700; margin-bottom:6px;">Request AgriSense Field Kit</h3>
+      <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px;">
+        Fill out this quick form or send directly through WhatsApp. We dispatch kits across Northern Nigeria.
+      </p>
+
+      <form id="quoteForm" onsubmit="handleQuoteSubmit(event)">
+        <div class="form-group">
+          <label>Your Full Name</label>
+          <input type="text" id="formName" placeholder="e.g. Alhaji Ibrahim Danjuma" required>
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number (WhatsApp preferred)</label>
+          <input type="tel" id="formPhone" placeholder="e.g. 0802 123 4567" required>
+        </div>
+
+        <div class="form-group">
+          <label>Pen Location / Cooperative Name</label>
+          <input type="text" id="formLoc" placeholder="e.g. Billiri, Gombe State" required>
+        </div>
+
+        <div class="form-group">
+          <label>Selected Tier</label>
+          <select id="formTier">
+            <option value="Individual Farm Kit">Individual Farm Kit (₦85,000)</option>
+            <option value="Cooperative Bulk">Cooperative Bulk (5+ Units - ₦68,000/ea)</option>
+            <option value="Lease-to-Own">Lease-to-Own via Mobile Money</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">
+          Submit &amp; Open WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Audio Context for realistic simulated 110dB Piezo Siren
+    let audioCtx = null;
+    let sirenOsc = null;
+    let sirenGain = null;
+    let isSirenMuted = true;
+    let isHazardActive = false;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAudioMute() {
+      initAudio();
+      isSirenMuted = !isSirenMuted;
+      const btn = document.getElementById('sirenBtn');
+      if (isSirenMuted) {
+        btn.innerText = '🔊 Unmute Siren';
+        stopSirenTone();
+      } else {
+        btn.innerText = '🔇 Mute Siren';
+        if (isHazardActive) playSirenTone();
+      }
+    }
+
+    function playSirenTone() {
+      if (isSirenMuted || !audioCtx) return;
+      if (sirenOsc) return;
+
+      sirenOsc = audioCtx.createOscillator();
+      sirenGain = audioCtx.createGain();
+      sirenOsc.type = 'sawtooth';
+      sirenOsc.frequency.setValueAtTime(800, audioCtx.currentTime);
+
+      // Pitch sweep
+      sirenOsc.frequency.linearRampToValueAtTime(1400, audioCtx.currentTime + 0.35);
+      sirenOsc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.7);
+
+      sirenGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      sirenOsc.connect(sirenGain);
+      sirenGain.connect(audioCtx.destination);
+      sirenOsc.start();
+
+      // Loop sweep
+      sirenOsc.onended = () => {
+        sirenOsc = null;
+        if (isHazardActive && !isSirenMuted) playSirenTone();
+      };
+      sirenOsc.stop(audioCtx.currentTime + 0.7);
+    }
+
+    function stopSirenTone() {
+      if (sirenOsc) {
+        try { sirenOsc.stop(); } catch(e){}
+        sirenOsc = null;
+      }
+    }
+
+    // Telemetry Simulation Controls
+    const sliderTemp = document.getElementById('sliderTemp');
+    const sliderAmm = document.getElementById('sliderAmm');
+    const valTemp = document.getElementById('valTemp');
+    const valHum = document.getElementById('valHum');
+    const valAmm = document.getElementById('valAmm');
+    const sliderTempVal = document.getElementById('sliderTempVal');
+    const sliderAmmVal = document.getElementById('sliderAmmVal');
+
+    const cardTemp = document.getElementById('cardTemp');
+    const cardAmm = document.getElementById('cardAmm');
+    const simCard = document.getElementById('simCard');
+    const liveDot = document.getElementById('liveDot');
+    const simStatusBadge = document.getElementById('simStatusBadge');
+    const alertBanner = document.getElementById('alertBanner');
+    const alertTitle = document.getElementById('alertTitle');
+    const alertDesc = document.getElementById('alertDesc');
+    const phoneAlert = document.getElementById('phoneAlert');
+    const smsText = document.getElementById('smsText');
+
+    function updateSimulation() {
+      const temp = parseFloat(sliderTemp.value);
+      const amm = parseInt(sliderAmm.value);
+
+      valTemp.innerText = temp.toFixed(1);
+      sliderTempVal.innerText = temp.toFixed(1) + ' °C';
+
+      valAmm.innerText = amm;
+      sliderAmmVal.innerText = amm + ' ppm';
+
+      // Dynamic Humidity calculation
+      let hum = Math.round(65 + (temp > 30 ? (temp - 30)*2.5 : -(30 - temp)));
+      if (hum > 92) hum = 92;
+      if (hum < 45) hum = 45;
+      valHum.innerText = hum;
+
+      const isHighTemp = temp > 32.0;
+      const isHighAmm = amm > 25;
+
+      if (isHighTemp) cardTemp.classList.add('danger');
+      else cardTemp.classList.remove('danger');
+
+      if (isHighAmm) cardAmm.classList.add('danger');
+      else cardAmm.classList.remove('danger');
+
+      if (isHighTemp || isHighAmm) {
+        isHazardActive = true;
+        simCard.classList.add('hazard-active');
+        liveDot.style.background = '#EF4444';
+        liveDot.style.boxShadow = '0 0 12px #EF4444';
+        simStatusBadge.style.color = '#EF4444';
+        simStatusBadge.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+        simStatusBadge.style.background = 'rgba(239, 68, 68, 0.1)';
+        simStatusBadge.innerText = 'STATUS: CRITICAL HAZARD';
+
+        alertBanner.classList.add('danger-mode');
+        alertTitle.innerText = '🚨 110dB Siren Triggered & SMS Dispatched!';
+
+        let reasons = [];
+        if (isHighAmm) reasons.push(`Ammonia Spike (${amm} ppm > 25 ppm limit)`);
+        if (isHighTemp) reasons.push(`Severe Heat Stress (${temp}°C > 32°C limit)`);
+        alertDesc.innerText = reasons.join(' & ') + '. Automatic relay enabled.';
+
+        // Display Simulated SMS
+        phoneAlert.style.display = 'block';
+        smsText.innerHTML = `🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Danger threshold exceeded at 02:15 AM! ${reasons.join(' & ')}. Siren is blaring on-site. Check pen immediately!`;
+
+        playSirenTone();
+      } else {
+        isHazardActive = false;
+        simCard.classList.remove('hazard-active');
+        liveDot.style.background = '#10B981';
+        liveDot.style.boxShadow = '0 0 10px #10B981';
+        simStatusBadge.style.color = '#10B981';
+        simStatusBadge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+        simStatusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
+        simStatusBadge.innerText = 'STATUS: NOMINAL';
+
+        alertBanner.classList.remove('danger-mode');
+        alertTitle.innerText = 'Continuous Edge Monitoring Active';
+        alertDesc.innerText = 'All micro-climate thresholds within safe limits.';
+        phoneAlert.style.display = 'none';
+
+        stopSirenTone();
+      }
+    }
+
+    sliderTemp.addEventListener('input', updateSimulation);
+    sliderAmm.addEventListener('input', updateSimulation);
+
+    function setSimState(temp, amm, mode) {
+      sliderTemp.value = temp;
+      sliderAmm.value = amm;
+      updateSimulation();
+
+      // Button styles
+      const buttons = document.querySelectorAll('.sim-actions button');
+      buttons.forEach(b => b.classList.remove('active-spike'));
+      event.target.classList.add('active-spike');
+    }
+
+    // Dynamic Clock Ticker
+    setInterval(() => {
+      const now = new Date();
+      const clockEl = document.getElementById('simClock');
+      if (clockEl) {
+        const hours = String(now.getHours()).padStart(2, '0');
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        const secs = String(now.getSeconds()).padStart(2, '0');
+        clockEl.innerText = `TIME: ${hours}:${mins}:${secs} (WAT)`;
+      }
+    }, 1000);
+
+    // ROI Calculator Logic
+    const calcFlock = document.getElementById('calcFlock');
+    const calcPrice = document.getElementById('calcPrice');
+    const calcRisk = document.getElementById('calcRisk');
+    const calcFlockVal = document.getElementById('calcFlockVal');
+    const calcPriceVal = document.getElementById('calcPriceVal');
+    const calcRiskVal = document.getElementById('calcRiskVal');
+    const calcTotalRisk = document.getElementById('calcTotalRisk');
+
+    function calculateROI() {
+      const birds = parseInt(calcFlock.value);
+      const price = parseInt(calcPrice.value);
+      const risk = parseInt(calcRisk.value) / 100;
+
+      calcFlockVal.innerText = birds.toLocaleString() + ' birds';
+      calcPriceVal.innerText = '₦' + price.toLocaleString();
+      calcRiskVal.innerText = (risk * 100).toFixed(0) + '%';
+
+      const totalLoss = Math.round(birds * price * risk);
+      calcTotalRisk.innerText = '₦' + totalLoss.toLocaleString();
+    }
+
+    calcFlock.addEventListener('input', calculateROI);
+    calcPrice.addEventListener('input', calculateROI);
+    calcRisk.addEventListener('input', calculateROI);
+
+    // Modal Handlers
+    function openModal(tier = '') {
+      if (tier) {
+        const select = document.getElementById('formTier');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(tier)) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      document.getElementById('requestModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('requestModal').classList.remove('open');
+    }
+
+    function handleQuoteSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('formName').value;
+      const phone = document.getElementById('formPhone').value;
+      const loc = document.getElementById('formLoc').value;
+      const tier = document.getElementById('formTier').value;
+
+      const message = `Hello AgriSense! My name is ${name} (${phone}) from ${loc}. I want to order/inquire about the: ${tier}. Please share dispatch details.`;
+      const url = `https://wa.me/2349015487928?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+      closeModal();
+    }
+
+    // Component Explorer interactive selection
+    const compItems = document.querySelectorAll('.component-item');
+    compItems.forEach(item => {
+      item.addEventListener('click', () => {
+        compItems.forEach(c => c.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Run initial calc & sim update
+    updateSimulation();
+    calculateROI();
+  </script>
 </body>
 </html>
