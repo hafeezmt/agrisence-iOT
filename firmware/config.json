@@ -1,0 +1,31 @@
+{
+  "device_id": "AGRISENSE-SN-004",
+  "farm_name": "Dadinkowa Cluster Pen #04",
+  "location": "Gombe State, Nigeria",
+  "thresholds": {
+    "temperature_warning_c": 30.0,
+    "temperature_critical_c": 32.5,
+    "humidity_warning_rh": 72.0,
+    "humidity_critical_rh": 80.0,
+    "ammonia_warning_ppm": 18.0,
+    "ammonia_critical_ppm": 25.0
+  },
+  "alerting": {
+    "siren_duration_seconds": 30,
+    "siren_cooldown_seconds": 120,
+    "sms_cooldown_seconds": 300,
+    "alert_phone_numbers": [
+      "+2349015487928",
+      "+2348028742753"
+    ]
+  },
+  "sampling": {
+    "sensor_poll_interval_seconds": 2,
+    "sd_log_interval_seconds": 60,
+    "low_power_poll_interval_seconds": 10
+  },
+  "network": {
+    "gsm_apn": "web.gprs.mtnnigeria.net",
+    "baudrate": 9600
+  }
+}
