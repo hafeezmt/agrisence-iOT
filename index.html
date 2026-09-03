@@ -817,31 +817,113 @@
     }
 
     /* Alert Banner & Sound */
-    .alert-banner {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.84rem;
+    .sim-alert-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      transition: all 0.25s ease;
+      flex-wrap: wrap;
+    }
+
+    .sim-alert-box.danger-mode {
+      background: rgba(239, 68, 68, 0.16);
+      border-color: var(--crimson);
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);
+    }
+
+    .alert-status {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex: 1;
+      min-width: 200px;
     }
 
-    .alert-banner.danger-mode {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: var(--crimson);
-      color: #FCA5A5;
+    .alert-icon {
+      font-size: 1.5rem;
+      line-height: 1;
     }
 
-    .phone-preview-modal {
-      display: none;
-      margin-top: 14px;
-      background: #030509;
-      border: 1px solid var(--crimson);
-      border-radius: 8px;
-      padding: 12px;
+    .alert-status strong {
+      display: block;
+      font-size: 0.85rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .alert-status p {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .siren-controls-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .siren-vol-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .siren-vol-slider-wrap .vol-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #94A3B8;
       font-family: var(--font-mono);
+    }
+
+    .siren-vol-slider-wrap input[type="range"] {
+      width: 60px;
+      height: 4px;
+      cursor: pointer;
+    }
+
+    #sirenVolLabel {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--gold);
+      font-family: var(--font-mono);
+      min-width: 32px;
+    }
+
+    .btn-siren-test {
+      background: rgba(229, 169, 60, 0.15);
+      border: 1px solid rgba(229, 169, 60, 0.4);
+      color: #FBBF24;
+      font-weight: 800;
+      font-size: 0.76rem;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-main);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-siren-test:hover, .btn-siren-test.playing {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+      transform: scale(1.02);
     }
 
     .sms-bubble {
@@ -1616,9 +1698,16 @@
                 <p id="alertDesc">All micro-climate thresholds within safe limits.</p>
               </div>
             </div>
-            <button class="btn-siren-test" id="btnSirenTest" onclick="toggleAudioTest()">
-              🔊 Unmute Siren
-            </button>
+            <div class="siren-controls-group">
+              <div class="siren-vol-slider-wrap" title="Adjust 110dB Siren Output Volume">
+                <span class="vol-label">VOL:</span>
+                <input type="range" id="sirenVolSlider" min="0" max="1" step="0.05" value="0.9" oninput="setSirenVolume(this.value)">
+                <span id="sirenVolLabel">90%</span>
+              </div>
+              <button class="btn-siren-test" id="btnSirenTest" onclick="toggleAudioTest()">
+                🔊 Test 110dB Siren
+              </button>
+            </div>
           </div>
 
           <div class="sim-sms-preview" id="smsPreview" style="display: none;">
@@ -2111,61 +2200,124 @@
       }
     }
 
-    // Audio Context for realistic simulated 110dB Piezo Siren
+    // High-Volume Realistic 110dB Industrial Strobe Siren Synthesizer
     let audioCtx = null;
-    let sirenOsc = null;
-    let sirenGain = null;
-    let isSirenMuted = true;
+    let masterGain = null;
+    let compressorNode = null;
+    let sirenOsc1 = null;
+    let sirenOsc2 = null;
+    let sirenTimer = null;
+    let sirenVolume = 0.90; // High volume default
+    let isSirenPlaying = false;
     let isHazardActive = false;
 
     function initAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        // High-acoustic compressor prevents audio clipping while maximizing loudness punch
+        compressorNode = audioCtx.createDynamicsCompressor();
+        compressorNode.threshold.setValueAtTime(-10, audioCtx.currentTime);
+        compressorNode.knee.setValueAtTime(6, audioCtx.currentTime);
+        compressorNode.ratio.setValueAtTime(12, audioCtx.currentTime);
+        compressorNode.attack.setValueAtTime(0.002, audioCtx.currentTime);
+        compressorNode.release.setValueAtTime(0.1, audioCtx.currentTime);
+
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(sirenVolume, audioCtx.currentTime);
+
+        masterGain.connect(compressorNode);
+        compressorNode.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function setSirenVolume(val) {
+      sirenVolume = parseFloat(val);
+      const lbl = document.getElementById('sirenVolLabel');
+      if (lbl) lbl.innerText = Math.round(sirenVolume * 100) + '%';
+      if (masterGain && audioCtx) {
+        masterGain.gain.setValueAtTime(sirenVolume, audioCtx.currentTime);
+      }
+    }
+
+    function playSirenTone() {
+      initAudio();
+      if (isSirenPlaying) return;
+      isSirenPlaying = true;
+
+      const btn = document.getElementById('btnSirenTest');
+      if (btn) {
+        btn.innerText = '🔇 Stop Siren';
+        btn.classList.add('playing');
+      }
+
+      function runCycle() {
+        if (!isSirenPlaying || !audioCtx) return;
+        const now = audioCtx.currentTime;
+        const cycleDuration = 0.60; // Piercing industrial rapid sweep
+
+        // Primary high-power piezo oscillator (sawtooth)
+        sirenOsc1 = audioCtx.createOscillator();
+        sirenOsc1.type = 'sawtooth';
+        sirenOsc1.frequency.setValueAtTime(950, now);
+        sirenOsc1.frequency.linearRampToValueAtTime(2400, now + cycleDuration * 0.5);
+        sirenOsc1.frequency.linearRampToValueAtTime(950, now + cycleDuration);
+
+        // Secondary square-wave harmonic overtone (pierces thick pen curtains & walls)
+        sirenOsc2 = audioCtx.createOscillator();
+        sirenOsc2.type = 'square';
+        sirenOsc2.frequency.setValueAtTime(1900, now);
+        sirenOsc2.frequency.linearRampToValueAtTime(4800, now + cycleDuration * 0.5);
+        sirenOsc2.frequency.linearRampToValueAtTime(1900, now + cycleDuration);
+
+        const subGain = audioCtx.createGain();
+        subGain.gain.setValueAtTime(0.40, now);
+        sirenOsc2.connect(subGain);
+
+        sirenOsc1.connect(masterGain);
+        subGain.connect(masterGain);
+
+        sirenOsc1.start(now);
+        sirenOsc2.start(now);
+        sirenOsc1.stop(now + cycleDuration);
+        sirenOsc2.stop(now + cycleDuration);
+
+        sirenTimer = setTimeout(runCycle, cycleDuration * 1000);
+      }
+
+      runCycle();
+    }
+
+    function stopSirenTone() {
+      isSirenPlaying = false;
+      if (sirenTimer) {
+        clearTimeout(sirenTimer);
+        sirenTimer = null;
+      }
+      if (sirenOsc1) {
+        try { sirenOsc1.stop(); sirenOsc1.disconnect(); } catch(e) {}
+        sirenOsc1 = null;
+      }
+      if (sirenOsc2) {
+        try { sirenOsc2.stop(); sirenOsc2.disconnect(); } catch(e) {}
+        sirenOsc2 = null;
+      }
+      const btn = document.getElementById('btnSirenTest');
+      if (btn) {
+        btn.innerText = '🔊 Test 110dB Siren';
+        btn.classList.remove('playing');
       }
     }
 
     function toggleAudioTest() {
       initAudio();
-      isSirenMuted = !isSirenMuted;
-      const btn = document.getElementById('btnSirenTest');
-      if (!btn) return;
-      if (isSirenMuted) {
-        btn.innerText = '🔊 Unmute Siren';
+      if (isSirenPlaying) {
         stopSirenTone();
       } else {
-        btn.innerText = '🔇 Mute Siren';
-        if (isHazardActive) playSirenTone();
-      }
-    }
-
-    function playSirenTone() {
-      if (isSirenMuted || !audioCtx) return;
-      if (sirenOsc) return;
-
-      sirenOsc = audioCtx.createOscillator();
-      sirenGain = audioCtx.createGain();
-      sirenOsc.type = 'sawtooth';
-      sirenOsc.frequency.setValueAtTime(800, audioCtx.currentTime);
-
-      sirenOsc.frequency.linearRampToValueAtTime(1400, audioCtx.currentTime + 0.35);
-      sirenOsc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.7);
-
-      sirenGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-      sirenOsc.connect(sirenGain);
-      sirenGain.connect(audioCtx.destination);
-      sirenOsc.start();
-
-      sirenOsc.onended = () => {
-        sirenOsc = null;
-        if (isHazardActive && !isSirenMuted) playSirenTone();
-      };
-      sirenOsc.stop(audioCtx.currentTime + 0.7);
-    }
-
-    function stopSirenTone() {
-      if (sirenOsc) {
-        try { sirenOsc.stop(); } catch(e){}
-        sirenOsc = null;
+        playSirenTone();
       }
     }
 
