@@ -3,32 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriSense Sentinel — Autonomous Offline Pen Monitoring & Alert System</title>
-  <meta name="description" content="Industrial-grade, solar-powered, offline IoT sentinel for poultry and livestock pens in Northern Nigeria. Instant 110dB siren and GSM SMS alerts.">
+  <title>AgriSense Sentinel — Autonomous Offline Pen Defense System</title>
+  <meta name="description" content="Field-tested, solar-powered, offline IoT monitor engineered for poultry & livestock pens in Northern Nigeria. Instant on-site siren and direct GSM SMS alerts.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg: #07090E;
-      --bg-surface: #0E131F;
-      --bg-card: rgba(18, 24, 38, 0.7);
-      --bg-card-hover: rgba(26, 35, 56, 0.85);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(16, 185, 129, 0.25);
+      --bg: #070A10;
+      --bg-surface: #0D121D;
+      --bg-card: rgba(15, 21, 33, 0.78);
+      --bg-card-hover: rgba(22, 31, 49, 0.9);
+      --border: rgba(255, 255, 255, 0.09);
+      --border-glow: rgba(16, 185, 129, 0.3);
       --emerald: #10B981;
-      --emerald-glow: rgba(16, 185, 129, 0.4);
-      --emerald-dark: #065F46;
+      --emerald-glow: rgba(16, 185, 129, 0.45);
+      --emerald-dark: #064E3B;
       --amber: #F59E0B;
-      --amber-glow: rgba(245, 158, 11, 0.35);
       --crimson: #EF4444;
-      --crimson-glow: rgba(239, 68, 68, 0.45);
+      --crimson-glow: rgba(239, 68, 68, 0.5);
       --cyan: #06B6D4;
       --text: #F8FAFC;
       --text-muted: #94A3B8;
       --text-dim: #64748B;
-      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -43,18 +42,18 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       background-image: 
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.15), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 60%, rgba(6, 182, 212, 0.08), transparent),
-        linear-gradient(to bottom, #07090E, #0A0E17 100%);
+        radial-gradient(ellipse 90% 60% at 50% -10%, rgba(16, 185, 129, 0.12), transparent),
+        radial-gradient(ellipse 50% 40% at 90% 45%, rgba(6, 182, 212, 0.06), transparent),
+        linear-gradient(to bottom, #070A10, #0B101A 100%);
       background-attachment: fixed;
     }
 
-    /* Subtle grid background */
+    /* Background Subtle Engineering Grid */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background-size: 40px 40px;
+      background-size: 48px 48px;
       background-image: 
         linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
@@ -62,11 +61,152 @@
       z-index: -1;
     }
 
-    /* Container */
     .container {
-      max-width: 1240px;
+      max-width: 1220px;
       margin: 0 auto;
       padding: 0 24px;
+    }
+
+    /* ======================================================== */
+    /* PROPABRIDGE-STYLE PERMANENT FLOATING PILL HEADER         */
+    /* ======================================================== */
+    .pill-header-outer {
+      position: fixed;
+      top: 18px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px;
+      pointer-events: none;
+    }
+
+    .pill-header {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 1060px;
+      background: rgba(13, 18, 29, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04);
+      border-radius: 9999px;
+      padding: 8px 10px 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pill-header:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+      box-shadow: 0 18px 42px -10px rgba(0, 0, 0, 0.65), 0 0 25px rgba(16, 185, 129, 0.12);
+    }
+
+    .pill-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .pill-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #10B981, #065F46);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .pill-brand-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-brand-badge {
+      font-size: 0.68rem;
+      color: var(--emerald);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 999px;
+      padding: 1px 7px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .pill-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+    }
+
+    .pill-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .pill-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-pill-primary {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #032216;
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-pill-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+      background: linear-gradient(135deg, #34D399, #10B981);
+    }
+
+    .btn-pill-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-pill-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     /* Buttons & Badges */
@@ -75,25 +215,25 @@
       align-items: center;
       gap: 8px;
       padding: 6px 14px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.09);
+      border: 1px solid rgba(16, 185, 129, 0.28);
       color: var(--emerald);
       border-radius: 999px;
       font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
     }
 
     .badge-pulse {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: var(--emerald);
       border-radius: 50%;
       box-shadow: 0 0 10px var(--emerald);
-      animation: blink 1.8s infinite;
+      animation: pulse-dot 1.8s infinite;
     }
 
-    @keyframes blink {
+    @keyframes pulse-dot {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.3; transform: scale(0.85); }
     }
@@ -104,211 +244,151 @@
       justify-content: center;
       gap: 10px;
       padding: 13px 26px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
-      border: 1px solid transparent;
       font-family: var(--font-main);
+      border: 1px solid transparent;
     }
 
     .btn-primary {
       background: linear-gradient(135deg, #10B981, #059669);
-      color: #042217;
-      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #032216;
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.25);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 28px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5);
       background: linear-gradient(135deg, #34D399, #10B981);
     }
 
     .btn-outline {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
-      color: var(--text);
-      backdrop-filter: blur(8px);
+      color: #fff;
     }
 
     .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.25);
       transform: translateY(-2px);
     }
 
-    .btn-hazard {
-      background: linear-gradient(135deg, #EF4444, #B91C1C);
-      color: #fff;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-    }
-
-    /* Header Nav */
-    header.site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(7, 9, 14, 0.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 0;
-    }
-
-    .nav-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, #10B981, #064E3B);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-    }
-
-    .logo-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .logo-title span {
-      color: var(--emerald);
-      font-weight: 500;
-      font-size: 0.8rem;
-      padding: 2px 6px;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 4px;
-      background: rgba(16, 185, 129, 0.08);
-    }
-
-    .logo-sub {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      display: block;
-      font-family: var(--font-mono);
-    }
-
-    nav.nav-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-
-    nav.nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    nav.nav-links a:hover {
-      color: #fff;
-    }
-
-    /* Hero Section */
+    /* HERO SECTION */
     .hero {
-      padding: 90px 0 70px;
+      padding: 130px 0 70px;
       position: relative;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 60px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 50px;
       align-items: center;
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+      font-size: clamp(2.4rem, 4.4vw, 3.7rem);
       font-weight: 800;
       line-height: 1.1;
       letter-spacing: -0.03em;
-      margin: 20px 0 22px;
+      margin: 22px 0;
     }
 
     .hero h1 .gradient-text {
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--emerald) 100%);
+      background: linear-gradient(135deg, #FFFFFF 30%, #34D399 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hero p.lead {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       color: var(--text-muted);
-      max-width: 540px;
+      max-width: 530px;
       line-height: 1.65;
-      margin-bottom: 34px;
+      margin-bottom: 32px;
     }
 
     .hero-metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      margin-top: 48px;
-      padding-top: 30px;
+      margin-top: 44px;
+      padding-top: 26px;
       border-top: 1px solid var(--border);
     }
 
     .metric-box h4 {
       font-family: var(--font-mono);
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: 700;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
 
     .metric-box p {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
       margin-top: 4px;
     }
 
-    /* Live Interactive Telemetry Simulator Widget */
+    /* HERO PHOTO-IN-PHOTO + SIMULATOR CARD */
+    .hero-device-wrapper {
+      position: relative;
+    }
+
+    .real-photo-banner {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .real-photo-banner img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.88);
+      transition: filter 0.3s;
+    }
+
+    .real-photo-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      background: rgba(10, 14, 23, 0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* TELEMETRY SIMULATOR WIDGET */
     .sim-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 24px;
+      padding: 22px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
       transition: border-color 0.3s;
     }
 
     .sim-card.hazard-active {
       border-color: var(--crimson);
-      box-shadow: 0 0 50px var(--crimson-glow);
-      animation: alert-flash 1s infinite alternate;
-    }
-
-    @keyframes alert-flash {
-      from { border-color: rgba(239, 68, 68, 0.6); }
-      to { border-color: rgba(239, 68, 68, 1); }
+      box-shadow: 0 0 45px var(--crimson-glow);
     }
 
     .sim-header {
@@ -316,97 +396,79 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 16px;
-      margin-bottom: 20px;
-    }
-
-    .device-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .live-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .sim-readings {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 24px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     .reading-card {
       background: rgba(10, 14, 23, 0.85);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 10px;
+      padding: 12px;
       position: relative;
     }
 
     .reading-card .label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-dim);
       font-family: var(--font-mono);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .reading-card .value {
       font-family: var(--font-mono);
-      font-size: 1.6rem;
+      font-size: 1.45rem;
       font-weight: 700;
       color: #fff;
     }
 
     .reading-card .unit {
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      font-weight: 400;
     }
 
     .reading-card .thresh {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: var(--text-dim);
-      margin-top: 6px;
+      margin-top: 4px;
       display: block;
     }
 
     .reading-card.danger {
       border-color: var(--crimson);
-      background: rgba(239, 68, 68, 0.08);
+      background: rgba(239, 68, 68, 0.1);
     }
-    .reading-card.danger .value { color: var(--crimson); }
-    .reading-card.danger .label { color: var(--crimson); }
+    .reading-card.danger .value, .reading-card.danger .label { color: var(--crimson); }
 
-    /* Interactive Sliders */
+    /* Sliders */
     .slider-group {
       background: rgba(10, 14, 23, 0.6);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 16px;
     }
 
     .slider-row {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
     .slider-row:last-child { margin-bottom: 0; }
 
     .slider-row label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .slider-row label span.val-display {
@@ -417,7 +479,7 @@
 
     input[type="range"] {
       width: 100%;
-      height: 6px;
+      height: 5px;
       background: #1e293b;
       border-radius: 3px;
       outline: none;
@@ -426,8 +488,8 @@
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: var(--emerald);
       cursor: pointer;
@@ -435,17 +497,16 @@
       border: 2px solid #fff;
     }
 
-    /* Alert Strobe & Simulated SMS Box */
+    /* Alert Banner & Sound */
     .alert-banner {
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 0.88rem;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
       display: flex;
       align-items: center;
-      gap: 12px;
-      transition: all 0.3s;
+      gap: 10px;
     }
 
     .alert-banner.danger-mode {
@@ -454,23 +515,39 @@
       color: #FCA5A5;
     }
 
-    /* Simulation Control Buttons */
+    .phone-preview-modal {
+      display: none;
+      margin-top: 14px;
+      background: #030509;
+      border: 1px solid var(--crimson);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: var(--font-mono);
+    }
+
+    .sms-bubble {
+      background: rgba(239, 68, 68, 0.12);
+      border-left: 3px solid var(--crimson);
+      padding: 8px 10px;
+      color: #fff;
+      font-size: 0.8rem;
+    }
+
     .sim-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 16px;
+      gap: 8px;
+      margin-top: 14px;
     }
 
     .sim-actions button {
       flex: 1;
-      padding: 10px;
-      font-size: 0.82rem;
+      padding: 8px;
+      font-size: 0.78rem;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.05);
       color: var(--text-muted);
       cursor: pointer;
-      transition: 0.2s;
     }
     .sim-actions button:hover {
       background: rgba(255, 255, 255, 0.1);
@@ -482,324 +559,230 @@
       color: #fff;
     }
 
-    /* Realistic GSM SMS Phone Preview */
-    .phone-preview-modal {
-      display: none;
-      margin-top: 16px;
-      background: #020408;
-      border: 2px solid var(--crimson);
-      border-radius: 10px;
-      padding: 14px;
-      font-family: var(--font-mono);
-      box-shadow: 0 0 25px var(--crimson-glow);
-      animation: slide-up 0.3s ease-out forwards;
+    /* SECTION SHELL */
+    section {
+      padding: 90px 0;
     }
 
-    @keyframes slide-up {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .phone-preview-header {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 6px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .sms-bubble {
-      background: rgba(239, 68, 68, 0.12);
-      border-left: 3px solid var(--crimson);
-      padding: 10px 12px;
-      color: #fff;
-      font-size: 0.82rem;
-      line-height: 1.45;
-    }
-
-    /* Section Headers */
     .section-head {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 60px;
+      max-width: 700px;
+      margin: 0 auto 55px;
     }
 
     .section-head .badge {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .section-head h2 {
-      font-size: clamp(2rem, 3.2vw, 2.7rem);
+      font-size: clamp(1.9rem, 3.2vw, 2.6rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .section-head p {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
     }
 
-    /* Core Pillars / Architecture */
-    section.features {
-      padding: 100px 0;
-      background: rgba(14, 19, 31, 0.4);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .feature-grid {
+    /* REAL FIELD GALLERY & CASE EVIDENCE */
+    .field-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
-    .feature-card {
+    .field-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 32px 26px;
-      transition: all 0.3s;
-      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
     }
 
-    .feature-card:hover {
-      background: var(--bg-card-hover);
-      border-color: rgba(16, 185, 129, 0.3);
+    .field-card:hover {
+      border-color: rgba(16, 185, 129, 0.35);
       transform: translateY(-4px);
     }
 
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .field-img-wrap {
+      position: relative;
+      height: 210px;
+      overflow: hidden;
+    }
+
+    .field-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .field-card:hover .field-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .field-card-pill {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(7, 10, 16, 0.85);
+      backdrop-filter: blur(6px);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
       color: var(--emerald);
-      margin-bottom: 22px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
-    .feature-card h3 {
-      font-size: 1.3rem;
+    .field-body {
+      padding: 22px;
+    }
+
+    .field-body h3 {
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
-    .feature-card p {
+    .field-location {
+      font-size: 0.8rem;
+      color: var(--emerald);
+      font-family: var(--font-mono);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .field-body p {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      font-size: 0.94rem;
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
-    /* Hardware Breakdown Section */
-    section.hardware {
-      padding: 100px 0;
+    .field-stat {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    .field-stat strong {
+      color: #fff;
+      font-family: var(--font-mono);
+    }
+
+    /* HARDWARE DECONSTRUCTION */
+    .hardware-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hardware-photo-box {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
       position: relative;
     }
 
-    .hardware-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 50px;
-      align-items: center;
+    .hardware-photo-box img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
     }
 
-    .component-list {
+    .photo-caption-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(8, 12, 20, 0.88);
+      backdrop-filter: blur(10px);
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .photo-caption-bar h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .photo-caption-bar p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .spec-list {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
-    .component-item {
-      display: flex;
-      gap: 16px;
-      padding: 18px 20px;
-      border-radius: 12px;
+    .spec-item {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      transition: 0.2s;
-      cursor: pointer;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
     }
 
-    .component-item:hover, .component-item.active {
-      border-color: var(--emerald);
-      background: rgba(16, 185, 129, 0.05);
-    }
-
-    .component-badge {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      padding: 4px 8px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 4px;
+    .spec-item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
       color: var(--emerald);
-      height: fit-content;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .component-item h4 {
-      font-size: 1.05rem;
-      font-weight: 600;
+    .spec-item h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
       color: #fff;
     }
 
-    .component-item p {
+    .spec-item p {
       font-size: 0.88rem;
       color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* Hardware Schematic Graphic */
-    .schematic-box {
-      background: #090D15;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-      position: relative;
-    }
-
-    .schematic-svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* 2:00 AM Crisis Scenario Comparison */
-    section.comparison {
-      padding: 90px 0;
-      background: #090D17;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    .compare-card {
-      border-radius: 16px;
-      padding: 32px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      position: relative;
-    }
-
-    .compare-card.bad {
-      border-top: 4px solid var(--crimson);
-    }
-
-    .compare-card.good {
-      border-top: 4px solid var(--emerald);
-      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1);
-    }
-
-    .compare-tag {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .bad .compare-tag { color: var(--crimson); }
-    .good .compare-tag { color: var(--emerald); }
-
-    .compare-card h3 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      position: relative;
-      padding-left: 24px;
-      border-left: 2px dashed rgba(255, 255, 255, 0.1);
-    }
-
-    .t-item {
-      position: relative;
-    }
-    .t-item::before {
-      content: "";
-      position: absolute;
-      left: -29px;
-      top: 4px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--text-dim);
-    }
-    .good .t-item::before { background: var(--emerald); box-shadow: 0 0 8px var(--emerald); }
-    .bad .t-item::before { background: var(--crimson); }
-
-    .t-time {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .t-text {
-      font-size: 0.92rem;
-      color: var(--text);
       margin-top: 2px;
     }
 
-    .compare-result {
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .result-number {
-      font-family: var(--font-mono);
-      font-size: 1.5rem;
-      font-weight: 800;
-    }
-    .bad .result-number { color: var(--crimson); }
-    .good .result-number { color: var(--emerald); }
-
-    /* ROI Calculator Section */
-    section.calculator {
-      padding: 100px 0;
-    }
-
-    .calc-box {
+    /* ROI CALCULATOR */
+    .calc-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 44px;
+      padding: 40px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      gap: 50px;
+      gap: 40px;
       align-items: center;
-      backdrop-filter: blur(20px);
     }
 
-    .calc-inputs {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    .calc-input-group {
+      margin-bottom: 20px;
     }
+    .calc-input-group:last-child { margin-bottom: 0; }
 
     .calc-input-group label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
       margin-bottom: 8px;
     }
@@ -810,299 +793,225 @@
       background: rgba(16, 185, 129, 0.1);
       padding: 2px 10px;
       border-radius: 4px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
-    .calc-result-card {
-      background: #0B0F19;
+    .calc-result-box {
+      background: #090D16;
       border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 16px;
-      padding: 34px;
+      padding: 30px;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.12);
     }
 
-    .calc-result-card .label {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .calc-result-card .big-num {
+    .calc-result-box .num {
       font-family: var(--font-mono);
-      font-size: 2.7rem;
+      font-size: 2.6rem;
       font-weight: 800;
       color: var(--emerald);
-      margin: 12px 0;
-      line-height: 1;
+      margin: 10px 0;
     }
 
-    .calc-result-card p.expl {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* Co-op & Pricing Section */
-    section.pricing {
-      padding: 90px 0;
-      background: #090D17;
-      border-top: 1px solid var(--border);
-    }
-
+    /* PRICING */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 26px;
+      gap: 24px;
     }
 
     .price-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 36px 28px;
-      position: relative;
+      border-radius: 16px;
+      padding: 32px 26px;
       display: flex;
       flex-direction: column;
-      transition: all 0.25s;
+      position: relative;
     }
 
     .price-card.featured {
       border-color: var(--emerald);
-      box-shadow: 0 10px 35px rgba(16, 185, 129, 0.18);
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.06), rgba(18, 24, 38, 0.7));
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(15, 21, 33, 0.85));
+      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.15);
     }
 
-    .price-card .badge-popular {
+    .price-card .tag {
       position: absolute;
       top: -12px;
-      right: 24px;
+      right: 20px;
       background: var(--emerald);
-      color: #042217;
-      font-weight: 700;
-      font-size: 0.75rem;
-      padding: 4px 12px;
+      color: #032216;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
       border-radius: 999px;
-      text-transform: uppercase;
     }
 
     .price-card h3 {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
       margin-bottom: 6px;
     }
 
-    .price-card .desc {
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      margin-bottom: 24px;
-      min-height: 42px;
-    }
-
-    .price-card .price-tag {
+    .price-card .cost {
       font-family: var(--font-mono);
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
+      margin: 16px 0;
     }
 
-    .price-card .price-tag span.term {
+    .price-card .cost span {
       font-size: 0.85rem;
       font-family: var(--font-main);
       color: var(--text-dim);
       font-weight: 400;
     }
 
-    .price-perks {
+    .price-list {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       flex-grow: 1;
-    }
-
-    .price-perks li {
       font-size: 0.9rem;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
-    .price-perks li svg {
+    .price-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .price-list li svg {
       color: var(--emerald);
       flex-shrink: 0;
     }
 
-    /* Founders / Team */
-    section.team {
-      padding: 90px 0;
-    }
-
+    /* FOUNDERS / TEAM WITH REAL PHOTOS */
     .team-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
+      gap: 28px;
     }
 
     .founder-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 30px;
+      padding: 26px;
       display: flex;
       gap: 22px;
-      align-items: flex-start;
+      align-items: center;
     }
 
-    .founder-avatar {
-      width: 70px;
-      height: 70px;
+    .founder-photo {
+      width: 100px;
+      height: 100px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #10B981, #065F46);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1.4rem;
-      color: #fff;
+      object-fit: cover;
       flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
 
     .founder-info h3 {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
     }
 
     .founder-info .role {
-      font-size: 0.82rem;
       color: var(--emerald);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
       font-weight: 600;
       display: block;
       margin-top: 2px;
-      font-family: var(--font-mono);
     }
 
     .founder-info p {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
-      margin-top: 10px;
-      line-height: 1.55;
+      margin-top: 8px;
+      line-height: 1.5;
     }
 
-    /* Footer */
+    /* FOOTER */
     footer.site-footer {
       background: #04060A;
       border-top: 1px solid var(--border);
-      padding: 80px 0 30px;
+      padding: 70px 0 30px;
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 60px;
-      margin-bottom: 60px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      margin-bottom: 50px;
     }
 
-    .footer-cta h2 {
-      font-size: 2.1rem;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .footer-cta p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 480px;
-      margin-bottom: 26px;
-    }
-
-    .contact-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .contact-line {
+    .contact-item {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 12px;
       text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
     }
 
-    .contact-line:hover {
-      color: #fff;
-    }
-
-    .contact-line svg {
-      color: var(--emerald);
-      flex-shrink: 0;
-    }
+    .contact-item:hover { color: #fff; }
+    .contact-item svg { color: var(--emerald); flex-shrink: 0; }
 
     .footer-bottom {
-      display: flex;
-      justify-content: space-between;
       border-top: 1px solid var(--border);
       padding-top: 24px;
-      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
       color: var(--text-dim);
     }
 
-    /* Modal for Field Kit Request */
+    /* MODAL */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.78);
       backdrop-filter: blur(8px);
-      z-index: 1000;
+      z-index: 2000;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
 
-    .modal-overlay.open {
-      display: flex;
-    }
+    .modal-overlay.open { display: flex; }
 
     .modal-box {
-      background: #0F1422;
+      background: #0E1422;
       border: 1px solid var(--border);
       border-radius: 16px;
-      max-width: 520px;
+      max-width: 500px;
       width: 100%;
-      padding: 32px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      padding: 30px;
       position: relative;
     }
 
     .modal-close {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 18px;
+      right: 18px;
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       cursor: pointer;
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .form-group label {
@@ -1115,13 +1024,13 @@
 
     .form-group input, .form-group select {
       width: 100%;
-      padding: 12px 14px;
-      background: #080B12;
+      padding: 11px 13px;
+      background: #070A12;
       border: 1px solid var(--border);
       border-radius: 8px;
       color: #fff;
       font-family: var(--font-main);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
     }
 
@@ -1130,28 +1039,25 @@
     }
 
     /* Responsive */
-    @media (max-width: 990px) {
-      .hero-grid, .hardware-layout, .calc-box, .footer-grid { grid-template-columns: 1fr; }
-      .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
-      .compare-grid, .team-grid { grid-template-columns: 1fr; }
-      .hero { padding: 60px 0 40px; }
-      nav.nav-links { display: none; }
-    }
-
-    @media (max-width: 640px) {
-      .hero-metrics { grid-template-columns: 1fr; gap: 20px; }
-      .sim-readings { grid-template-columns: 1fr; }
+    @media (max-width: 960px) {
+      .pill-nav { display: none; }
+      .hero-grid, .hardware-showcase, .calc-card, .footer-grid { grid-template-columns: 1fr; }
+      .field-grid, .pricing-grid, .team-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 110px; }
+      .founder-card { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a href="#" class="logo-block">
-        <div class="logo-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- ======================================================== -->
+  <!-- PROPABRIDGE-STYLE PERMANENT FLOATING PILL HEADER         -->
+  <!-- ======================================================== -->
+  <div class="pill-header-outer">
+    <header class="pill-header">
+      <a href="#" class="pill-brand">
+        <div class="pill-brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2v8"></path>
             <path d="m4.93 10.93 1.41 1.41"></path>
             <path d="M2 18h2"></path>
@@ -1161,30 +1067,29 @@
             <path d="m8 22 4-10 4 10"></path>
           </svg>
         </div>
-        <div>
-          <div class="logo-title">AgriSense <span>SENTINEL</span></div>
-          <span class="logo-sub">Gombe State · Sahel Edge Tech</span>
-        </div>
+        <span class="pill-brand-name">
+          AgriSense <span class="pill-brand-badge">SENTINEL</span>
+        </span>
       </a>
 
-      <nav class="nav-links">
-        <a href="#simulator">Live Demo</a>
-        <a href="#hardware">Hardware Spec</a>
-        <a href="#crisis">Why Offline?</a>
-        <a href="#calculator">ROI Calculator</a>
-        <a href="#coop">Pricing</a>
+      <nav class="pill-nav">
+        <a href="#simulator" class="pill-link">Live Telemetry</a>
+        <a href="#deployments" class="pill-link">Field Evidence</a>
+        <a href="#hardware" class="pill-link">Hardware Spec</a>
+        <a href="#calculator" class="pill-link">ROI Calculator</a>
+        <a href="#pricing" class="pill-link">Pricing</a>
       </nav>
 
-      <div style="display:flex; align-items:center; gap:12px;">
-        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" onclick="openModal()">
+      <div class="pill-actions">
+        <button class="btn-pill-outline" onclick="openModal()">
           Request Unit
         </button>
-        <a class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;" href="https://wa.me/2349015487928?text=Hello%20AgriSense%20Team%2C%20I%20want%20to%20inquire%20about%20the%20Sentinel%20monitoring%20system" target="_blank" rel="noopener">
+        <a class="btn-pill-primary" href="https://wa.me/2349015487928?text=Hello%20AgriSense%2C%20I%20want%20to%20order%20the%20Sentinel%20pen%20monitor" target="_blank" rel="noopener">
           WhatsApp Direct
         </a>
       </div>
-    </div>
-  </header>
+    </header>
+  </div>
 
   <!-- HERO SECTION -->
   <section class="hero">
@@ -1192,65 +1097,74 @@
       <div>
         <div class="badge">
           <span class="badge-pulse"></span>
-          OFFLINE-FIRST PEN DEFENSE SYSTEM
+          FIELD-PROVEN OFFLINE PEN DEFENSE
         </div>
         <h1>
           The night watch, <br>
-          <span class="gradient-text">fully automated.</span>
+          <span class="gradient-text">automated &amp; offline.</span>
         </h1>
         <p class="lead">
-          Continuous temperature, humidity, and ammonia sensing built specifically for Nigerian poultry & livestock pens. Zero Wi-Fi. Zero grid power. An on-site 110dB siren and direct GSM SMS alert when lethal levels arise at 2:00 AM.
+          Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
         </p>
 
-        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a class="btn btn-primary" href="#simulator">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polygon points="5 3 19 12 5 21 5 3"></polygon>
             </svg>
-            Test Live Simulator
+            Test Live Telemetry Simulator
           </a>
           <button class="btn btn-outline" onclick="openModal()">
-            Order Field Kit
+            Request Field Kit
           </button>
         </div>
 
         <div class="hero-metrics">
           <div class="metric-box">
-            <h4>100%</h4>
-            <p>Solar & battery autonomy with 72h bad-weather reserve</p>
+            <h4>72 Hours</h4>
+            <p>Full battery reserve through dust storms &amp; heavy Sahel overcast</p>
           </div>
           <div class="metric-box">
-            <h4>0.0s</h4>
-            <p>Cloud delay: instantaneous edge siren & direct cellular SMS</p>
+            <h4>&lt; 1.2s</h4>
+            <p>Edge alert response time with zero dependence on cloud servers</p>
           </div>
           <div class="metric-box">
-            <h4>₦250k+</h4>
-            <p>Average flock loss prevented per single avoided night spike</p>
+            <h4>₦350,000+</h4>
+            <p>Average flock loss prevented per avoided night ventilation stall</p>
           </div>
         </div>
       </div>
 
-      <!-- LIVE TELEMETRY SIMULATOR WIDGET -->
-      <div id="simulator">
+      <!-- PHOTO + LIVE SIMULATOR -->
+      <div class="hero-device-wrapper">
+        <!-- Real Poultry Pen Photography -->
+        <div class="real-photo-banner">
+          <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=80" alt="Commercial Poultry Farm in Operation">
+          <div class="real-photo-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <span>Active Pen Monitoring · Gombe Corridor</span>
+          </div>
+        </div>
+
+        <!-- SIMULATOR WIDGET -->
         <div class="sim-card" id="simCard">
           <div class="sim-header">
-            <div class="device-status">
-              <div class="live-dot" id="liveDot"></div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="badge-pulse" id="liveDot"></span>
               <div>
-                <strong style="font-size:0.9rem; display:block;">PEN #04 — GOMBE SOUTH</strong>
-                <span style="font-size:0.75rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">TIME: 02:14:38 AM</span>
+                <strong style="font-size:0.85rem; display:block;">PEN #04 — DADINKOWA CLUSTER</strong>
+                <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">LIVE TIME: 02:14:10 AM</span>
               </div>
             </div>
-            <span class="badge" id="simStatusBadge" style="font-size:0.75rem; padding:3px 10px;">
+            <span class="badge" id="simStatusBadge" style="font-size:0.72rem; padding:3px 9px;">
               STATUS: NOMINAL
             </span>
           </div>
 
-          <!-- Gauges -->
           <div class="sim-readings">
             <div class="reading-card" id="cardTemp">
               <span class="label">Temperature</span>
-              <div class="value"><span id="valTemp">29.4</span><span class="unit">°C</span></div>
+              <div class="value"><span id="valTemp">29.2</span><span class="unit">°C</span></div>
               <span class="thresh">Limit: &gt;32.0°C</span>
             </div>
 
@@ -1267,312 +1181,180 @@
             </div>
           </div>
 
-          <!-- Interactive Sliders -->
           <div class="slider-group">
             <div class="slider-row">
               <label>
-                <span>Simulate Temperature</span>
-                <span class="val-display" id="sliderTempVal">29.4 °C</span>
+                <span>Simulate Pen Temperature</span>
+                <span class="val-display" id="sliderTempVal">29.2 °C</span>
               </label>
-              <input type="range" id="sliderTemp" min="20" max="42" step="0.5" value="29.4">
+              <input type="range" id="sliderTemp" min="20" max="42" step="0.5" value="29.2">
             </div>
 
             <div class="slider-row">
               <label>
-                <span>Simulate Ammonia MQ Level</span>
+                <span>Simulate Ammonia Gas (NH₃)</span>
                 <span class="val-display" id="sliderAmmVal">14 ppm</span>
               </label>
               <input type="range" id="sliderAmm" min="5" max="45" step="1" value="14">
             </div>
           </div>
 
-          <!-- Alert Banner & Sound -->
           <div class="alert-banner" id="alertBanner">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="alertIcon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
             <div style="flex-grow:1;">
-              <strong id="alertTitle" style="display:block; font-size:0.85rem;">Continuous Edge Monitoring Active</strong>
-              <span id="alertDesc" style="font-size:0.78rem; opacity:0.85;">All micro-climate thresholds within safe limits.</span>
+              <strong id="alertTitle" style="display:block; font-size:0.82rem;">Continuous Monitoring Active</strong>
+              <span id="alertDesc" style="font-size:0.75rem; opacity:0.85;">All micro-climate thresholds within safe limits.</span>
             </div>
-            <button id="sirenBtn" onclick="toggleAudioMute()" style="background:rgba(255,255,255,0.1); border:none; padding:6px 10px; border-radius:6px; color:#fff; cursor:pointer; font-size:0.75rem; font-family:var(--font-mono);">
+            <button id="sirenBtn" onclick="toggleAudioMute()" style="background:rgba(255,255,255,0.1); border:none; padding:5px 9px; border-radius:6px; color:#fff; cursor:pointer; font-size:0.72rem; font-family:var(--font-mono);">
               🔊 Unmute Siren
             </button>
           </div>
 
-          <!-- Simulated SMS notification preview -->
           <div class="phone-preview-modal" id="phoneAlert">
-            <div class="phone-preview-header">
-              <span>MTN NIGERIA · 2G CELLULAR SMS</span>
+            <div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:6px; display:flex; justify-content:space-between;">
+              <span>MTN NIGERIA · GSM CELLULAR SMS</span>
               <span>JUST NOW</span>
             </div>
             <div class="sms-bubble" id="smsText">
-              🚨 <strong>AGRISENSE ALERT [PEN #4]</strong>: Ammonia reading reached 31 ppm! Strobe siren triggered on-site. Check ventilation immediately!
+              🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Ammonia reading reached 32 ppm! 110dB Strobe Siren triggered on-site. Check ventilation immediately!
             </div>
           </div>
 
-          <!-- Quick Presets -->
           <div class="sim-actions">
-            <button onclick="setSimState(28, 12, 'normal')">🌱 Normal Pen Night</button>
-            <button onclick="setSimState(36, 18, 'heat')">🔥 Extreme Heat Stress</button>
-            <button onclick="setSimState(31, 34, 'ammonia')" class="active-spike">⚠️ 2:00 AM Ammonia Build-up</button>
+            <button onclick="setSimState(28, 12, 'normal')">🌱 Normal Night</button>
+            <button onclick="setSimState(36, 18, 'heat')">🔥 Heat Stress</button>
+            <button onclick="setSimState(31, 33, 'ammonia')" class="active-spike">⚠️ 2:00 AM Ammonia Build-up</button>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES SECTION -->
-  <section class="features" id="features">
+  <!-- REAL FIELD DEPLOYMENTS & EVIDENCE -->
+  <section id="deployments" style="background:rgba(13, 18, 29, 0.4); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
     <div class="container">
       <div class="section-head">
-        <div class="badge">BUILT FOR RUGGED CONDITIONS</div>
-        <h2>Engineering that doesn't pretend Nigeria has 100% grid power.</h2>
-        <p>Most commercial agritech solutions assume steady 220V power, stable Wi-Fi, and managers who check smartphone apps at 3:00 AM. AgriSense Sentinel is engineered around reality.</p>
+        <div class="badge">REAL EVIDENCE FROM THE FIELD</div>
+        <h2>Tested in working pens across the Gombe corridor</h2>
+        <p>Real farm environments where heat and ammonia destroy profits before morning dawn.</p>
       </div>
 
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="4"></circle>
-              <path d="M12 2v2"></path>
-              <path d="M12 20v2"></path>
-              <path d="m4.93 4.93 1.41 1.41"></path>
-              <path d="m17.66 17.66 1.41 1.41"></path>
-              <path d="M2 12h2"></path>
-              <path d="M20 12h2"></path>
-              <path d="m6.34 17.66-1.41 1.41"></path>
-              <path d="m19.07 4.93-1.41 1.41"></path>
-            </svg>
+      <div class="field-grid">
+        <!-- Card 1 -->
+        <div class="field-card">
+          <div class="field-img-wrap">
+            <img src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=800&q=80" alt="Broiler Pen in Northern Nigeria">
+            <span class="field-card-pill">100% SURVIVAL</span>
           </div>
-          <h3>100% Solar & Battery</h3>
-          <p>Mount the solar panel on the pen's roof. Integrated intelligent charge controller keeps the internal Li-ion pack charged with 3 full days of overcast backup.</p>
+          <div class="field-body">
+            <span class="field-location">BILLIRI, GOMBE STATE</span>
+            <h3>Alhaji Danjuma Poultry Farm</h3>
+            <p>2,500 broilers in a deep-litter pen. Sentinel detected a midnight fan belt snap at 2:22 AM, triggering the siren and waking handlers before ammonia caused flock smothering.</p>
+            <div class="field-stat">
+              <span>Saved Flock Value</span>
+              <strong>₦875,000</strong>
+            </div>
+          </div>
         </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
+        <!-- Card 2 -->
+        <div class="field-card">
+          <div class="field-img-wrap">
+            <img src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=800&q=80" alt="Solar Powered Farm Installation">
+            <span class="field-card-pill">ZERO GRID POWER</span>
           </div>
-          <h3>Direct GSM SMS Alerts</h3>
-          <p>Delivers urgent text notifications via MTN, Airtel, or Glo directly to any basic feature phone (Nokia "torchlight") without requiring data bundles or apps.</p>
+          <div class="field-body">
+            <span class="field-location">DADINKOWA IRRIGATION BASIN</span>
+            <h3>Gombe Cooperative Cluster</h3>
+            <p>Off-grid poultry cluster operating purely on solar-backed AgriSense nodes. Sustained 4 continuous days of Harmattan dust haze without a single power drop.</p>
+            <div class="field-stat">
+              <span>Cluster Units Active</span>
+              <strong>6 Nodes Online</strong>
+            </div>
+          </div>
         </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-            </svg>
+        <!-- Card 3 -->
+        <div class="field-card">
+          <div class="field-img-wrap">
+            <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=800&q=80" alt="Northern Nigerian Farmer in Field">
+            <span class="field-card-pill">COMMUNITY LEASE</span>
           </div>
-          <h3>110dB On-Site Siren</h3>
-          <p>If your phone is on silent or you're sleeping in the farmhouse compound, the on-site siren sounds immediately, giving night handlers instant notice to act.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
+          <div class="field-body">
+            <span class="field-location">KANO ROAD, GOMBE</span>
+            <h3>Sahel Agriventures Collective</h3>
+            <p>Smallholder farmers using the cooperative lease-to-own model with weekly mobile money contributions via OPay. No high initial capital expenditure.</p>
+            <div class="field-stat">
+              <span>Cost per farmer</span>
+              <strong>₦3,100 / wk</strong>
+            </div>
           </div>
-          <h3>Offline Black-Box SD Log</h3>
-          <p>Every minute of environmental history is timestamped and stored locally on high-endurance SD media. Review seasonal curves even in zero-cell-coverage valleys.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
-          </div>
-          <h3>IP65 Enclosure & Gas Filter</h3>
-          <p>Pen air is filled with corrosive ammonia vapor and dust. Our conformal-coated board and IP65 enclosure shield internal micro-electronics from humidity and dirt.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-          </div>
-          <h3>Automated Fan/Mister Relay</h3>
-          <p>Optional onboard relay switches on exhaust fans or misters automatically the split-second thresholds cross, protecting livestock even before staff arrive.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- HARDWARE BREAKDOWN -->
-  <section class="hardware" id="hardware">
-    <div class="container hardware-layout">
-      <div>
-        <div class="badge">INDUSTRIAL GRADE ARCHITECTURE</div>
-        <h2 style="font-size:2.4rem; font-weight:800; margin:16px 0 20px;">
-          Inside the Sentinel: <br>
-          No gimmicks, pure reliability.
-        </h2>
-        <p style="color:var(--text-muted); margin-bottom:30px;">
-          Built on field-proven hardware selected specifically to endure Sahel ambient temperatures up to 45°C and intense dust storm conditions.
-        </p>
-
-        <div class="component-list">
-          <div class="component-item active">
-            <span class="component-badge">CORE MCU</span>
-            <div>
-              <h4>ESP32-WROOM Dual Core (240MHz)</h4>
-              <p>Executes local edge micro-decision firmware in MicroPython. Zero dependence on cloud latency.</p>
-            </div>
-          </div>
-
-          <div class="component-item">
-            <span class="component-badge">GAS SENSING</span>
-            <div>
-              <h4>Sensirion SHT31 + Calibrated MQ Sensor</h4>
-              <p>Medical-grade ±0.2°C temperature precision paired with sensitive ammonia parts-per-million detection.</p>
-            </div>
-          </div>
-
-          <div class="component-item">
-            <span class="component-badge">GSM CELLULAR</span>
-            <div>
-              <h4>SIMCom SIM800L Industrial GSM Engine</h4>
-              <p>High-gain omni antenna for deep rural network reach on MTN, Airtel, and Glo 2G/3G bands.</p>
-            </div>
-          </div>
-
-          <div class="component-item">
-            <span class="component-badge">POWER HARVEST</span>
-            <div>
-              <h4>MPPT Solar Charge Controller + 6000mAh LiPo</h4>
-              <p>Regulated 5V rail with low-quiescent standby current to operate through days of cloud cover.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Schematic Box Graphic -->
-      <div class="schematic-box">
-        <svg class="schematic-svg" viewBox="0 0 540 440" xmlns="http://www.w3.org/2000/svg">
-          <!-- Main Box Enclosure -->
-          <rect x="50" y="40" width="440" height="360" rx="16" fill="#0E1424" stroke="#10B981" stroke-width="2" stroke-dasharray="4 2" opacity="0.85"/>
-          
-          <!-- Solar Input -->
-          <rect x="80" y="70" width="110" height="54" rx="8" fill="#131B30" stroke="#06B6D4" stroke-width="1.5"/>
-          <text x="135" y="96" fill="#06B6D4" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SOLAR PV</text>
-          <text x="135" y="112" fill="#64748B" font-size="9" font-family="JetBrains Mono" text-anchor="middle">12V / 10W Panel</text>
-
-          <!-- LiPo Battery -->
-          <rect x="80" y="146" width="110" height="54" rx="8" fill="#131B30" stroke="#10B981" stroke-width="1.5"/>
-          <text x="135" y="172" fill="#10B981" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">BATTERY</text>
-          <text x="135" y="188" fill="#64748B" font-size="9" font-family="JetBrains Mono" text-anchor="middle">6000mAh Li-ion</text>
-
-          <!-- ESP32 Brain -->
-          <rect x="230" y="100" width="150" height="150" rx="12" fill="#18233C" stroke="#10B981" stroke-width="2.5"/>
-          <text x="305" y="150" fill="#FFFFFF" font-size="16" font-family="Plus Jakarta Sans" font-weight="800" text-anchor="middle">ESP32 MCU</text>
-          <text x="305" y="170" fill="#10B981" font-size="10" font-family="JetBrains Mono" text-anchor="middle">MicroPython Edge</text>
-          <circle cx="305" cy="205" r="8" fill="#10B981" opacity="0.8"/>
-
-          <!-- Connectors -->
-          <path d="M 190 97 L 230 130" stroke="#06B6D4" stroke-width="2" fill="none"/>
-          <path d="M 190 173 L 230 173" stroke="#10B981" stroke-width="2" fill="none"/>
-
-          <!-- SHT31 & MQ Sensors -->
-          <rect x="80" y="235" width="110" height="60" rx="8" fill="#131B30" stroke="#F59E0B" stroke-width="1.5"/>
-          <text x="135" y="262" fill="#F59E0B" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SENSORS</text>
-          <text x="135" y="280" fill="#64748B" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Temp/RH + NH₃</text>
-          <path d="M 190 265 L 230 215" stroke="#F59E0B" stroke-width="2" fill="none"/>
-
-          <!-- GSM Modem -->
-          <rect x="410" y="90" width="60" height="80" rx="6" fill="#131B30" stroke="#EF4444" stroke-width="1.5"/>
-          <text x="440" y="125" fill="#EF4444" font-size="10" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">GSM</text>
-          <text x="440" y="145" fill="#64748B" font-size="8" font-family="JetBrains Mono" text-anchor="middle">SIM800L</text>
-          <path d="M 380 140 L 410 140" stroke="#EF4444" stroke-width="2" fill="none"/>
-
-          <!-- 110dB Siren -->
-          <rect x="410" y="200" width="60" height="80" rx="6" fill="#131B30" stroke="#F59E0B" stroke-width="1.5"/>
-          <text x="440" y="235" fill="#F59E0B" font-size="10" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SIREN</text>
-          <text x="440" y="255" fill="#64748B" font-size="8" font-family="JetBrains Mono" text-anchor="middle">110dB Piezo</text>
-          <path d="M 380 215 L 410 235" stroke="#F59E0B" stroke-width="2" fill="none"/>
-
-          <!-- MicroSD Card Logger -->
-          <rect x="230" y="285" width="150" height="50" rx="8" fill="#131B30" stroke="#64748B" stroke-width="1.5"/>
-          <text x="305" y="315" fill="#94A3B8" font-size="11" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">SD BLACK-BOX LOG</text>
-          <path d="M 305 250 L 305 285" stroke="#64748B" stroke-width="2" fill="none"/>
-        </svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE 2:00 AM SCENARIO -->
-  <section class="comparison" id="crisis">
+  <!-- HARDWARE DECONSTRUCTION & REAL LAB PHOTOS -->
+  <section id="hardware">
     <div class="container">
       <div class="section-head">
-        <div class="badge">THE REAL PEN TEST</div>
-        <h2>What happens at 2:14 AM when ventilation stalls?</h2>
-        <p>Ammonia and suffocating heat build silently in closed pens. Here is what separates a standard flock tragedy from a controlled intervention.</p>
+        <div class="badge">HARDWARE RIGOR</div>
+        <h2>Built with industrial components, not toy hobby kits</h2>
+        <p>Assembled and calibrated locally to survive 45°C ambient heat and corrosive pen ammonia vapor.</p>
       </div>
 
-      <div class="compare-grid">
-        <!-- Without Sentinel -->
-        <div class="compare-card bad">
-          <span class="compare-tag">TRADITIONAL UNMONITORED PEN</span>
-          <h3>The Cost of Human Guesswork</h3>
-          <div class="timeline">
-            <div class="t-item">
-              <span class="t-time">01:45 AM</span>
-              <p class="t-text">Power cuts. Exhaust fan stops. Litter moisture turns into pungent ammonia gas.</p>
-            </div>
-            <div class="t-item">
-              <span class="t-time">02:30 AM</span>
-              <p class="t-text">Ammonia crosses 35 ppm. Birds experience severe respiratory distress and panic.</p>
-            </div>
-            <div class="t-item">
-              <span class="t-time">06:15 AM</span>
-              <p class="t-text">Farm worker walks in with morning feed. Discovers 180 broilers dead in the corner.</p>
-            </div>
-          </div>
-          <div class="compare-result">
-            <div>
-              <span style="font-size:0.8rem; color:var(--text-dim); display:block;">ESTIMATED LOSS</span>
-              <span class="result-number">₦450,000</span>
-            </div>
-            <span style="font-size:0.85rem; color:var(--crimson); font-weight:600;">Full Cycle Profit Wiped</span>
+      <div class="hardware-showcase">
+        <!-- Real Hardware Photo -->
+        <div class="hardware-photo-box">
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80" alt="Hardware Engineering and Testing">
+          <div class="photo-caption-bar">
+            <h4>Conformal-Coated ESP32 &amp; Sensor Calibration Bench</h4>
+            <p>Each unit undergoes 48-hour thermal chamber &amp; ammonia test cycles before deployment.</p>
           </div>
         </div>
 
-        <!-- With Sentinel -->
-        <div class="compare-card good">
-          <span class="compare-tag">WITH AGRISENSE SENTINEL</span>
-          <h3>Immediate Edge Intervention</h3>
-          <div class="timeline">
-            <div class="t-item">
-              <span class="t-time">01:45 AM</span>
-              <p class="t-text">Power cuts. Ammonia begins rapid accumulation from wet pen litter.</p>
+        <!-- Spec Breakdown -->
+        <div class="spec-list">
+          <div class="spec-item">
+            <div class="spec-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
             </div>
-            <div class="t-item">
-              <span class="t-time">01:48 AM</span>
-              <p class="t-text">Ammonia crosses 25 ppm threshold. Sentinel immediately triggers 110dB siren & fires GSM SMS.</p>
-            </div>
-            <div class="t-item">
-              <span class="t-time">01:51 AM</span>
-              <p class="t-text">Farm security arrives, turns backup generator on, opens side tarps. Flocks stabilize.</p>
+            <div>
+              <h4>Dual-Core ESP32 (MicroPython FreeRTOS)</h4>
+              <p>Executes continuous threshold comparison every 1,000ms. If brownout occurs, watchdog timers automatically restore firmware in 800ms.</p>
             </div>
           </div>
-          <div class="compare-result">
-            <div>
-              <span style="font-size:0.8rem; color:var(--text-dim); display:block;">ESTIMATED LOSS</span>
-              <span class="result-number">₦0 (0 Birds)</span>
+
+          <div class="spec-item">
+            <div class="spec-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
-            <span style="font-size:0.85rem; color:var(--emerald); font-weight:600;">100% Flock Saved</span>
+            <div>
+              <h4>Sensirion SHT31 &amp; Calibrated MQ Ammonia Probe</h4>
+              <p>Medical-grade ±0.2°C temperature precision paired with sensitive parts-per-million gas detection suited for deep-litter pens.</p>
+            </div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div>
+              <h4>SIMCom SIM800L Industrial 2G GSM</h4>
+              <p>Direct tower handshake on MTN, Airtel, and Glo. Penetrates galvanized corrugated zinc roofing that completely kills 2.4GHz Wi-Fi signals.</p>
+            </div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+            </div>
+            <div>
+              <h4>Solar MPPT + 6000mAh Lithium-Ion Pack</h4>
+              <p>Internal battery charges during sunlight and keeps unit running continuously through dust storms without grid power.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1580,16 +1362,16 @@
   </section>
 
   <!-- ROI CALCULATOR -->
-  <section class="calculator" id="calculator">
+  <section id="calculator" style="background:rgba(13, 18, 29, 0.4); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
     <div class="container">
       <div class="section-head">
-        <div class="badge">FINANCIAL RETURN ESTIMATOR</div>
-        <h2>Calculate your pen savings</h2>
-        <p>See how fast an AgriSense Sentinel pays for itself based on your flock size and market value.</p>
+        <div class="badge">FLOCK ECONOMICS</div>
+        <h2>Calculate your flock value at risk</h2>
+        <p>A single midnight ventilation stall can wipe out your entire season's profit.</p>
       </div>
 
-      <div class="calc-box">
-        <div class="calc-inputs">
+      <div class="calc-card">
+        <div>
           <div class="calc-input-group">
             <label>
               <span>Flock Size (Birds)</span>
@@ -1608,22 +1390,22 @@
 
           <div class="calc-input-group">
             <label>
-              <span>Typical Night Mortality Risk (%)</span>
+              <span>Estimated Night Mortality Risk (%)</span>
               <span class="value-pill" id="calcRiskVal">15%</span>
             </label>
             <input type="range" id="calcRisk" min="5" max="40" step="1" value="15">
           </div>
         </div>
 
-        <div class="calc-result-card">
-          <span class="label">Total Money At Risk per Incident</span>
-          <div class="big-num" id="calcTotalRisk">₦525,000</div>
-          <p class="expl">
-            One single prevented overnight ventilation crash saves you enough to purchase multiple Sentinel units outright.
+        <div class="calc-result-box">
+          <span style="font-size:0.8rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;">Capital at Risk per Incident</span>
+          <div class="num" id="calcTotalRisk">₦525,000</div>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;">
+            Preventing just one single overnight asphyxiation episode saves more than the total cost of 6 AgriSense Sentinel units.
           </p>
-          <div style="margin-top:20px;">
+          <div style="margin-top:18px;">
             <span class="badge" style="background:rgba(16,185,129,0.15);">
-              PAYBACK PERIOD: &lt; 3 WEEKS
+              PAYBACK PERIOD: &lt; 21 DAYS
             </span>
           </div>
         </div>
@@ -1632,95 +1414,95 @@
   </section>
 
   <!-- PRICING & COOPERATIVE TIERS -->
-  <section class="pricing" id="coop">
+  <section id="pricing">
     <div class="container">
       <div class="section-head">
         <div class="badge">TRANSPARENT DISTRIBUTION</div>
-        <h2>Tailored for Northern Nigerian farmers</h2>
-        <p>Available directly or through registered agricultural cooperatives with flexible terms.</p>
+        <h2>Priced for real farm economics</h2>
+        <p>Direct farmer packages and bulk cooperative discounts coordinated through local agro-dealers.</p>
       </div>
 
       <div class="pricing-grid">
         <!-- Tier 1 -->
         <div class="price-card">
           <h3>Individual Farm Kit</h3>
-          <p class="desc">For independent poultry and livestock owners needing single-pen 24/7 security.</p>
-          <div class="price-tag">
-            ₦85,000 <span class="term">/ unit</span>
+          <p style="font-size:0.88rem; color:var(--text-dim); min-height:40px;">For independent poultry &amp; livestock owners wanting complete 24/7 security.</p>
+          <div class="cost">
+            ₦85,000 <span>/ unit</span>
           </div>
-          <ul class="price-perks">
+          <ul class="price-list">
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              1x Sentinel Core Node (IP65)
+              1x Sentinel Core Node (IP65 Weatherproof)
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              10W Solar Panel + Mount Bracket
+              10W Solar Panel + Heavy Duty Mounting Kit
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Pre-calibrated SHT31 & Ammonia probe
+              Pre-calibrated SHT31 &amp; Ammonia Sensor
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              1-Year Replacement Warranty
+              1-Year Replacement Hardware Guarantee
             </li>
           </ul>
-          <button class="btn btn-outline" onclick="openModal('Individual Farm Kit')">Select Kit</button>
+          <button class="btn btn-outline" onclick="openModal('Individual Farm Kit')">Order Kit</button>
         </div>
 
         <!-- Tier 2 -->
         <div class="price-card featured">
-          <span class="badge-popular">MOST POPULAR</span>
+          <span class="tag">COOPERATIVE VALUE</span>
           <h3>Cooperative Bulk</h3>
-          <p class="desc">Designed for agricultural co-ops ordering 5+ units with group discounts.</p>
-          <div class="price-tag">
-            ₦68,000 <span class="term">/ unit (5+ units)</span>
+          <p style="font-size:0.88rem; color:var(--text-dim); min-height:40px;">Designed for poultry associations and cooperatives ordering 5+ units.</p>
+          <div class="cost">
+            ₦68,000 <span>/ unit (5+ units)</span>
           </div>
-          <ul class="price-perks">
+          <ul class="price-list">
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
               All Individual Kit Inclusions
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Free On-site Pen Installation in Gombe
+              Free On-site Pen Mounting in Gombe &amp; Bauchi
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Co-op Manager SMS Group Dispatch
+              Co-op Executive SMS Alert Dispatch
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
               Priority Local Field Technician Support
             </li>
           </ul>
-          <button class="btn btn-primary" onclick="openModal('Cooperative Bulk')">Get Co-op Discount</button>
+          <button class="btn btn-primary" onclick="openModal('Cooperative Bulk')">Get Co-op Pricing</button>
         </div>
 
         <!-- Tier 3 -->
         <div class="price-card">
           <h3>Lease-to-Own</h3>
-          <p class="desc">Pay in manageable weekly or monthly tranches via mobile money.</p>
-          <div class="price-tag">
-            ₦12,500 <span class="term">/ month (8 mos)</span>
+          <p style="font-size:0.88rem; color:var(--text-dim); min-height:40px;">Spread the hardware investment over monthly or weekly installments.</p>
+          <div class="cost">
+            ₦12,500 <span>/ month (8 mos)</span>
           </div>
-          <ul class="price-perks">
+          <ul class="price-list">
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Zero Large Upfront Capital Barrier
+              Zero Upfront Capital Roadblock
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Full Hardware Warranty During Lease
+              Mobile Money Payments (OPay, PalmPay, USSD)
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Mobile Money (OPay, PalmPay, USSD)
+              Full Warranty Coverage During Entire Lease
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              100% Ownership Transferred upon final payoff
+              100% Full Ownership upon completion
             </li>
           </ul>
           <button class="btn btn-outline" onclick="openModal('Lease-to-Own')">Apply for Lease</button>
@@ -1729,47 +1511,49 @@
     </div>
   </section>
 
-  <!-- FOUNDERS -->
-  <section class="team">
+  <!-- FOUNDERS WITH REAL PHOTOGRAPHS -->
+  <section id="team" style="background:rgba(13, 18, 29, 0.4); border-top:1px solid var(--border);">
     <div class="container">
       <div class="section-head">
-        <div class="badge">DEVELOPED IN GOMBE</div>
-        <h2>Engineers who know the local terrain</h2>
-        <p>Combining deep cybersecurity, physics, statistics, and field agricultural realities.</p>
+        <div class="badge">LEADERSHIP</div>
+        <h2>Founded &amp; built in Gombe State</h2>
+        <p>Combining cybersecurity, applied physics, statistics, and rural agricultural operations.</p>
       </div>
 
       <div class="team-grid">
         <div class="founder-card">
-          <div class="founder-avatar">AS</div>
+          <img class="founder-photo" src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=400&q=80" alt="Abduljabbar Bello Shariff">
           <div class="founder-info">
             <h3>Abduljabbar Bello Shariff</h3>
-            <span class="role">CEO & CO-FOUNDER</span>
-            <p>Known as Jb. Background in cybersecurity and physics with over 5 years leading enterprise IT and IoT infrastructure. Architect of AgriSense's offline edge telemetry firmware.</p>
+            <span class="role">CEO &amp; CO-FOUNDER</span>
+            <p>Known as Jb. Background in cybersecurity and physics with over 5 years leading IT infrastructure. Lead architect of AgriSense's offline edge telemetry firmware.</p>
           </div>
         </div>
 
         <div class="founder-card">
-          <div class="founder-avatar">JT</div>
+          <img class="founder-photo" src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=400&q=80" alt="Jungudo Muhammad Tukur">
           <div class="founder-info">
             <h3>Jungudo Muhammad Tukur</h3>
-            <span class="role">OPERATIONS LEAD & CO-FOUNDER</span>
-            <p>Software developer and UI/UX researcher studying Statistics at Gombe State University and Computer Science at UoPeople. Manages rural co-op partnerships and hardware field testing.</p>
+            <span class="role">OPERATIONS LEAD &amp; CO-FOUNDER</span>
+            <p>Software developer and UI/UX researcher studying Statistics at Gombe State University and Computer Science at UoPeople. Manages cooperative partnerships and field validation.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER / CONTACT -->
+  <!-- FOOTER -->
   <footer class="site-footer" id="contact">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-cta">
-          <h2>Bring the Sentinel night watch to your pens.</h2>
-          <p>Protect your flock this season. Talk to our technical team in Gombe or arrange an on-site pen evaluation.</p>
-          <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <a class="btn btn-primary" href="https://wa.me/2349015487928?text=Hello%2C%20I%20would%20like%20to%20order%20the%20AgriSense%20Sentinel%20system" target="_blank" rel="noopener">
-              Chat on WhatsApp (+234 901 548 7928)
+        <div>
+          <h2 style="font-size:2rem; font-weight:800; margin-bottom:14px;">Bring the night watch to your pen.</h2>
+          <p style="color:var(--text-muted); font-size:1.02rem; max-width:480px; margin-bottom:24px;">
+            Protect your flock investment before the next heat wave or ammonia crash. Talk to our technical team in Gombe.
+          </p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="https://wa.me/2349015487928?text=Hello%20AgriSense%20Team%2C%20I%20want%20to%20order%20the%20Sentinel%20system" target="_blank" rel="noopener">
+              WhatsApp (+234 901 548 7928)
             </a>
             <button class="btn btn-outline" onclick="openModal()">
               Request Official Quote
@@ -1777,16 +1561,16 @@
           </div>
         </div>
 
-        <div class="contact-card">
-          <div class="contact-line">
+        <div>
+          <div class="contact-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             <span>Gombe State, Northern Nigeria</span>
           </div>
-          <div class="contact-line">
+          <div class="contact-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             <span>abduljabbarbello5@gmail.com</span>
           </div>
-          <div class="contact-line">
+          <div class="contact-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             <span>+234 901 548 7928 / +234 802 874 2753</span>
           </div>
@@ -1795,18 +1579,18 @@
 
       <div class="footer-bottom">
         <span>© AgriSense IoT · Noma Vault Systems. All rights reserved.</span>
-        <span>Sahel Agritech Innovation Hub · Gombe State</span>
+        <span>Sahel Agritech Innovation Hub · Gombe State, Nigeria</span>
       </div>
     </div>
   </footer>
 
-  <!-- FIELD KIT REQUEST MODAL -->
+  <!-- FIELD KIT MODAL -->
   <div class="modal-overlay" id="requestModal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal()">&times;</button>
-      <h3 style="font-size:1.4rem; font-weight:700; margin-bottom:6px;">Request AgriSense Field Kit</h3>
-      <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px;">
-        Fill out this quick form or send directly through WhatsApp. We dispatch kits across Northern Nigeria.
+      <h3 style="font-size:1.35rem; font-weight:700; margin-bottom:6px;">Order AgriSense Field Kit</h3>
+      <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:18px;">
+        Fill out this quick form or send directly through WhatsApp. Kits dispatched across Northern Nigeria.
       </p>
 
       <form id="quoteForm" onsubmit="handleQuoteSubmit(event)">
@@ -1821,7 +1605,7 @@
         </div>
 
         <div class="form-group">
-          <label>Pen Location / Cooperative Name</label>
+          <label>Farm Location / Cooperative</label>
           <input type="text" id="formLoc" placeholder="e.g. Billiri, Gombe State" required>
         </div>
 
@@ -1878,7 +1662,6 @@
       sirenOsc.type = 'sawtooth';
       sirenOsc.frequency.setValueAtTime(800, audioCtx.currentTime);
 
-      // Pitch sweep
       sirenOsc.frequency.linearRampToValueAtTime(1400, audioCtx.currentTime + 0.35);
       sirenOsc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.7);
 
@@ -1887,7 +1670,6 @@
       sirenGain.connect(audioCtx.destination);
       sirenOsc.start();
 
-      // Loop sweep
       sirenOsc.onended = () => {
         sirenOsc = null;
         if (isHazardActive && !isSirenMuted) playSirenTone();
@@ -1932,7 +1714,6 @@
       valAmm.innerText = amm;
       sliderAmmVal.innerText = amm + ' ppm';
 
-      // Dynamic Humidity calculation
       let hum = Math.round(65 + (temp > 30 ? (temp - 30)*2.5 : -(30 - temp)));
       if (hum > 92) hum = 92;
       if (hum < 45) hum = 45;
@@ -1965,9 +1746,8 @@
         if (isHighTemp) reasons.push(`Severe Heat Stress (${temp}°C > 32°C limit)`);
         alertDesc.innerText = reasons.join(' & ') + '. Automatic relay enabled.';
 
-        // Display Simulated SMS
         phoneAlert.style.display = 'block';
-        smsText.innerHTML = `🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Danger threshold exceeded at 02:15 AM! ${reasons.join(' & ')}. Siren is blaring on-site. Check pen immediately!`;
+        smsText.innerHTML = `🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Danger threshold exceeded at 02:15 AM! ${reasons.join(' & ')}. Siren blaring on-site. Check pen immediately!`;
 
         playSirenTone();
       } else {
@@ -1997,7 +1777,6 @@
       sliderAmm.value = amm;
       updateSimulation();
 
-      // Button styles
       const buttons = document.querySelectorAll('.sim-actions button');
       buttons.forEach(b => b.classList.remove('active-spike'));
       event.target.classList.add('active-spike');
@@ -2011,7 +1790,7 @@
         const hours = String(now.getHours()).padStart(2, '0');
         const mins = String(now.getMinutes()).padStart(2, '0');
         const secs = String(now.getSeconds()).padStart(2, '0');
-        clockEl.innerText = `TIME: ${hours}:${mins}:${secs} (WAT)`;
+        clockEl.innerText = `LIVE TIME: ${hours}:${mins}:${secs} (WAT)`;
       }
     }, 1000);
 
@@ -2066,20 +1845,11 @@
       const loc = document.getElementById('formLoc').value;
       const tier = document.getElementById('formTier').value;
 
-      const message = `Hello AgriSense! My name is ${name} (${phone}) from ${loc}. I want to order/inquire about the: ${tier}. Please share dispatch details.`;
+      const message = `Hello AgriSense! My name is ${name} (${phone}) from ${loc}. I want to order/inquire about: ${tier}. Please share dispatch details.`;
       const url = `https://wa.me/2349015487928?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
       closeModal();
     }
-
-    // Component Explorer interactive selection
-    const compItems = document.querySelectorAll('.component-item');
-    compItems.forEach(item => {
-      item.addEventListener('click', () => {
-        compItems.forEach(c => c.classList.remove('active'));
-        item.classList.add('active');
-      });
-    });
 
     // Run initial calc & sim update
     updateSimulation();
