@@ -1,0 +1,21 @@
+{
+  "name": "AgriSense Sentinel",
+  "short_name": "AgriSense",
+  "description": "Offline Pen Defense System & Live Telemetry",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#080B12",
+  "theme_color": "#FAF8EE",
+  "icons": [
+    {
+      "src": "./assets/hero_poultry.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "./assets/hero_poultry.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
