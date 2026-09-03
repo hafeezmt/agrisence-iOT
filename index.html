@@ -72,7 +72,7 @@
     /* ======================================================== */
     .pill-header-outer {
       position: fixed;
-      top: 18px;
+      top: 10px;
       left: 0;
       right: 0;
       z-index: 1000;
@@ -85,14 +85,14 @@
     .pill-header {
       pointer-events: auto;
       width: 100%;
-      max-width: 1060px;
-      background: rgba(13, 18, 29, 0.72);
+      max-width: 940px;
+      background: rgba(13, 18, 29, 0.76);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04);
+      box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
       border-radius: 9999px;
-      padding: 8px 10px 8px 20px;
+      padding: 5px 6px 5px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -100,46 +100,51 @@
     }
 
     .pill-header:hover {
-      border-color: rgba(16, 185, 129, 0.3);
-      box-shadow: 0 18px 42px -10px rgba(0, 0, 0, 0.65), 0 0 25px rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      box-shadow: 0 12px 34px -8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.12);
     }
 
     .pill-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       text-decoration: none;
       color: #fff;
     }
 
     .pill-brand-icon {
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
       background: linear-gradient(135deg, #10B981, #065F46);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+    }
+
+    .pill-brand-icon svg {
+      width: 14px;
+      height: 14px;
     }
 
     .pill-brand-name {
-      font-size: 1.05rem;
+      font-size: 0.92rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .pill-brand-badge {
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       color: var(--emerald);
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.25);
       border-radius: 999px;
-      padding: 1px 7px;
+      padding: 1px 6px;
       font-weight: 600;
       letter-spacing: 0.03em;
     }
@@ -147,39 +152,39 @@
     .pill-nav {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
     }
 
     .pill-link {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.88rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      padding: 6px 14px;
+      padding: 4px 11px;
       border-radius: 999px;
       transition: all 0.2s ease;
     }
 
     .pill-link:hover {
       color: #fff;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.07);
     }
 
     .pill-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn-pill-primary {
       background: linear-gradient(135deg, #10B981, #059669);
       color: #032216;
       font-weight: 700;
-      font-size: 0.84rem;
-      padding: 8px 18px;
+      font-size: 0.78rem;
+      padding: 6px 14px;
       border-radius: 999px;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 3px 12px rgba(16, 185, 129, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.2);
       transition: all 0.2s ease;
       cursor: pointer;
@@ -187,7 +192,7 @@
 
     .btn-pill-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.45);
       background: linear-gradient(135deg, #34D399, #10B981);
     }
 
@@ -195,9 +200,9 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       color: #fff;
-      font-size: 0.84rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 999px;
       text-decoration: none;
       transition: all 0.2s ease;
@@ -281,23 +286,23 @@
 
     /* HERO SECTION */
     .hero {
-      padding: 130px 0 70px;
+      padding: 95px 0 45px;
       position: relative;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 50px;
+      gap: 40px;
       align-items: center;
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 4.4vw, 3.7rem);
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.12;
       letter-spacing: -0.03em;
-      margin: 22px 0;
+      margin: 16px 0;
     }
 
     .hero h1 .gradient-text {
@@ -307,33 +312,33 @@
     }
 
     .hero p.lead {
-      font-size: 1.12rem;
+      font-size: 1.02rem;
       color: var(--text-muted);
-      max-width: 530px;
-      line-height: 1.65;
-      margin-bottom: 32px;
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 24px;
     }
 
     .hero-metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 44px;
-      padding-top: 26px;
+      gap: 14px;
+      margin-top: 30px;
+      padding-top: 20px;
       border-top: 1px solid var(--border);
     }
 
     .metric-box h4 {
       font-family: var(--font-mono);
-      font-size: 1.55rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #fff;
     }
 
     .metric-box p {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     /* HERO PHOTO-IN-PHOTO + SIMULATOR CARD */
@@ -343,16 +348,16 @@
 
     .real-photo-banner {
       position: relative;
-      border-radius: 18px;
+      border-radius: 14px;
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .real-photo-banner img {
       width: 100%;
-      height: 190px;
+      height: 155px;
       object-fit: cover;
       display: block;
       filter: brightness(0.88);
@@ -361,14 +366,14 @@
 
     .real-photo-tag {
       position: absolute;
-      bottom: 12px;
-      left: 14px;
-      background: rgba(10, 14, 23, 0.82);
+      bottom: 10px;
+      left: 12px;
+      background: rgba(10, 14, 23, 0.85);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.75rem;
+      padding: 3px 9px;
+      font-size: 0.72rem;
       color: #fff;
       display: flex;
       align-items: center;
@@ -379,10 +384,10 @@
     .sim-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px;
+      border-radius: 14px;
+      padding: 18px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
       transition: border-color 0.3s;
     }
 
@@ -561,54 +566,54 @@
 
     /* SECTION SHELL */
     section {
-      padding: 90px 0;
+      padding: 58px 0;
     }
 
     .section-head {
       text-align: center;
-      max-width: 700px;
-      margin: 0 auto 55px;
+      max-width: 680px;
+      margin: 0 auto 38px;
     }
 
     .section-head .badge {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .section-head h2 {
-      font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+      font-size: clamp(1.75rem, 2.8vw, 2.3rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .section-head p {
       color: var(--text-muted);
-      font-size: 1.02rem;
+      font-size: 0.96rem;
     }
 
     /* REAL FIELD GALLERY & CASE EVIDENCE */
     .field-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 18px;
     }
 
     .field-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
       transition: all 0.3s ease;
     }
 
     .field-card:hover {
       border-color: rgba(16, 185, 129, 0.35);
-      transform: translateY(-4px);
+      transform: translateY(-3px);
     }
 
     .field-img-wrap {
       position: relative;
-      height: 210px;
+      height: 155px;
       overflow: hidden;
     }
 
@@ -625,49 +630,49 @@
 
     .field-card-pill {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 10px;
+      right: 10px;
       background: rgba(7, 10, 16, 0.85);
       backdrop-filter: blur(6px);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 999px;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--emerald);
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
     .field-body {
-      padding: 22px;
+      padding: 16px 18px;
     }
 
     .field-body h3 {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .field-location {
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       color: var(--emerald);
       font-family: var(--font-mono);
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
     .field-body p {
-      font-size: 0.9rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .field-stat {
-      margin-top: 14px;
-      padding-top: 12px;
+      margin-top: 12px;
+      padding-top: 10px;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
     }
 
@@ -680,21 +685,21 @@
     .hardware-showcase {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 30px;
       align-items: center;
     }
 
     .hardware-photo-box {
-      border-radius: 18px;
+      border-radius: 14px;
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
       position: relative;
     }
 
     .hardware-photo-box img {
       width: 100%;
-      height: 420px;
+      height: 330px;
       object-fit: cover;
       display: block;
     }
@@ -704,42 +709,42 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(8, 12, 20, 0.88);
+      background: rgba(8, 12, 20, 0.9);
       backdrop-filter: blur(10px);
-      padding: 16px 20px;
+      padding: 12px 16px;
       border-top: 1px solid var(--border);
     }
 
     .photo-caption-bar h4 {
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #fff;
     }
 
     .photo-caption-bar p {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
     }
 
     .spec-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
 
     .spec-item {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
+      border-radius: 10px;
+      padding: 12px 16px;
       display: flex;
-      gap: 16px;
+      gap: 14px;
       align-items: flex-start;
     }
 
     .spec-item-icon {
-      width: 40px;
-      height: 40px;
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.25);
@@ -750,14 +755,19 @@
       flex-shrink: 0;
     }
 
+    .spec-item-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
     .spec-item h4 {
-      font-size: 1.02rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #fff;
     }
 
     .spec-item p {
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -766,64 +776,68 @@
     .calc-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
+      border-radius: 16px;
+      padding: 26px 30px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      gap: 40px;
+      gap: 30px;
       align-items: center;
     }
 
     .calc-input-group {
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
     .calc-input-group:last-child { margin-bottom: 0; }
 
     .calc-input-group label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.9rem;
+      font-size: 0.84rem;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .calc-input-group .value-pill {
       font-family: var(--font-mono);
       color: var(--emerald);
       background: rgba(16, 185, 129, 0.1);
-      padding: 2px 10px;
+      padding: 1px 8px;
       border-radius: 4px;
-      font-size: 0.92rem;
+      font-size: 0.85rem;
     }
 
     .calc-result-box {
       background: #090D16;
       border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 16px;
-      padding: 30px;
+      border-radius: 14px;
+      padding: 22px;
       text-align: center;
     }
 
     .calc-result-box .num {
       font-family: var(--font-mono);
-      font-size: 2.6rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: var(--emerald);
-      margin: 10px 0;
+      margin: 8px 0;
+    }
+
+    .calc-result-box p {
+      font-size: 0.82rem;
     }
 
     /* PRICING */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 18px;
     }
 
     .price-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 26px;
+      border-radius: 14px;
+      padding: 24px 20px;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -832,37 +846,37 @@
     .price-card.featured {
       border-color: var(--emerald);
       background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(15, 21, 33, 0.85));
-      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.15);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
     }
 
     .price-card .tag {
       position: absolute;
-      top: -12px;
-      right: 20px;
+      top: -10px;
+      right: 16px;
       background: var(--emerald);
       color: #032216;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 800;
-      padding: 3px 10px;
+      padding: 2px 8px;
       border-radius: 999px;
     }
 
     .price-card h3 {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .price-card .cost {
       font-family: var(--font-mono);
-      font-size: 2.1rem;
+      font-size: 1.85rem;
       font-weight: 800;
       color: #fff;
-      margin: 16px 0;
+      margin: 12px 0;
     }
 
     .price-card .cost span {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-family: var(--font-main);
       color: var(--text-dim);
       font-weight: 400;
@@ -872,10 +886,10 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 10px;
+      margin-bottom: 22px;
       flex-grow: 1;
-      font-size: 0.9rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
     }
 
@@ -888,55 +902,57 @@
     .price-list li svg {
       color: var(--emerald);
       flex-shrink: 0;
+      width: 15px;
+      height: 15px;
     }
 
     /* FOUNDERS / TEAM WITH REAL PHOTOS */
     .team-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 28px;
+      gap: 18px;
     }
 
     .founder-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 26px;
+      border-radius: 14px;
+      padding: 18px 20px;
       display: flex;
-      gap: 22px;
+      gap: 18px;
       align-items: center;
     }
 
     .founder-photo {
-      width: 108px;
-      height: 108px;
-      border-radius: 16px;
+      width: 92px;
+      height: 92px;
+      border-radius: 12px;
       object-fit: cover;
       object-position: center 15%;
       flex-shrink: 0;
       border: 2px solid rgba(16, 185, 129, 0.4);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
     }
 
     .founder-info h3 {
-      font-size: 1.2rem;
+      font-size: 1.12rem;
       font-weight: 700;
     }
 
     .founder-info .role {
       color: var(--emerald);
       font-family: var(--font-mono);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
       display: block;
       margin-top: 2px;
     }
 
     .founder-info p {
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
-      margin-top: 8px;
-      line-height: 1.5;
+      margin-top: 6px;
+      line-height: 1.48;
     }
 
     /* FOOTER */
@@ -1246,7 +1262,7 @@
         <!-- Card 1 -->
         <div class="field-card">
           <div class="field-img-wrap">
-            <img src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=800&q=80" alt="Broiler Pen in Northern Nigeria">
+            <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=800&q=80" alt="Commercial Broiler Pen in Northern Nigeria">
             <span class="field-card-pill">100% SURVIVAL</span>
           </div>
           <div class="field-body">
