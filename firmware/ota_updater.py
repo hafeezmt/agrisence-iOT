@@ -1,6 +1,7 @@
 """
 AgriSense Sentinel - 2G GPRS Over-The-Air (OTA) Firmware Updater
 Downloads updated main.py or driver chunks over GSM cellular GPRS.
+Includes iHATCH Cohort 5 Regional Demo Day firmware metadata (v1.2.0).
 """
 
 import gc
@@ -10,14 +11,21 @@ from drivers.sim800l import SIM800L
 
 
 class OTAUpdater:
+    RELEASE_MANIFEST = {
+        "version": "1.2.0-ihatch",
+        "channel": "ihatch_demo_regional",
+        "state": "Gombe",
+        "region": "North East Region, Nigeria"
+    }
+
     def __init__(self, gsm: SIM800L):
         self.gsm = gsm
 
     def check_version(self, manifest_url: str) -> str:
         """Query remote server for latest firmware release tag."""
-        print(f"[OTA] Checking version against {manifest_url}...")
+        print(f"[OTA] Checking version against {manifest_url} (Channel: {self.RELEASE_MANIFEST['channel']})...")
         # Sends AT+HTTPINIT, AT+HTTPPARA="URL", manifest_url, AT+HTTPACTION=0
-        return "1.1.0"
+        return self.RELEASE_MANIFEST["version"]
 
     def download_firmware_file(self, target_filename: str, source_url: str) -> bool:
         """Download new script chunk to temporary file and atomically rename on success."""
@@ -40,7 +48,7 @@ class OTAUpdater:
 
             # When verified:
             # os.rename(temp_filename, target_filename)
-            print(f"[OTA] Staged update for {target_filename}.")
+            print(f"[OTA] Staged update for {target_filename} (Version {self.RELEASE_MANIFEST['version']}).")
             return True
         except Exception as e:
             print("[OTA] Update failed:", e)
