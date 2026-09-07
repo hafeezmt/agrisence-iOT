@@ -18,11 +18,13 @@ AgriSense IoT develops autonomous, solar-powered edge monitoring solutions desig
 ## Market Opportunity & Financial Model
 - **Target Market**: Commercial broiler and layer poultry farms across Gombe State and the North East corridor.
 - **Unit Economics**:
-  - Outright Purchase: ₦85,000 / unit.
-  - Micro-Lease via Co-op: ₦12,500 / month (8-month tenure).
+  - Core Edge Hardware Unit: **₦25,000** (ESP32, SHT31, MQ-135 Gas Array, SIM800L 2G GSM Module).
+  - Turnkey Commercial Installation Kit: **₦85,000** (Includes ₦25k Core Board + 10W Solar Panel + 6000mAh Battery + 110dB Outdoor Siren & Strobe + IP65 Casing + On-Site Pen Mounting & 1-Year Local Warranty).
+  - Micro-Lease via Co-op: **₦12,500 / month** (8-month tenure) or **₦3,100 / week**.
 - **Flock Saved per Alert**: ₦875,000 average flock value saved per prevented night ventilation stall.
 
-## Contact Information
-- **CEO & Lead Architect**: Abduljabbar Bello Shariff
+## Contact Information & Field Validation
+- **CEO & Lead Architect**: Abduljabbar Bello Shariff (+234 802 874 2753 / +234 901 548 7928)
 - **Operations Lead**: Jungudo Muhammad Tukur
+- **Field Validation Disclaimer**: Field trial metrics reflect real-world hardware prototype stress testing and simulated midnight ventilation failure scenarios in partner commercial pens across Gombe State.
 - **Website**: [https://agrisence-i-ot-4qac.vercel.app/](https://agrisence-i-ot-4qac.vercel.app/)
