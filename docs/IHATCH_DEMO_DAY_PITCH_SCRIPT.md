@@ -1,45 +1,48 @@
-# 🏆 AgriSense IoT - iHATCH Cohort 5 Regional Demo Day Pitch Script
-**State**: Gombe State  
-**Region**: North East Region, Nigeria  
-**Presenter**: Abduljabbar Bello Shariff (CEO) / Jungudo Muhammad Tukur (Operations Lead)  
-**Target Duration**: 3 Minutes (180 Seconds)  
+# 🌾 AgriSense IoT - iHatch Cohort 5 Pitch Script (Updated September 2026)
+**Slogan**: *"Giving Nigerian Farmers the Eyes They Never Had."*  
+**Presenter**: Abduljabbar Bello Shariff (CEO) & Jungudo Muhammad Tukur (Operations Lead)  
+**Location**: Gombe State, Nigeria  
 
 ---
 
-## ⏱️ Minute 0:00 - 0:45 | The Problem (Sahel Poultry Mortality Crisis)
-> *"Good morning respected judges, mentors, and fellow innovators. My name is Abduljabbar Bello Shariff, representing Gombe State and AgriSense IoT.*
+## ⏱️ Minute 0:00 - 0:45 | Slide 1–3: Title & The Problem
+> *"Good morning respected judges, mentors, and fellow innovators. My name is Abduljabbar Bello Shariff, CEO of AgriSense IoT, representing Gombe State.*
 > 
-> *In Northern Nigeria, commercial poultry farming is a high-stakes battle against extreme heat and lethal ammonia gas. Between 1:00 AM and 4:00 AM, when ventilation fan belts snap or power drops, toxic ammonia builds up inside deep-litter pens. Because farmers are asleep, thousands of birds suffocate before morning dawn — costing smallholders over ₦875,000 in a single night.*
+> *In Nigeria today, 30% of smallholder livestock is lost every season to preventable heat, humidity, and lethal ammonia gas. Smallholders suffer from night blindness — waking up 2 to 3 times per night by torchlight, but still missing the midnight crisis moment. By morning feeding, the damage is done. A single incident costs a farmer ₦50,000 to ₦300,000.*
 > 
-> *Traditional cloud IoT solutions fail here because 2.4GHz Wi-Fi cannot penetrate corrugated zinc roofing, and cloud servers are useless when cellular data fails."*
+> *As Aminu Lawan, an agro-dealer in Gombe Main Market told us in discovery: 'The farmers around here don't think about prevention — they think about treatment.' Imported monitoring tools cost over $500, require Wi-Fi, and were never built for Gombe's infrastructure."*
 
 ---
 
-## ⏱️ Minute 0:45 - 1:30 | The Solution (AgriSense Sentinel Edge Defense)
-> *"That is why we built the **AgriSense Sentinel** — an autonomous, solar-powered edge telemetry device engineered specifically for Northern Nigerian pens.*
+## ⏱️ Minute 0:45 - 1:30 | Slide 4–5: Solution & How It Works
+> *"That is why we built **AgriSense Sentinel** — a solar-powered, offline-first IoT sensor unit built in Gombe State for Nigeria.*
 > 
-> 1. **Zero Internet Reliance**: Powered by dual-core ESP32 edge micro-processors running local FreeRTOS anomaly detection.
-> 2. **Instant On-Site Defense**: The split-second ammonia exceeds 25 PPM or temperatures spike, Sentinel triggers a 110dB strobe siren inside the pen to wake farm handlers instantly.
-> 3. **2G Cellular SMS Dispatch**: Equipped with SIM800L 2G GSM hardware that broadcasts direct SMS alerts over 2G towers (MTN, Airtel, Glo) straight to the farmer’s basic feature phone."*
+> *1. **Offline Sensing**: An ESP32 reads temperature, humidity, and ammonia every 10 to 30 seconds inside the pen.*
+> *2. **Instant Local Siren**: The moment thresholds are crossed, a 110dB on-site siren fires instantly. Farm workers and neighbors hear it even if cellular towers fail.*
+> *3. **2G SMS Alert**: A SIM800L module dispatches an SMS to the farmer's phone via MTN, Airtel, or Glo within seconds — working on any basic phone without Wi-Fi or smartphone requirement."*
 
 ---
 
-## ⏱️ Minute 1:30 - 2:15 | Market Validation & Traction (Gombe Corridor)
-> *"Over the past 6 months, we have deployed AgriSense Sentinel units across 3 major commercial poultry clusters in Gombe State:*
-> - **Billiri Pen Cluster** (Alhaji Danjuma Farm — 2,500 broilers)
-> - **Dadinkowa Irrigation Basin** (Solar micro-pen pilot)
-> - **Tudun Wada Co-op Cluster** (500-bird layer pen)
+## ⏱️ Minute 1:30 - 2:15 | Slide 6–7: Field Validation & Customer Discovery
+> *"We conducted 20 customer discovery interviews with farmers and stakeholders across Gombe State. 17 out of 20 confirmed real-time SMS alerts as their primary need.*
 > 
-> *In Billiri, Sentinel detected a midnight fan belt snap at 2:22 AM, triggering the siren and saving ₦875,000 worth of flock.*
-> *Our pilot has achieved **100% flock survival** across all active pens during severe Sahel heatwaves."*
+> *In Kaltungo, Hajiya Ramatu Haruna lost ₦80,000 in a single one-hour midnight heat spike.*
+> *In Tudun Wada, Mallam Usman Bello — managing 300 broilers — became our primary Month 3 active pilot site, stating: 'Anything that saves even 20 birds is worth it to me.'*
+> *In Akko LGA, Lawan Bukar told us unprompted: 'If this device means I can sleep properly, I will pay ₦20,000 for it right now.'"*
 
 ---
 
-## ⏱️ Minute 2:15 - 3:00 | Business Model & Ask (iHATCH Regional Impact)
-> *"Our business model is built for local economics:*
-> - **Outright Purchase**: ₦85,000 per Sentinel Unit.
-> - **Co-op Lease-to-Own**: ₦12,500/month for smallholders via OPay, PalmPay, and USSD.
+## ⏱️ Minute 2:15 - 3:00 | Slide 8–14: Unit Economics, Roadmap & The Ask
+> *"Our business model matches validated farmer willingness-to-pay:*
+> - **Individual Kit**: ₦25,000 hardware unit.
+> - **Cooperative Bulk**: ₦20,000 per unit (5+ batch order).
+> - **Lease-to-Own**: ₦5,000 deposit + ₦3,500 × 6 months via OPay or Moniepoint.
+> - **Subscription**: ₦1,200/month per unit for SMS gateway & support.
 > 
-> *Representing Gombe State at iHATCH Cohort 5, our goal is to scale from 3 pilot corridors to 150 commercial pens across the North East Region by Q2 2027, protecting over ₦150 Million in local agricultural asset value.*
+> *Our 4-Month Roadmap is on schedule: Month 1 and Month 2 are **COMPLETED**. Month 3 is **CURRENTLY ACTIVE** with our live deployment at Mallam Usman's farm in Tudun Wada.*
 > 
-> *Thank you for your time, and we welcome your questions!"*
+> *Our Ask today in Month 3:*
+> 1. One warm introduction to a cooperative chairperson or ADP programme manager in Gombe State to finalize our Month 4 enterprise deal.
+> 2. A component sourcing connection in Kano or Lagos to drop component costs from ₦31,500 to ₦22,000.
+> 
+> *30% mortality. One affordable sensor. One SMS. One family protected. Thank you!"*
