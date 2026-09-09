@@ -1829,7 +1829,7 @@
       </a>
 
       <nav class="pill-nav">
-        <a href="#simulator" class="pill-link" id="navTel">How it works</a>
+        <a href="#hero" class="pill-link" id="navTel">Overview</a>
         <a href="#pilotHub" class="pill-link">Corridor Hub</a>
         <a href="#deployments" class="pill-link" id="navEv">Field Evidence</a>
         <a href="#hardware" class="pill-link" id="navHw">Hardware</a>
@@ -1856,9 +1856,9 @@
   </div>
 
   <!-- HERO SECTION -->
-  <section class="hero" id="simulator">
-    <div class="container hero-grid">
-      <div>
+  <section class="hero" id="hero">
+    <div class="container hero-grid" style="grid-template-columns:1fr; max-width:860px; margin:0 auto; text-align:center;">
+      <div style="display:flex; flex-direction:column; align-items:center;">
         <div class="badge" style="background:rgba(229, 169, 60, 0.12); border-color:rgba(229, 169, 60, 0.35); color:var(--gold);">
           <span class="badge-pulse" style="background:var(--gold); box-shadow:0 0 10px var(--gold);"></span>
           <span id="heroBadge">NG Starting in Gombe State, Nigeria</span>
@@ -1867,13 +1867,13 @@
           Pen defense, <br>
           <span class="hero-serif-italic">finally automated.</span>
         </h1>
-        <p class="lead" id="heroLead">
+        <p class="lead" id="heroLead" style="margin-left:auto; margin-right:auto;">
           Continuous temperature, humidity, and lethal ammonia sensing engineered specifically for Northern Nigerian poultry pens. Solar-backed. Zero internet reliance. Fires an immediate 110dB on-site siren and direct 2G GSM SMS to your phone the split-second conditions turn lethal.
         </p>
 
-        <div class="hero-cta-group" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-          <a class="btn-gold" href="#simulator">
-            <span>Schedule Pen Monitor</span>
+        <div class="hero-cta-group" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center;">
+          <a class="btn-gold" href="#pilotHub">
+            <span>Explore Pilot Corridor</span>
             <span style="font-size:1.1rem; font-weight:900;">&rsaquo;</span>
           </a>
           <button class="btn-dark-pill" onclick="openModal()">
@@ -1881,7 +1881,7 @@
           </button>
         </div>
 
-        <div class="hero-metrics">
+        <div class="hero-metrics" style="width:100%;">
           <div class="metric-box">
             <h4>72 Hours</h4>
             <p>Full battery reserve through dust storms &amp; heavy Sahel overcast</p>
@@ -1893,166 +1893,6 @@
           <div class="metric-box">
             <h4>₦350,000+</h4>
             <p>Average flock loss prevented per avoided night ventilation stall</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRACTICAL VIDEO + LIVE EVENTS + SIMULATOR IN BIG CONTEXT -->
-      <div class="hero-device-wrapper">
-        <!-- Practical Video & Real-time Live Events Card (TrashGo Style) -->
-        <div class="practical-hero-card">
-          <div class="practical-video-wrap">
-            <video id="penPracticalVideo" autoplay loop muted playsinline poster="./assets/danjuma_poultry.jpg">
-              <source src="./assets/pen_practical_demo.webm" type="video/webm">
-            </video>
-
-            <!-- Video Surveillance HUD -->
-            <div class="video-hud-top">
-              <div class="hud-rec-badge">
-                <span class="hud-rec-dot"></span>
-                <span>REC ● 02:41:18 WAT</span>
-              </div>
-              <div class="hud-cam-badge">
-                IR NIGHT CAM-01 · DADINKOWA PEN #04
-              </div>
-            </div>
-
-            <div class="practical-video-tag">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <span class="desktop-text">Dadinkowa Cluster &amp; Tudun Wada Farm Route</span>
-              <span class="mobile-text">Dadinkowa Cluster</span>
-            </div>
-
-            <div class="video-control-overlay">
-              <button class="btn-video-toggle" onclick="toggleVideoPlayback()" id="videoToggleBtn">
-                <span>⏸</span> <span class="desktop-text">Practical Feed</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Live Pen Sensor Status Today (TrashGo Style Pickups) -->
-          <div class="live-events-panel">
-            <div class="events-header">
-              <div class="events-title">
-                <span style="color:var(--gold);">⚡</span>
-                <span>Live Pen Monitoring Today</span>
-              </div>
-              <span class="events-active-pill">🟢 3 Active</span>
-            </div>
-
-            <div class="events-list">
-              <div class="event-item">
-                <div class="event-main">
-                  <span class="event-icon">🏡</span>
-                  <div>
-                    <div class="event-name">Malam Danjuma Poultry (Dadinkowa)</div>
-                    <div class="event-meta">Cluster #GB-04 · Temp 29.0°C · NH₃ 14ppm · 8:14 am</div>
-                  </div>
-                </div>
-                <span class="event-status-tag done">Done</span>
-              </div>
-
-              <div class="event-item">
-                <div class="event-main">
-                  <span class="event-icon">🏭</span>
-                  <div>
-                    <div class="event-name">Gombe Integrated Farms (Tudun Wada)</div>
-                    <div class="event-meta">Broiler Pen #12 · Exhaust Fan Active · ~10 mins</div>
-                  </div>
-                </div>
-                <span class="event-status-tag en-route">En Route</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SIMULATOR WIDGET -->
-        <div class="sim-card" id="simCard">
-          <div class="sim-header">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span class="badge-pulse" id="liveDot"></span>
-              <div>
-                <strong style="font-size:0.86rem; display:block; color:#fff;">PEN #04 — DADINKOWA CLUSTER</strong>
-                <span style="font-size:0.72rem; color:var(--text-dim); font-family:var(--font-mono);" id="simClock">LIVE TIME: 09:02:23 (WAT)</span>
-              </div>
-            </div>
-            <span class="badge" id="simStatusBadge" style="font-size:0.72rem; padding:3px 10px;">
-              STATUS: NOMINAL
-            </span>
-          </div>
-
-          <div class="sim-readings">
-            <div class="reading-card" id="cardTemp">
-              <span class="label">Temperature</span>
-              <div class="value"><span id="valTemp">29.0</span><span class="unit">°C</span></div>
-              <span class="thresh">Limit: &gt;32.0°C</span>
-            </div>
-
-            <div class="reading-card" id="cardHum">
-              <span class="label">Humidity</span>
-              <div class="value"><span id="valHum">64</span><span class="unit">%</span></div>
-              <span class="thresh">Limit: &gt;75%</span>
-            </div>
-
-            <div class="reading-card" id="cardAmmonia">
-              <span class="label">Ammonia (NH₃)</span>
-              <div class="value"><span id="valAmmonia">14</span><span class="unit">ppm</span></div>
-              <span class="thresh">Limit: &gt;25 ppm</span>
-            </div>
-          </div>
-
-          <div class="sim-controls">
-            <div class="control-row">
-              <label>
-                <span>Simulate Pen Temperature</span>
-                <strong id="lblTemp">29.0°C</strong>
-              </label>
-              <input type="range" id="sliderTemp" min="20" max="44" step="0.2" value="29.0" oninput="updateSimulation()">
-            </div>
-
-            <div class="control-row">
-              <label>
-                <span>Simulate Ammonia Gas (NH₃)</span>
-                <strong id="lblAmmonia">14 ppm</strong>
-              </label>
-              <input type="range" id="sliderAmmonia" min="0" max="55" step="0.5" value="14.0" oninput="updateSimulation()">
-            </div>
-          </div>
-
-          <div class="sim-alert-box" id="alertBox">
-            <div class="alert-status">
-              <span class="alert-icon" id="alertIcon">🛡️</span>
-              <div>
-                <strong id="alertTitle">Continuous Edge Monitoring Active</strong>
-                <p id="alertDesc">All micro-climate thresholds within safe limits.</p>
-              </div>
-            </div>
-            <div class="siren-controls-group">
-              <div class="siren-vol-slider-wrap" title="Adjust 110dB Siren Output Volume">
-                <span class="vol-label">VOL:</span>
-                <input type="range" id="sirenVolSlider" min="0" max="1" step="0.05" value="0.9" oninput="setSirenVolume(this.value)">
-                <span id="sirenVolLabel">90%</span>
-              </div>
-              <button class="btn-siren-test" id="btnSirenTest" onclick="toggleAudioTest()">
-                🔊 Test 110dB Siren
-              </button>
-            </div>
-          </div>
-
-          <div class="sim-sms-preview" id="smsPreview" style="display: none;">
-            <div class="sms-sender">
-              <span>AGRISENSE 2G GSM SMS DISPATCH</span>
-              <span>NETWORK: MTN-NG</span>
-            </div>
-            <div class="sms-bubble" id="smsText">
-              🚨 <strong>AGRISENSE EMERGENCY [PEN #4]</strong>: Ammonia reading reached 32 ppm! 110dB Strobe Siren triggered on-site. Check ventilation immediately!
-            </div>
-          </div>
-
-          <div class="sim-actions">
-            <button onclick="setSimState(28, 12, 'normal')">🌱 Normal Night</button>
-            <button onclick="setSimState(36, 18, 'heat')">🔥 Heat Stress</button>
-            <button onclick="setSimState(31, 33, 'ammonia')" class="active-spike">⚠️ 2:00 AM Ammonia Build-up</button>
           </div>
         </div>
       </div>
